@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - Kantan Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f8fafc;
+            color: #1a202c;
+        }
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+        .header h1 {
+            font-size: 18px;
+            color: #1a202c;
+            font-weight: 700;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+        }
+        .user-name {
+            color: #4a5568;
+            font-weight: 600;
+        }
+        .logout {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .logout:hover {
+            color: #764ba2;
+        }
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 16px;
+        }
+        
+        @media (min-width: 768px) {
+            .main-content {
+                padding: 32px;
+            }
+        }
+        
+        /* Profile Completion Banner */
+        .profile-banner {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            color: white;
+            display: none;
+        }
+        .profile-banner.show {
+            display: block;
+        }
+        .profile-banner-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .profile-banner-text {
+            font-size: 14px;
+            margin-bottom: 16px;
+            opacity: 0.95;
+        }
+        .button-warning {
+            padding: 10px 20px;
+            background: white;
+            color: #f59e0b;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 28px 20px;
+            margin-bottom: 24px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        .hero-section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        .hero-section p {
+            font-size: 14px;
+            opacity: 0.95;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        @media (min-width: 768px) {
+            .hero-section {
+                border-radius: 20px;
+                padding: 40px;
+                margin-bottom: 32px;
+            }
+            .hero-section h2 {
+                font-size: 32px;
+                margin-bottom: 12px;
+            }
+            .hero-section p {
+                font-size: 16px;
+                margin-bottom: 28px;
+            }
+        }
+        
+        /* Medical Profile Card */
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .profile-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+        .profile-subtitle {
+            font-size: 14px;
+            color: #718096;
+        }
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .profile-item {
+            padding: 16px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+        .profile-item-label {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .profile-item-value {
+            font-size: 16px;
+            color: #1a202c;
+            font-weight: 600;
+        }
+        .profile-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f7fafc;
+        }
+        .profile-section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 12px;
+        }
+        .profile-section-content {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+        
+        .button-primary {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 14px rgba(102, 126, 234, 0.4);
+        }
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+        }
+        .button-secondary {
+            padding: 10px 20px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .button-secondary:hover {
+            background: #f7fafc;
+        }
+        
+        /* Symptom Input */
+        .symptom-input {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+        }
+        .symptom-input h3 {
+            font-size: 18px;
+            color: #1a202c;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.2s;
+            background: #f7fafc;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .info-text {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 8px;
+        }
+        
+        /* Loading & Error States */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 16px;
+            color: #718096;
+        }
+        .error-message {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c33;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 16px;
+            }
+            .user-name {
+                display: none;
+            }
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">K</div>
+            <h1>Kantan Care</h1>
+        </div>
+        <div class="user-info">
+            <span class="user-name" id="userName">Loading...</span>
+            <a class="logout" onclick="logout()">Logout</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Loading State -->
+        <div class="loading" id="loadingState">
+            Loading your profile...
+        </div>
+
+        <!-- Main Content (Hidden until loaded) -->
+        <div id="mainContent" style="display: none;">
+            <!-- Profile Completion Banner -->
+            <div class="profile-banner" id="profileBanner">
+                <div class="profile-banner-title">⚠️ Complete Your Medical Profile</div>
+                <div class="profile-banner-text">
+                    Complete your medical profile to get personalized AI recommendations and better care suggestions.
+                </div>
+                <button class="button-warning" onclick="window.location.href='medical-profile-setup.html'">
+                    Complete Now
+                </button>
+            </div>
+
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <h2 id="welcomeMessage">Welcome back!</h2>
+                <p>How are you feeling today? Describe your symptoms below for AI-powered health recommendations.</p>
+                
+                <div class="symptom-input">
+                    <h3>Describe Your Symptoms</h3>
+                    <textarea id="symptomText" placeholder="E.g., I've been experiencing a persistent cough and mild fever for the past 3 days..."></textarea>
+                    <div class="info-text">💡 Be as specific as possible about what you're feeling and when it started</div>
+                    <button class="button-primary" onclick="submitSymptoms()" style="margin-top: 16px;">
+                        Get AI Recommendations
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medical Profile Summary -->
+            <div class="profile-card" id="profileCard">
+                <div class="profile-header">
+                    <div>
+                        <div class="profile-title">Your Medical Profile</div>
+                        <div class="profile-subtitle">Quick overview of your health information</div>
+                    </div>
+                    <button class="button-secondary" onclick="window.location.href='medical-profile-setup.html'">
+                        Edit Profile
+                    </button>
+                </div>
+
+                <div class="profile-grid">
+                    <div class="profile-item">
+                        <div class="profile-item-label">Age</div>
+                        <div class="profile-item-value" id="profileAge">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-item-label">Gender</div>
+                        <div class="profile-item-value" id="profileGender">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-item-label">Blood Type</div>
+                        <div class="profile-item-value" id="profileBloodType">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-item-label">Weight</div>
+                        <div class="profile-item-value" id="profileWeight">-</div>
+                    </div>
+                </div>
+
+                <div class="profile-section" id="allergiesSection" style="display: none;">
+                    <div class="profile-section-title">🛡️ Known Allergies</div>
+                    <div class="profile-section-content" id="profileAllergies">None reported</div>
+                </div>
+
+                <div class="profile-section" id="medicationsSection" style="display: none;">
+                    <div class="profile-section-title">💊 Current Medications</div>
+                    <div class="profile-section-content" id="profileMedications">None reported</div>
+                </div>
+
+                <div class="profile-section" id="conditionsSection" style="display: none;">
+                    <div class="profile-section-title">📋 Chronic Conditions</div>
+                    <div class="profile-section-content" id="profileConditions">None reported</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBNYwM7ySCuyog04dJrWugBig41qh2Pu4U",
+            authDomain: "kantan-d6e74.firebaseapp.com",
+            projectId: "kantan-d6e74",
+            storageBucket: "kantan-d6e74.firebasestorage.app",
+            messagingSenderId: "199639000224",
+            appId: "1:199639000224:web:662872c3eeb09b24e555c5",
+            measurementId: "G-658L3RPXFZ"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let currentUser = null;
+        let userData = null;
+
+        // Check authentication and load user data
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                // Not logged in, redirect to login
+                window.location.href = 'login.html';
+                return;
+            }
+
+            currentUser = user;
+            
+            try {
+                // Load user data from Firestore
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                
+                if (!userDoc.exists) {
+                    document.getElementById('loadingState').innerHTML = 
+                        '<div class="error-message">User profile not found. Please contact support.</div>';
+                    return;
+                }
+
+                userData = userDoc.data();
+
+                // Check if user is a patient
+                if (userData.role !== 'patient') {
+                    window.location.href = 'doctor-dashboard.html';
+                    return;
+                }
+
+                // Check if profile is complete
+                if (!userData.profileComplete) {
+                    window.location.href = 'medical-profile-setup.html';
+                    return;
+                }
+
+                // Display user data
+                displayUserData(userData);
+                
+                // Hide loading, show content
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                document.getElementById('loadingState').innerHTML = 
+                    '<div class="error-message">Failed to load user profile. Please refresh the page.</div>';
+            }
+        });
+
+        // Display user data in the UI
+        function displayUserData(data) {
+            // Update header
+            document.getElementById('userName').textContent = data.fullName || 'User';
+            document.getElementById('welcomeMessage').textContent = 
+                `Welcome back, ${data.fullName?.split(' ')[0] || 'there'}!`;
+
+            // Update profile card
+            document.getElementById('profileAge').textContent = data.age || '-';
+            document.getElementById('profileGender').textContent = 
+                data.gender ? data.gender.charAt(0).toUpperCase() + data.gender.slice(1) : '-';
+            document.getElementById('profileBloodType').textContent = data.bloodType || 'Not set';
+            document.getElementById('profileWeight').textContent = 
+                data.weight ? `${data.weight} kg` : 'Not set';
+
+            // Show/hide sections based on data
+            if (data.allergies) {
+                document.getElementById('allergiesSection').style.display = 'block';
+                document.getElementById('profileAllergies').textContent = data.allergies;
+            }
+
+            if (data.currentMedications) {
+                document.getElementById('medicationsSection').style.display = 'block';
+                document.getElementById('profileMedications').textContent = data.currentMedications;
+            }
+
+            if (data.chronicConditions) {
+                document.getElementById('conditionsSection').style.display = 'block';
+                document.getElementById('profileConditions').textContent = data.chronicConditions;
+            }
+
+            // Show banner if profile is incomplete
+            if (!data.profileComplete) {
+                document.getElementById('profileBanner').classList.add('show');
+            }
+        }
+
+        // Logout function
+        async function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                try {
+                    await auth.signOut();
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    alert('Failed to logout. Please try again.');
+                }
+            }
+        }
+
+        // Submit symptoms (placeholder - will connect to AI in Phase 2)
+        function submitSymptoms() {
+            const symptoms = document.getElementById('symptomText').value.trim();
+            
+            if (!symptoms) {
+                alert('Please describe your symptoms first.');
+                return;
+            }
+
+            // For now, show a message that this feature is coming soon
+            alert('✨ AI Analysis Feature Coming Soon!\n\nYour symptoms will be analyzed using Bio_ClinicalBERT to provide:\n• Symptom summary\n• Suggested tests\n• Recommended specialists\n• Nearby clinics\n\nThis feature will be implemented in Phase 2.');
+            
+            // Clear input
+            document.getElementById('symptomText').value = '';
+        }
+    </script>
+</body>
+</html>

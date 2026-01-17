@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kantan Care - Medical Profile Setup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .setup-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 700px;
+            overflow: hidden;
+        }
+        .setup-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 32px 40px;
+            color: white;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        .setup-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .setup-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 6px;
+            margin-top: 20px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: white;
+            height: 100%;
+            width: 50%;
+            transition: width 0.3s;
+            border-radius: 3px;
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-size: 13px;
+        }
+        .step-indicator span {
+            opacity: 0.7;
+        }
+        .step-indicator span.active {
+            opacity: 1;
+            font-weight: 600;
+        }
+        .setup-body {
+            padding: 40px;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .step-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+        .step-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 28px;
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        label {
+            display: block;
+            color: #1a202c;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s;
+            background: #f7fafc;
+        }
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s;
+            background: #f7fafc;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+        .button-primary {
+            flex: 1;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.3px;
+        }
+        .button-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        .button-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .button-secondary {
+            flex: 1;
+            padding: 16px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.3px;
+        }
+        .button-secondary:hover {
+            background: #f7fafc;
+        }
+        .skip-link {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: #718096;
+        }
+        .skip-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .skip-link a:hover {
+            text-decoration: underline;
+        }
+        .info-box {
+            background: #f0f4ff;
+            border: 2px solid #d4e0ff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+        .error-message {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .medication-item,
+        .allergy-item {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .medication-item button,
+        .allergy-item button {
+            background: #fee;
+            color: #c33;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .add-button {
+            background: #f0f4ff;
+            color: #667eea;
+            border: 2px dashed #d4e0ff;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .add-button:hover {
+            background: #e6edff;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <div class="setup-header">
+            <div class="logo-container">
+                <div class="logo">K</div>
+                <span style="font-weight: 600;">Kantan Care</span>
+            </div>
+            <h1>Complete Your Medical Profile</h1>
+            <p>This helps us provide better care recommendations</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="step-indicator">
+                <span class="active" id="stepLabel1">Step 1: Basic Info</span>
+                <span id="stepLabel2">Step 2: Medical History</span>
+            </div>
+        </div>
+
+        <div class="setup-body">
+            <div class="error-message" id="errorMessage"></div>
+
+            <!-- Step 1: Basic Information -->
+            <div class="step active" id="step1">
+                <div class="step-title">Basic Information</div>
+                <div class="step-subtitle">Let's start with some basic details</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" id="age" placeholder="25" min="0" max="150" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select id="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                            <option value="prefer-not-to-say">Prefer not to say</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Blood Type (Optional)</label>
+                        <select id="bloodType">
+                            <option value="">Select blood type</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Weight (kg, Optional)</label>
+                        <input type="number" id="weight" placeholder="70" min="0" step="0.1">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="button-primary" onclick="nextStep()">Next Step</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Medical History -->
+            <div class="step" id="step2">
+                <div class="step-title">Medical History</div>
+                <div class="step-subtitle">Help us understand your health background</div>
+
+                <div class="info-box">
+                    💡 This information reduces repeated questions during consultations and helps doctors make better decisions.
+                </div>
+
+                <div class="form-group">
+                    <label>Known Allergies</label>
+                    <textarea id="allergies" placeholder="E.g., Penicillin, Peanuts, Latex (leave blank if none)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Current Medications</label>
+                    <textarea id="medications" placeholder="E.g., Cetirizine 10mg/day, Vitamin D Weekly (leave blank if none)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Chronic Conditions (Optional)</label>
+                    <textarea id="chronicConditions" placeholder="E.g., Hypertension, Diabetes, Asthma (leave blank if none)"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="button-secondary" onclick="prevStep()">Back</button>
+                    <button type="button" class="button-primary" id="submitBtn" onclick="submitProfile()">Complete Setup</button>
+                </div>
+
+                <div class="skip-link">
+                    <a href="#" onclick="skipProfile()">Skip for now, complete later</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBNYwM7ySCuyog04dJrWugBig41qh2Pu4U",
+            authDomain: "kantan-d6e74.firebaseapp.com",
+            projectId: "kantan-d6e74",
+            storageBucket: "kantan-d6e74.firebasestorage.app",
+            messagingSenderId: "199639000224",
+            appId: "1:199639000224:web:662872c3eeb09b24e555c5",
+            measurementId: "G-658L3RPXFZ"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        let currentStep = 1;
+        let userId = null;
+        let isEditMode = false;
+
+        // Check authentication and load existing data
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+            } else {
+                userId = user.uid;
+                
+                // Load existing profile data if available
+                try {
+                    const userDoc = await db.collection('users').doc(userId).get();
+                    if (userDoc.exists) {
+                        const userData = userDoc.data();
+                        
+                        // Check if profile already has data (edit mode)
+                        if (userData.age || userData.gender) {
+                            isEditMode = true;
+                            prefillForm(userData);
+                            updateUIForEditMode();
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error loading profile:', error);
+                }
+            }
+        });
+
+        // Prefill form with existing data
+        function prefillForm(data) {
+            // Step 1 fields
+            if (data.age) document.getElementById('age').value = data.age;
+            if (data.gender) document.getElementById('gender').value = data.gender;
+            if (data.bloodType) document.getElementById('bloodType').value = data.bloodType;
+            if (data.weight) document.getElementById('weight').value = data.weight;
+            
+            // Step 2 fields
+            if (data.allergies) document.getElementById('allergies').value = data.allergies;
+            if (data.currentMedications) document.getElementById('medications').value = data.currentMedications;
+            if (data.chronicConditions) document.getElementById('chronicConditions').value = data.chronicConditions;
+        }
+
+        // Update UI for edit mode
+        function updateUIForEditMode() {
+            // Change header text
+            document.querySelector('.setup-header h1').textContent = 'Update Your Medical Profile';
+            document.querySelector('.setup-header p').textContent = 'Keep your health information up to date';
+            
+            // Change button text
+            document.getElementById('submitBtn').textContent = 'Save Changes';
+            
+            // Change info box text
+            const infoBox = document.querySelector('.info-box');
+            if (infoBox) {
+                infoBox.innerHTML = '💡 Updating your profile helps doctors provide better care and recommendations.';
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 5000);
+        }
+
+        // Navigate to next step
+        function nextStep() {
+            // Validate Step 1
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+
+            if (!age || !gender) {
+                showError('Please fill in all required fields (Age and Gender).');
+                return;
+            }
+
+            if (age < 0 || age > 150) {
+                showError('Please enter a valid age.');
+                return;
+            }
+
+            currentStep = 2;
+            updateUI();
+        }
+
+        // Navigate to previous step
+        function prevStep() {
+            currentStep = 1;
+            updateUI();
+        }
+
+        // Update UI based on current step
+        function updateUI() {
+            // Hide all steps
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            
+            // Show current step
+            document.getElementById(`step${currentStep}`).classList.add('active');
+
+            // Update progress bar
+            const progress = (currentStep / 2) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            // Update step labels
+            document.querySelectorAll('.step-indicator span').forEach(span => span.classList.remove('active'));
+            document.getElementById(`stepLabel${currentStep}`).classList.add('active');
+        }
+
+        // Submit medical profile
+        async function submitProfile() {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            
+            if (isEditMode) {
+                submitBtn.innerHTML = '<span class="loading"></span> Saving Changes...';
+            } else {
+                submitBtn.innerHTML = '<span class="loading"></span> Saving...';
+            }
+
+            try {
+                // Collect all form data
+                const profileData = {
+                    // Basic Info
+                    age: parseInt(document.getElementById('age').value),
+                    gender: document.getElementById('gender').value,
+                    bloodType: document.getElementById('bloodType').value || '',
+                    weight: document.getElementById('weight').value ? parseFloat(document.getElementById('weight').value) : null,
+                    
+                    // Medical History
+                    allergies: document.getElementById('allergies').value.trim(),
+                    currentMedications: document.getElementById('medications').value.trim(),
+                    chronicConditions: document.getElementById('chronicConditions').value.trim(),
+                    
+                    // Metadata
+                    profileComplete: true,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                // Add profileCompletedAt only if first time completing
+                if (!isEditMode) {
+                    profileData.profileCompletedAt = firebase.firestore.FieldValue.serverTimestamp();
+                }
+
+                // Update user document in Firestore
+                await db.collection('users').doc(userId).update(profileData);
+
+                // Show success message
+                if (isEditMode) {
+                    alert('✅ Profile updated successfully!');
+                }
+
+                // Redirect to patient dashboard
+                window.location.href = 'patient-dashboard.html';
+
+            } catch (error) {
+                console.error('Error saving profile:', error);
+                showError('Failed to save profile. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = isEditMode ? 'Save Changes' : 'Complete Setup';
+            }
+        }
+
+        // Skip profile completion
+        function skipProfile() {
+            if (confirm('Are you sure you want to skip? You can complete your profile later from the dashboard.')) {
+                window.location.href = 'patient-dashboard.html';
+            }
+        }
+    </script>
+</body>
+</html>
