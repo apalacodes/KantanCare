@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f8fafc;
+            color: #1a202c;
+        }
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 {
+            font-size: 18px;
+            color: #1a202c;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .back-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .back-link:hover {
+            color: #764ba2;
+        }
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 16px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+        @media (min-width: 1024px) {
+            .main-content {
+                grid-template-columns: 350px 1fr;
+                padding: 32px;
+            }
+        }
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+        .sidebar h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+        .sidebar-subtitle {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 24px;
+        }
+        .search-box {
+            margin-bottom: 24px;
+        }
+        .search-box label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f7fafc;
+            transition: all 0.2s;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .filter-group {
+            margin-bottom: 24px;
+        }
+        .filter-group h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 12px;
+        }
+        .filter-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: #f7fafc;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+        .consultations-list {
+            margin-top: 24px;
+        }
+        .consultations-list h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 16px;
+        }
+        .consultation-item {
+            padding: 16px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .consultation-item:hover {
+            border-color: #667eea;
+            background: white;
+        }
+        .consultation-item.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        .consultation-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+        .consultation-meta {
+            font-size: 13px;
+            color: #718096;
+        }
+        .consultation-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #667eea;
+            color: white;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .detail-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .detail-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+        .detail-subtitle {
+            font-size: 14px;
+            color: #718096;
+        }
+        .button-primary {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .quick-links {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #e2e8f0;
+            flex-wrap: wrap;
+        }
+        .quick-link {
+            padding: 12px 24px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quick-link:hover {
+            border-color: #667eea;
+            color: #667eea;
+            background: white;
+        }
+        .info-box {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .info-box h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 16px;
+        }
+        .info-box p {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        .notifications-box {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .notifications-box h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+        .notifications-subtitle {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 16px;
+        }
+        .notification-item {
+            padding: 16px;
+            background: #f7fafc;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .notification-content {
+            flex: 1;
+        }
+        .notification-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+        .notification-meta {
+            font-size: 13px;
+            color: #718096;
+        }
+        .notification-badge {
+            padding: 6px 12px;
+            background: #fef3c7;
+            color: #92400e;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .notification-badge.read {
+            background: #f7fafc;
+            color: #718096;
+        }
+        .button-secondary {
+            padding: 10px 20px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+        .button-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Medical Records</h1>
+        <a class="back-link" onclick="window.location.href='patient-dashboard.html'">← Back to Dashboard</a>
+    </div>
+
+    <div class="main-content">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>Records</h3>
+            <p class="sidebar-subtitle">Filter & search</p>
+
+            <div class="search-box">
+                <label>Search records</label>
+                <input type="text" placeholder='"cough"' value='"cough"'>
+            </div>
+
+            <div class="filter-group">
+                <h4>Type</h4>
+                <div class="filter-option">
+                    <span>Consultations</span>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Date range</h4>
+                <div class="filter-option">
+                    <span>Last 6 months</span>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Doctor</h4>
+                <div class="filter-option">
+                    <span>Any</span>
+                </div>
+            </div>
+
+            <div class="consultations-list">
+                <h4>Consultations</h4>
+                
+                <div class="consultation-item active" onclick="selectConsultation(1)">
+                    <div class="consultation-title">Respiratory consultation • Dr. Nair</div>
+                    <div class="consultation-meta">Wed, 10 Jul 2025 • Video • 24 min</div>
+                    <span class="consultation-tag">Summary & Rx</span>
+                </div>
+
+                <div class="consultation-item" onclick="selectConsultation(2)">
+                    <div class="consultation-title">Annual physical • Dr. Lee</div>
+                    <div class="consultation-meta">Mon, 12 May 2025 • In-person</div>
+                    <span class="consultation-tag">Reports</span>
+                </div>
+
+                <div class="consultation-item" onclick="selectConsultation(3)">
+                    <div class="consultation-title">Lab results review • CityCare</div>
+                    <div class="consultation-meta">Tue, 18 Mar 2025 • Video</div>
+                    <span class="consultation-tag">Labs</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail Panel -->
+        <div class="detail-panel">
+            <div class="detail-header">
+                <div>
+                    <div class="detail-title">Consultation detail</div>
+                    <div class="detail-subtitle">Respiratory consultation • 10 Jul 2025</div>
+                </div>
+                <button class="button-primary">Download PDF</button>
+            </div>
+
+            <div class="quick-links">
+                <div class="quick-link">Visit summary PDF</div>
+                <div class="quick-link">Chest X-ray image</div>
+            </div>
+
+            <div class="info-box">
+                <h4>Doctor notes</h4>
+                <p>Mild upper respiratory infection. No evidence of pneumonia. Recommend rest, hydration, and watchful waiting.</p>
+            </div>
+
+            <div class="notifications-box">
+                <h4>Notifications inbox</h4>
+                <p class="notifications-subtitle">Toggle read/unread</p>
+
+                <div class="notification-item">
+                    <div class="notification-content">
+                        <div class="notification-title">Appointment confirmed • Dr. Nair</div>
+                        <div class="notification-meta">Today • 04:15 PM</div>
+                    </div>
+                    <span class="notification-badge">Mark as read</span>
+                </div>
+
+                <div class="notification-item">
+                    <div class="notification-content">
+                        <div class="notification-title">Lab results ready • Blood panel</div>
+                        <div class="notification-meta">Read • 1 hr ago</div>
+                    </div>
+                    <button class="button-secondary">Mark unread</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectConsultation(id) {
+            document.querySelectorAll('.consultation-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // In real app, load different consultation data here
+            console.log('Selected consultation:', id);
+        }
+    </script>
+</body>
+</html>
