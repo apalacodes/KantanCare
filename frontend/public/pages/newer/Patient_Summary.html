@@ -18,7 +18,7 @@
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Symptom Assessment - Banani</title>
+      <title>Symptom Summary</title>
       <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
       <style>
         * {
@@ -122,7 +122,256 @@
           background-color: var(--background);
           overflow: hidden;
         }
+        .grid {
+          display: grid;
+        }
+        .gap-1 {
+          gap: 4px;
+        }
+        .gap-2 {
+          gap: 8px;
+        }
+        .gap-3 {
+          gap: 12px;
+        }
+        .gap-4 {
+          gap: 16px;
+        }
+        .gap-6 {
+          gap: 24px;
+        }
+        .p-4 {
+          padding: 16px;
+        }
+        .p-6 {
+          padding: 24px;
+        }
+        .px-6 {
+          padding-left: 24px;
+          padding-right: 24px;
+        }
+        .py-2 {
+          padding-top: 8px;
+          padding-bottom: 8px;
+        }
+        .w-full {
+          width: 100%;
+        }
+        .h-full {
+          height: 100%;
+        }
+        .flex-1 {
+          flex: 1;
+        }
+        .border-b {
+          border-bottom: 1px solid var(--border);
+        }
+        .border-r {
+          border-right: 1px solid var(--border);
+        }
+        .border-t {
+          border-top: 1px solid var(--border);
+        }
 
+        .border-b {
+          border-bottom: 1px solid var(--border);
+        }
+        .border-r {
+          border-right: 1px solid var(--border);
+        }
+        .border-t {
+          border-top: 1px solid var(--border);
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        p {
+          margin: 0;
+        }
+        .text-xs {
+          font-size: 12px;
+        }
+        .text-sm {
+          font-size: 14px;
+        }
+        .text-base {
+          font-size: 16px;
+        }
+        .text-lg {
+          font-size: 18px;
+        }
+        .text-xl {
+          font-size: 20px;
+        }
+        .text-2xl {
+          font-size: 24px;
+        }
+        .font-medium {
+          font-weight: 500;
+        }
+        .font-semibold {
+          font-weight: 600;
+        }
+        .font-bold {
+          font-weight: 700;
+        }
+        .text-muted {
+          color: var(--muted-foreground);
+        }
+        .text-primary {
+          color: var(--primary);
+        }
+        .text-success {
+          color: var(--success-foreground);
+        }
+        .text-warning {
+          color: var(--warning-foreground);
+        }
+
+        /* Components */
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px 16px;
+          border-radius: var(--radius-md);
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+          border: 1px solid transparent;
+          white-space: nowrap;
+        }
+        .btn-primary {
+          background-color: var(--primary);
+          color: var(--primary-foreground);
+        }
+        .btn-secondary {
+          background-color: var(--secondary);
+          color: var(--secondary-foreground);
+        }
+        .btn-outline {
+          background-color: transparent;
+          border: 1px solid var(--border);
+          color: var(--foreground);
+        }
+        .btn-ghost {
+          background-color: transparent;
+          color: var(--muted-foreground);
+        }
+        .btn-ghost:hover {
+          background-color: var(--muted);
+          color: var(--foreground);
+        }
+        .btn-sm {
+          padding: 4px 8px;
+          font-size: 12px;
+          height: 28px;
+        }
+
+        .card {
+          background-color: var(--card);
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--border);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+          overflow: hidden;
+        }
+
+        .badge {
+          display: inline-flex;
+          align-items: center;
+          padding: 2px 8px;
+          border-radius: 9999px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+        .badge-blue {
+          background-color: var(--accent);
+          color: var(--accent-foreground);
+        }
+        .badge-green {
+          background-color: var(--success);
+          color: var(--success-foreground);
+        }
+        .badge-yellow {
+          background-color: var(--warning);
+          color: var(--warning-foreground);
+        }
+        .badge-gray {
+          background-color: var(--secondary);
+          color: var(--muted-foreground);
+        }
+
+        /* Sidebar */
+        .sidebar {
+          width: 260px;
+          background-color: var(--sidebar);
+          flex-shrink: 0;
+          z-index: 20;
+        }
+        .nav-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 12px;
+          border-radius: var(--radius-md);
+          color: var(--muted-foreground);
+          text-decoration: none;
+          cursor: pointer;
+          margin-bottom: 2px;
+        }
+        .nav-item.active {
+          background-color: var(--accent);
+          color: var(--accent-foreground);
+        }
+        .nav-item:hover:not(.active) {
+          background-color: var(--secondary);
+          color: var(--foreground);
+        }
+
+        /* Layout Specifics */
+        .main-content {
+          flex: 1;
+          overflow-y: auto;
+          padding: 0;
+        }
+        .content-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 32px;
+        }
+
+        .analysis-grid {
+          display: grid;
+          grid-template-columns: 2fr 1fr;
+          gap: 24px;
+        }
+
+        .icon-box {
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .step-number {
+          width: 24px;
+          height: 24px;
+          background: var(--muted);
+          color: var(--muted-foreground);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          font-weight: 600;
+        }
         .top-bar {
           height: 64px;
           border-bottom: 1px solid var(--border);
@@ -176,7 +425,14 @@
           width: 100%;
           padding-bottom: 80px;
         }
-
+        .badge {
+          display: inline-flex;
+          align-items: center;
+          padding: 2px 8px;
+          border-radius: 9999px;
+          font-size: 12px;
+          font-weight: 500;
+        }
         .header-section {
           margin-bottom: 32px;
         }
@@ -284,6 +540,9 @@
           gap: 4px;
           margin-top: 16px;
         }
+         .items-center {
+          align-items: center;
+        }
         .scale-item {
           flex: 1;
           height: 48px;
@@ -353,6 +612,24 @@
           grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
           gap: 12px;
         }
+
+        .badge-blue {
+          background-color: var(--accent);
+          color: var(--accent-foreground);
+        }
+        .badge-green {
+          background-color: var(--success);
+          color: var(--success-foreground);
+        }
+        .badge-yellow {
+          background-color: var(--warning);
+          color: var(--warning-foreground);
+        }
+        .badge-gray {
+          background-color: var(--secondary);
+          color: var(--muted-foreground);
+        }
+
         .body-part {
           border: 1px solid var(--border);
           border-radius: var(--radius-md);
@@ -396,6 +673,18 @@
           align-items: center;
           z-index: 10;
         }
+        .icon-box {
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .text-lg {
+          font-size: 18px;
+        }
         .privacy-note {
           font-size: 13px;
           color: var(--muted-foreground);
@@ -422,6 +711,9 @@
         .btn-secondary {
           background-color: var(--secondary);
           color: var(--secondary-foreground);
+        }
+        .gap-2 {
+          gap: 8px;
         }
 
         /* Responsive Grid for Duration/Severity split */
@@ -577,12 +869,17 @@
                 icon="lucide:chevron-right"
                 style="font-size: 14px"
               ></iconify-icon>
-              <span>Symptom Checker</span>
+              <span>Symptom Analysis</span>
               <iconify-icon
                 icon="lucide:chevron-right"
                 style="font-size: 14px"
               ></iconify-icon>
-              <span class="breadcrumb-active">New Assessment</span>
+              <span>New Assessment</span>
+              <iconify-icon
+                icon="lucide:chevron-right"
+                style="font-size: 14px"
+              ></iconify-icon>
+              <span class="breadcrumb-active">Results</span>
             </div>
 
             <div class="user-actions">
@@ -591,7 +888,7 @@
                   icon="lucide:map-pin"
                   style="font-size: 14px"
                 ></iconify-icon>
-                <span>Seattle, WA</span>
+                <span>KTM, Nepal</span>
               </div>
               <img
                 src="https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FSouth%20Asian%2F3"
@@ -610,16 +907,16 @@
           <div class="scroll-area">
             <div class="content-width">
               <div class="header-section">
-                <h1 class="page-title">Describe your symptoms</h1>
+                <h1 class="page-title">Symptom Summary</h1>
                 <div class="page-subtitle">
-                  We'll use this information to analyze your condition and
-                  recommend the best next steps.
+Based on your summary , description and medical records here is your analysis.
+Please not that this is not a medical diagnosis. For an accurate diagnosis, your report has been sent for review and consultation to your selected healthcare professional.
                 </div>
               </div>
 
               <!-- Progress Tracker -->
               <div class="progress-track">
-                <div class="step active">
+                <div class="step">
                   <div class="step-circle">1</div>
                   Symptoms
                 </div>
@@ -629,7 +926,7 @@
                   Analysis
                 </div>
                 <div class="step-line"></div>
-                <div class="step">
+                <div class="step active">
                   <div class="step-circle">3</div>
                   Results
                 </div>
@@ -637,314 +934,288 @@
 
               <!-- Main Form -->
               <div class="form-card">
-                <div class="card-title">
-                  <iconify-icon
-                    icon="lucide:message-square"
-                    style="font-size: 18px; color: var(--primary)"
-                  ></iconify-icon>
-                  What's bothering you today?
-                </div>
-                <div class="textarea-wrapper">
-                  <textarea
-                    class="custom-textarea"
-                    placeholder="e.g., I have a throbbing headache on the right side and sensitivity to light..."
-                    data-media-type="banani-button"
-                  ></textarea>
-                </div>
-                <div class="helper-text">
-                  Try to be as specific as possible about how you feel.
+               <div class="icon-box bg-warning/10 text-warning-foreground">
+                <iconify-icon
+                  icon="lucide:alert-triangle"
+                  style="font-size: 24px"
+                ></iconify-icon>
+              </div>
+              <div class="flex-1">
+                <h2 class="text-lg font-semibold mb-1">
+                  Possible Diagnostics!
+                </h2>
+                <p class="text-muted-foreground text-sm mb-3">
+                  Your symptoms (persistent cough, mild fever, chest discomfort)
+                  align with acute respiratory inflammation. While not
+                  immediately critical, medical attention is recommended within
+                  24 hours.
+                </p>
+                <div class="flex gap-2">
+                  <span class="badge badge-yellow">Moderate Severity</span>
+                  <span class="badge badge-gray"> contagious likely</span>
                 </div>
               </div>
-
-              <div class="grid-2">
-                <div class="form-card" style="margin-bottom: 0">
-                  <div class="card-title">
-                    <iconify-icon
-                      icon="lucide:clock"
-                      style="font-size: 18px; color: var(--primary)"
-                    ></iconify-icon>
-                    Duration
-                  </div>
-                  <div class="chip-group">
-                    <div class="chip" data-media-type="banani-button">
-                      Today
-                    </div>
-                    <div class="chip active" data-media-type="banani-button">
-                      1-3 Days
-                    </div>
-                    <div class="chip" data-media-type="banani-button">
-                      1 Week
-                    </div>
-                    <div class="chip" data-media-type="banani-button">
-                      1 Month+
-                    </div>
-                  </div>
                 </div>
 
-                <div class="form-card" style="margin-bottom: 0">
-                  <div class="card-title">
-                    <iconify-icon
-                      icon="lucide:alert-circle"
-                      style="font-size: 18px; color: var(--primary)"
-                    ></iconify-icon>
-                    Severity
-                  </div>
-                  <div class="scale-container">
-                    <div class="scale-item" data-media-type="banani-button">
-                      1
-                    </div>
-                    <div class="scale-item" data-media-type="banani-button">
-                      2
-                    </div>
-                    <div class="scale-item" data-media-type="banani-button">
-                      3
-                    </div>
-                    <div class="scale-item" data-media-type="banani-button">
-                      4
-                    </div>
-                    <div
-                      class="scale-item selected"
-                      data-media-type="banani-button"
-                    >
-                      5
-                    </div>
-                    <div class="scale-item" data-media-type="banani-button">
-                      6
-                    </div>
-                    <div class="scale-item" data-media-type="banani-button">
-                      7
-                    </div>
-                    <div class="scale-item" data-media-type="banani-button">
-                      8
-                    </div>
-                    <div class="scale-item" data-media-type="banani-button">
-                      9
-                    </div>
-                    <div class="scale-item" data-media-type="banani-button">
-                      10
-                    </div>
-                  </div>
-                  <div class="scale-labels">
-                    <span>Mild</span>
-                    <span>Moderate</span>
-                    <span>Severe</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-card">
-                <div class="card-title">
-                  <iconify-icon
-                    icon="lucide:user"
-                    style="font-size: 18px; color: var(--primary)"
-                  ></iconify-icon>
-                  Where is the pain located?
-                </div>
-                <div class="body-grid">
-                  <div class="body-part" data-media-type="banani-button">
-                    <iconify-icon
-                      icon="lucide:smile"
-                      class="part-icon"
-                      style="font-size: 24px"
-                    ></iconify-icon>
-                    <span class="part-label">Head / Face</span>
-                  </div>
-                  <div class="body-part" data-media-type="banani-button">
-                    <iconify-icon
-                      icon="lucide:mic"
-                      class="part-icon"
-                      style="font-size: 24px"
-                    ></iconify-icon>
-                    <span class="part-label">Throat / Neck</span>
-                  </div>
-                  <div
-                    class="body-part selected"
-                    data-media-type="banani-button"
-                  >
-                    <iconify-icon
-                      icon="lucide:heart-pulse"
-                      class="part-icon"
-                      style="font-size: 24px"
-                    ></iconify-icon>
-                    <span class="part-label">Chest</span>
-                  </div>
-                  <div class="body-part" data-media-type="banani-button">
-                    <iconify-icon
-                      icon="lucide:utensils"
-                      class="part-icon"
-                      style="font-size: 24px"
-                    ></iconify-icon>
-                    <span class="part-label">Abdomen</span>
-                  </div>
-                  <div class="body-part" data-media-type="banani-button">
-                    <iconify-icon
-                      icon="lucide:accessibility"
-                      class="part-icon"
-                      style="font-size: 24px"
-                    ></iconify-icon>
-                    <span class="part-label">Back</span>
-                  </div>
-                  <div class="body-part" data-media-type="banani-button">
-                    <iconify-icon
-                      icon="lucide:move"
-                      class="part-icon"
-                      style="font-size: 24px"
-                    ></iconify-icon>
-                    <span class="part-label">Limbs</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-card">
-                <div class="card-title">
-                  <iconify-icon
-                    icon="lucide:layers"
-                    style="font-size: 18px; color: var(--primary)"
-                  ></iconify-icon>
-                  Additional Context
-                </div>
+          
+          <div class="analysis-grid">
+            <!-- Left Column: Recommendations -->
+            <div class="flex flex-col gap-6">
+              <!-- Tests to be done -->
+              <div class="card">
                 <div
-                  style="
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    gap: 16px;
-                  "
+                  class="p-4 border-b bg-secondary/30 flex justify-between items-center"
                 >
+                  <h3 class="font-semibold flex items-center gap-2">
+                    <iconify-icon
+                      icon="lucide:microscope"
+                      style="font-size: 18px; color: var(--primary)"
+                    ></iconify-icon>
+                    Recommended Diagnostic Tests
+                  </h3>
+                  <span class="text-xs text-muted-foreground"
+                    >Review with doctor</span
+                  >
+                </div>
+                <div class="p-0">
                   <div
-                    style="
-                      display: flex;
-                      align-items: center;
-                      gap: 12px;
-                      padding: 12px;
-                      border: 1px solid var(--border);
-                      border-radius: var(--radius-md);
-                      background: var(--input);
-                    "
+                    class="flex items-center gap-4 p-4 border-b hover:bg-muted/30 transition-colors"
                     data-media-type="banani-button"
                   >
-                    <div
-                      style="
-                        width: 18px;
-                        height: 18px;
-                        border: 2px solid var(--muted-foreground);
-                        border-radius: 4px;
-                      "
-                    ></div>
-                    <span style="font-size: 14px; font-weight: 500"
-                      >Recently traveled</span
-                    >
+                    <div class="step-number">1</div>
+                    <div class="flex-1">
+                      <h4 class="text-sm font-medium">
+                        Complete Blood Count (CBC)
+                      </h4>
+                      <p class="text-xs text-muted-foreground">
+                        To check for infection markers (white blood cell count).
+                      </p>
+                    </div>
+                    
                   </div>
                   <div
-                    style="
-                      display: flex;
-                      align-items: center;
-                      gap: 12px;
-                      padding: 12px;
-                      border: 1px solid var(--primary);
-                      border-radius: var(--radius-md);
-                      background: var(--secondary);
-                    "
+                    class="flex items-center gap-4 p-4 border-b hover:bg-muted/30 transition-colors"
                     data-media-type="banani-button"
                   >
+                    <div class="step-number">2</div>
+                    <div class="flex-1">
+                      <h4 class="text-sm font-medium">Chest X-Ray (PA View)</h4>
+                      <p class="text-xs text-muted-foreground">
+                        To rule out pneumonia or other lung consolidations.
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="flex items-center gap-4 p-4 hover:bg-muted/30 transition-colors"
+                    data-media-type="banani-button"
+                  >
+                    <div class="step-number">3</div>
+                    <div class="flex-1">
+                      <h4 class="text-sm font-medium">Spirometry (Optional)</h4>
+                      <p class="text-xs text-muted-foreground">
+                        If wheezing persists, checks lung function capacity.
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- Relief Remedies -->
+              <div class="card">
+                <div class="p-4 border-b bg-secondary/30">
+                  <h3 class="font-semibold flex items-center gap-2">
+                    <iconify-icon
+                      icon="lucide:coffee"
+                      style="font-size: 18px; color: var(--success-foreground)"
+                    ></iconify-icon>
+                    Immediate Relief Remedies
+                  </h3>
+                </div>
+                <div class="p-6 grid grid-cols-2 gap-4">
+                  <div class="flex gap-3 items-start">
+                    <iconify-icon
+                      icon="lucide:droplets"
+                      style="font-size: 20px; color: var(--primary)"
+                    ></iconify-icon>
+                    <div>
+                      <h4 class="text-sm font-medium">Hydration</h4>
+                      <p class="text-xs text-muted-foreground">
+                        Drink plenty of warm fluids to thin mucus.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-start">
+                    <iconify-icon
+                      icon="lucide:moon"
+                      style="font-size: 20px; color: #8b5cf6"
+                    ></iconify-icon>
+                    <div>
+                      <h4 class="text-sm font-medium">Rest</h4>
+                      <p class="text-xs text-muted-foreground">
+                        Avoid physical exertion to aid recovery.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-start">
+                    <iconify-icon
+                      icon="lucide:thermometer"
+                      style="font-size: 20px; color: #ef4444"
+                    ></iconify-icon>
+                    <div>
+                      <h4 class="text-sm font-medium">Humidifier</h4>
+                      <p class="text-xs text-muted-foreground">
+                        Use moist air to soothe irritated airways.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex gap-3 items-start">
+                    <iconify-icon
+                      icon="lucide:pill"
+                      style="font-size: 20px; color: var(--muted-foreground)"
+                    ></iconify-icon>
+                    <div>
+                      <h4 class="text-sm font-medium">OTC Meds</h4>
+                      <p class="text-xs text-muted-foreground">
+                        Antipyretics for fever (Consult pharmacist).
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Find Care -->
+            <div class="flex flex-col gap-6">
+              <!-- Recommended Specialists -->
+              <div class="card flex flex-col">
+                <div class="p-4 border-b">
+                  <h3 class="font-semibold text-sm">Recommended Specialists</h3>
+                </div>
+                <div class="p-4 flex flex-col gap-4">
+                  <!-- Doctor Card 1 -->
+                  <div
+                    class="border rounded-lg p-3 hover:border-primary cursor-pointer bg-secondary/10"
+                    data-media-type="banani-button"
+                  >
+                    <div class="flex items-start gap-3">
+                      <img
+                        src="https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F35-50%2FEuropean%2F5"
+                        alt="Doctor"
+                        class="w-10 h-10 rounded-full object-cover"
+                        style="width: 40px; height: 40px"
+                      />
+                      <div>
+                        <h4 class="text-sm font-semibold">Dr. Robert Chen</h4>
+                        <p class="text-xs text-muted-foreground">
+                          Pulmonologist • 12y exp
+                        </p>
+                        <div class="flex gap-2 mt-2">
+                          <span class="badge badge-green text-[10px]"
+                            >Available Today</span
+                          >
+                        </div>
+                      </div>
+                    </div>
                     <div
-                      style="
-                        width: 18px;
-                        height: 18px;
-                        background: var(--primary);
-                        border: 2px solid var(--primary);
-                        border-radius: 4px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                      "
+                      class="mt-3 pt-3 border-t flex justify-between items-center"
                     >
+                      <span class="text-xs font-medium text-primary"
+                        >Next slot: 2:00 PM</span
+                      >
                       <iconify-icon
-                        icon="lucide:check"
-                        style="
-                          font-size: 12px;
-                          color: var(--primary-foreground);
-                        "
+                        icon="lucide:arrow-right"
+                        style="font-size: 14px; color: var(--primary)"
                       ></iconify-icon>
                     </div>
-                    <span style="font-size: 14px; font-weight: 500"
-                      >Took medication recently</span
-                    >
                   </div>
+
+                  <!-- Doctor Card 2 -->
                   <div
-                    style="
-                      display: flex;
-                      align-items: center;
-                      gap: 12px;
-                      padding: 12px;
-                      border: 1px solid var(--border);
-                      border-radius: var(--radius-md);
-                      background: var(--input);
-                    "
+                    class="border rounded-lg p-3 hover:border-primary cursor-pointer"
                     data-media-type="banani-button"
                   >
+                    <div class="flex items-start gap-3">
+                      <img
+                        src="https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F35-50%2FAfrican%2F2"
+                        alt="Doctor"
+                        class="w-10 h-10 rounded-full object-cover"
+                        style="width: 40px; height: 40px"
+                      />
+                      <div>
+                        <h4 class="text-sm font-semibold">Dr. Sarah Johnson</h4>
+                        <p class="text-xs text-muted-foreground">
+                          General Physician • 8y exp
+                        </p>
+                        <div class="flex gap-2 mt-2">
+                          <span class="badge badge-gray text-[10px]"
+                            >Video Consult</span
+                          >
+                        </div>
+                      </div>
+                    </div>
                     <div
-                      style="
-                        width: 18px;
-                        height: 18px;
-                        border: 2px solid var(--muted-foreground);
-                        border-radius: 4px;
-                      "
-                    ></div>
-                    <span style="font-size: 14px; font-weight: 500"
-                      >High fever (&gt;38°C)</span
+                      class="mt-3 pt-3 border-t flex justify-between items-center"
                     >
-                  </div>
-                  <div
-                    style="
-                      display: flex;
-                      align-items: center;
-                      gap: 12px;
-                      padding: 12px;
-                      border: 1px solid var(--border);
-                      border-radius: var(--radius-md);
-                      background: var(--input);
-                    "
-                    data-media-type="banani-button"
-                  >
-                    <div
-                      style="
-                        width: 18px;
-                        height: 18px;
-                        border: 2px solid var(--muted-foreground);
-                        border-radius: 4px;
-                      "
-                    ></div>
-                    <span style="font-size: 14px; font-weight: 500"
-                      >Pregnant</span
-                    >
+                      <span class="text-xs font-medium text-muted-foreground"
+                        >Next slot: Tomorrow</span
+                      >
+                      <iconify-icon
+                        icon="lucide:arrow-right"
+                        style="font-size: 14px; color: var(--muted-foreground)"
+                      ></iconify-icon>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <!-- Floating Action Bar -->
-          <div class="action-bar">
-            <div class="privacy-note">
-              <iconify-icon
-                icon="lucide:shield-check"
-                style="font-size: 16px; color: var(--success)"
-              ></iconify-icon>
-              Your data is encrypted and HIPAA compliant.
-            </div>
-            <div style="display: flex; gap: 12px">
-              <button class="btn btn-secondary" data-media-type="banani-button">
-                Save Draft
-              </button>
-              <button class="btn btn-primary" data-media-type="banani-button">
-                Analyze Symptoms
-                <iconify-icon
-                  icon="lucide:arrow-right"
-                  style="font-size: 16px"
-                ></iconify-icon>
-              </button>
-            </div>
-          </div>
+              <!-- Nearby Clinics -->
+              <div class="card flex flex-col">
+                <div class="p-4 border-b">
+                  <h3 class="font-semibold text-sm">Suggested Clinics</h3>
+                </div>
+                <div class="relative h-32 bg-secondary">
+                  </div>
+                </div>
+                <div class="p-0">
+                  <div
+                    class="p-3 border-b hover:bg-muted cursor-pointer"
+                    data-media-type="banani-button"
+                  >
+                    <div class="flex justify-between">
+                      <span class="text-sm font-medium"
+                        >City Diagnostic Lab</span
+                      >
+                      <span class="text-xs text-muted-foreground">0.5 mi</span>
+                    </div>
+                    <div class="flex gap-2 mt-1">
+                      <span
+                        class="text-[10px] bg-secondary px-1.5 py-0.5 rounded text-muted-foreground"
+                        >X-Ray</span
+                      >
+                      <span
+                        class="text-[10px] bg-secondary px-1.5 py-0.5 rounded text-muted-foreground"
+                        >Blood Work</span
+                      >
+                    </div>
+                  </div>
+                  <div
+                    class="p-3 hover:bg-muted cursor-pointer"
+                    data-media-type="banani-button"
+                  >
+                    <div class="flex justify-between">
+                      <span class="text-sm font-medium"
+                        >Green Valley Urgent Care</span
+                      >
+                      <span class="text-xs text-muted-foreground">1.2 mi</span>
+                    </div>
+                    <div class="flex gap-2 mt-1">
+                      <span
+                        class="text-[10px] bg-secondary px-1.5 py-0.5 rounded text-muted-foreground"
+                        >Walk-in</span
+                      >
+                    </div>
+                  </div>
         </main>
       </div>
     </body>
