@@ -1,0 +1,940 @@
+<div
+  class="export-wrapper"
+  style="
+    width: 1440px;
+    min-height: 812px;
+    position: relative;
+    font-family: var(--font-family-body);
+    background-color: var(--background);
+  "
+>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900&family=Geist:wght@100;200;300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:wght@200;300;400;500;600;700;800;900&family=PT+Serif:wght@400;700&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&family=Shantell+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <html>
+    <head>
+      <style>
+        * {
+          box-sizing: border-box;
+        }
+        .landing-shell {
+          min-height: 644px;
+          display: flex;
+          flex-direction: column;
+          background: var(--background);
+          color: var(--foreground);
+          font-size: 15px;
+        }
+        .landing-top-nav {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 18px 72px 12px 72px;
+          background: var(--card);
+        }
+        .landing-nav-left {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .landing-logo-mark {
+          width: 32px;
+          height: 32px;
+          border-radius: var(--radius-md);
+          background: var(--primary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--primary-foreground);
+          font-size: 18px;
+          font-weight: 600;
+        }
+        .landing-app-name {
+          font-size: 18px;
+          font-weight: 600;
+        }
+        .landing-app-tagline {
+          font-size: 12px;
+          color: var(--muted-foreground);
+        }
+        .landing-nav-right {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+        .nav-link {
+          font-size: 13px;
+          color: var(--muted-foreground);
+          padding: 6px 8px;
+          border-radius: var(--radius-md);
+        }
+        .nav-cta {
+          padding: 8px 16px;
+          border-radius: var(--radius-lg);
+          background: var(--primary);
+          color: var(--primary-foreground);
+          font-size: 13px;
+          font-weight: 500;
+          cursor: default;
+        }
+        .landing-main {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        .section-hero {
+          padding: 56px 120px 64px 120px;
+          display: flex;
+          gap: 56px;
+          align-items: flex-start;
+          background: var(--background);
+        }
+        .hero-left {
+          flex: 3;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        .hero-eyebrow {
+          font-size: 12px;
+          font-weight: 500;
+          color: var(--accent-foreground);
+          background: var(--accent);
+          display: inline-flex;
+          align-items: center;
+          padding: 4px 10px;
+          border-radius: var(--radius-xl);
+        }
+        .hero-title {
+          font-size: 32px;
+          font-weight: 600;
+          line-height: 1.25;
+        }
+        .hero-highlight {
+          color: var(--primary);
+        }
+        .hero-subtitle {
+          font-size: 15px;
+          color: var(--muted-foreground);
+          max-width: 520px;
+          line-height: 1.5;
+        }
+        .hero-actions {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-top: 4px;
+        }
+        .hero-primary-btn {
+          padding: 10px 18px;
+          border-radius: var(--radius-lg);
+          background: var(--primary);
+          color: var(--primary-foreground);
+          font-size: 14px;
+          font-weight: 500;
+          cursor: default;
+        }
+        .hero-secondary-btn {
+          padding: 9px 16px;
+          border-radius: var(--radius-lg);
+          background: var(--secondary);
+          color: var(--secondary-foreground);
+          font-size: 14px;
+          font-weight: 500;
+          cursor: default;
+        }
+        .hero-meta {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          margin-top: 8px;
+          font-size: 12px;
+          color: var(--muted-foreground);
+        }
+        .hero-meta-row {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+        .hero-pill {
+          padding: 3px 8px;
+          border-radius: var(--radius-xl);
+          background: var(--secondary);
+          font-size: 11px;
+        }
+        .hero-right {
+          flex: 2;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .hero-card {
+          background: var(--card);
+          border-radius: var(--radius-lg);
+          padding: 14px 14px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .hero-card-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .hero-card-title {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        .hero-card-chip {
+          padding: 2px 8px;
+          border-radius: var(--radius-xl);
+          background: var(--success);
+          color: var(--success-foreground);
+          font-size: 11px;
+        }
+        .hero-snippet {
+          font-size: 13px;
+          color: var(--muted-foreground);
+        }
+        .hero-snippet-quote {
+          font-size: 13px;
+          line-height: 1.5;
+        }
+        .hero-snippet-label {
+          font-size: 11px;
+          color: var(--muted-foreground);
+          margin-top: 4px;
+        }
+        .hero-stat-row {
+          display: flex;
+          gap: 12px;
+          margin-top: 4px;
+        }
+        .hero-stat {
+          flex: 1;
+          border-radius: var(--radius-md);
+          background: var(--secondary);
+          padding: 8px 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+        .hero-stat-value {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        .hero-stat-label {
+          font-size: 11px;
+          color: var(--muted-foreground);
+        }
+        .section {
+          padding: 56px 120px;
+          display: flex;
+          flex-direction: column;
+          gap: 32px;
+        }
+        .section.alt {
+          background: var(--secondary);
+        }
+        .section-header {
+          max-width: 560px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .section-title {
+          font-size: 22px;
+          font-weight: 600;
+        }
+        .section-subtitle {
+          font-size: 14px;
+          color: var(--muted-foreground);
+          line-height: 1.5;
+        }
+        .features-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+        }
+        .feature-card {
+          background: var(--card);
+          border-radius: var(--radius-lg);
+          padding: 14px 14px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .feature-title {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        .feature-.export-wrapper {
+          font-size: 13px;
+          color: var(--muted-foreground);
+          line-height: 1.5;
+        }
+        .feature-list {
+          margin-top: 4px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          font-size: 12px;
+          color: var(--muted-foreground);
+        }
+        .feature-list-item {
+          display: flex;
+          gap: 6px;
+        }
+        .feature-bullet {
+          width: 4px;
+          height: 4px;
+          border-radius: 999px;
+          background: var(--muted-foreground);
+          margin-top: 6px;
+        }
+        .steps-layout {
+          display: grid;
+          grid-template-columns: 2.2fr 2fr;
+          gap: 32px;
+          align-items: flex-start;
+        }
+        .steps-list {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .step-row {
+          display: flex;
+          gap: 10px;
+        }
+        .step-index {
+          width: 22px;
+          height: 22px;
+          border-radius: var(--radius-xl);
+          background: var(--primary);
+          color: var(--primary-foreground);
+          font-size: 12px;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 2px;
+        }
+        .step-content {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+        .step-title {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        .step-.export-wrapper {
+          font-size: 13px;
+          color: var(--muted-foreground);
+          line-height: 1.5;
+        }
+        .step-tag-row {
+          display: flex;
+          gap: 6px;
+          flex-wrap: wrap;
+          margin-top: 2px;
+        }
+        .step-tag {
+          padding: 2px 8px;
+          border-radius: var(--radius-xl);
+          background: var(--secondary);
+          font-size: 11px;
+        }
+        .steps-side-card {
+          background: var(--card);
+          border-radius: var(--radius-lg);
+          padding: 14px 14px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          font-size: 13px;
+        }
+        .steps-side-title {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        .steps-side-highlight {
+          border-radius: var(--radius-md);
+          background: var(--muted);
+          padding: 8px 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          font-size: 12px;
+        }
+        .steps-side-row {
+          display: flex;
+          justify-content: space-between;
+        }
+        .steps-side-label {
+          color: var(--muted-foreground);
+        }
+        .steps-side-value {
+          font-weight: 500;
+        }
+        .audience-layout {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+        }
+        .audience-card {
+          background: var(--card);
+          border-radius: var(--radius-lg);
+          padding: 14px 14px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+        .audience-tag {
+          font-size: 11px;
+          color: var(--muted-foreground);
+        }
+        .audience-title {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        .audience-.export-wrapper {
+          font-size: 13px;
+          color: var(--muted-foreground);
+          line-height: 1.5;
+        }
+        .audience-pill-row {
+          display: flex;
+          gap: 6px;
+          flex-wrap: wrap;
+          margin-top: 4px;
+        }
+        .audience-pill {
+          padding: 2px 8px;
+          border-radius: var(--radius-xl);
+          background: var(--secondary);
+          font-size: 11px;
+        }
+        .cta-center {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+          text-align: center;
+        }
+        .cta-title {
+          font-size: 20px;
+          font-weight: 600;
+        }
+        .cta-subtitle {
+          font-size: 14px;
+          color: var(--muted-foreground);
+          max-width: 520px;
+          line-height: 1.5;
+        }
+        .cta-actions {
+          display: flex;
+          gap: 12px;
+          margin-top: 4px;
+        }
+        .footer-strip {
+          padding: 16px 120px 24px 120px;
+          font-size: 12px;
+          color: var(--muted-foreground);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: var(--card);
+        }
+        .footer-links {
+          display: flex;
+          gap: 12px;
+        }
+        .avatar-inline {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 4px;
+        }
+        .avatar-inline-img {
+          width: 28px;
+          height: 28px;
+          border-radius: 999px;
+          overflow: hidden;
+        }
+        .avatar-inline-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .avatar-inline-text {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+        .avatar-inline-name {
+          font-size: 12px;
+          font-weight: 500;
+        }
+        .avatar-inline-role {
+          font-size: 11px;
+          color: var(--muted-foreground);
+        }
+        .small-badge {
+          padding: 2px 6px;
+          border-radius: var(--radius-xl);
+          background: var(--success);
+          color: var(--success-foreground);
+          font-size: 10px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="landing-shell">
+        <div class="landing-top-nav">
+          <div class="landing-nav-left">
+            <div class="landing-logo-mark">H</div>
+            <div>
+              <div class="landing-app-name">Kantan Care</div>
+              <div class="landing-app-tagline">
+                AI-assisted Pre-visit Triage & Routing
+              </div>
+            </div>
+          </div>
+          <div class="landing-nav-right">
+            <div class="nav-link" data-media-type="banani-button">
+              How it works
+            </div>
+            <div class="nav-link" data-media-type="banani-button">
+              For hospitals
+            </div>
+            <div class="nav-link" data-media-type="banani-button">Pricing</div>
+            <div class="nav-cta" data-media-type="banani-button">
+              Book a demo
+            </div>
+          </div>
+        </div>
+        <div class="landing-main">
+          <section class="section-hero">
+            <div class="hero-left">
+              <div class="hero-eyebrow">For doctors &amp; hospitals</div>
+              <div class="hero-title">
+                Reduce OPD chaos with
+                <span class="hero-highlight">guided, pre-visit plans</span>.
+              </div>
+              <div class="hero-subtitle">
+                Patients arrive with a clear department, likely investigations,
+                and a prioritized doctor suggestion — based on their symptoms,
+                existing reports, and your hospital's capacity.
+              </div>
+              <div class="hero-actions">
+                <div class="hero-primary-btn" data-media-type="banani-button">
+                  Request doctor access
+                </div>
+                <div class="hero-secondary-btn" data-media-type="banani-button">
+                  See a sample triage plan
+                </div>
+              </div>
+              <div class="hero-meta">
+                <div class="hero-meta-row">
+                  <span>Built for busy OPDs:</span>
+                  <div class="hero-pill">Centralized data</div>
+                  <div class="hero-pill">AI + clinician review</div>
+                  <div class="hero-pill">Triage before arrival</div>
+                </div>
+                <div class="hero-meta-row">
+                  <span
+                    >Outcome: fewer clueless walk-ins, more prepared
+                    visits.</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="hero-right">
+              <div class="hero-card">
+                <div class="hero-card-header">
+                  <div class="hero-card-title">Example: Sita's guided plan</div>
+                  <div class="hero-card-chip">Pre-visit only</div>
+                </div>
+                <div class="hero-snippet-quote">
+                  “Based on your symptoms, the recommended department is
+                  <b>Gastro OPD</b>. <b>Dr. Sharma</b> is available today from
+                  <b>11:00–13:00</b>. Queue length: <b>Moderate</b> (~25 min).
+                  Would you like to pre-register?”
+                </div>
+                <div class="hero-snippet-label">
+                  Patients see this <b>before</b> they step into your hospital.
+                </div>
+              </div>
+              <div class="hero-card">
+                <div class="hero-card-header">
+                  <div class="hero-card-title">For your hospital</div>
+                </div>
+                <div class="hero-stat-row">
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">-30%</div>
+                    <div class="hero-stat-label">
+                      unnecessary cross-department shuffling
+                    </div>
+                  </div>
+                  <div class="hero-stat">
+                    <div class="hero-stat-value">+20 min</div>
+                    <div class="hero-stat-label">
+                      average time saved per complex OPD case
+                    </div>
+                  </div>
+                </div>
+                <div class="avatar-inline">
+                  <div class="avatar-inline-img">
+                    <img src="https://app.banani.co/avatar5.jpg" alt="doctor" />
+                  </div>
+                  <div class="avatar-inline-text">
+                    <div class="avatar-inline-name">Dr. Sharma</div>
+                    <div class="avatar-inline-role">
+                      Gastroenterologist • Uses HealthConnect for pre-visit
+                      review
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="section alt">
+            <div class="section-header">
+              <div class="section-title">
+                Make OPD visits focused, not clueless.
+              </div>
+              <div class="section-subtitle">
+                HealthConnect sits between the patient and your hospital,
+                converting vague complaints into structured, centralized
+                information — so you spend more time on decisions and less on
+                detective work.
+              </div>
+            </div>
+            <div class="features-grid">
+              <div class="feature-card">
+                <div class="feature-title">Centralized, pre-visit data</div>
+                <div class="feature-body">
+                  Patients upload previous reports, prescriptions, and symptom
+                  descriptions into one shared view before they arrive.
+                </div>
+                <div class="feature-list">
+                  <div class="feature-list-item">
+                    <div class="feature-bullet"></div>
+                    <div>
+                      Past labs, imaging, and discharge summaries at a glance.
+                    </div>
+                  </div>
+                  <div class="feature-list-item">
+                    <div class="feature-bullet"></div>
+                    <div>
+                      Reduces repeated tests and unnecessary investigations.
+                    </div>
+                  </div>
+                  <div class="feature-list-item">
+                    <div class="feature-bullet"></div>
+                    <div>
+                      Helps you start at the right depth from minute one.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-title">AI triage + doctor oversight</div>
+                <div class="feature-body">
+                  Our AI narrows down likely departments, tests, and urgency;
+                  your clinicians always have the final call.
+                </div>
+                <div class="feature-list">
+                  <div class="feature-list-item">
+                    <div class="feature-bullet"></div>
+                    <div>Symptom clustering and risk flags.</div>
+                  </div>
+                  <div class="feature-list-item">
+                    <div class="feature-bullet"></div>
+                    <div>
+                      Recommended departments (e.g., Neuro, Cardio, Gastro OPD).
+                    </div>
+                  </div>
+                  <div class="feature-list-item">
+                    <div class="feature-bullet"></div>
+                    <div>Configurable by your hospital protocols.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-title">Smart doctor &amp; OPD routing</div>
+                <div class="feature-body">
+                  Patients see the most suitable and currently available doctor
+                  or unit, reducing random walk-ins and crowding.
+                </div>
+                <div class="feature-list">
+                  <div class="feature-list-item">
+                    <div class="feature-bullet"></div>
+                    <div>
+                      Doctor suggestions based on specialty, experience, and
+                      slots.
+                    </div>
+                  </div>
+                  <div class="feature-list-item">
+                    <div class="feature-bullet"></div>
+                    <div>Queue length estimates shared upfront.</div>
+                  </div>
+                  <div class="feature-list-item">
+                    <div class="feature-bullet"></div>
+                    <div>Protects your OPD from avoidable overload.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="section">
+            <div class="section-header">
+              <div class="section-title">
+                How the doctor-side workflow fits in.
+              </div>
+              <div class="section-subtitle">
+                You dont need to change your EMR. HealthConnect simply prepares
+                patients and surfaces a clean summary for you before the
+                consultation.
+              </div>
+            </div>
+            <div class="steps-layout">
+              <div class="steps-list">
+                <div class="step-row">
+                  <div class="step-index">1</div>
+                  <div class="step-content">
+                    <div class="step-title">
+                      Patient completes guided symptom and report upload
+                    </div>
+                    <div class="step-body">
+                      From home, the patient enters symptoms, duration,
+                      severity, and uploads existing labs/X-rays. AI structures
+                      this into a clinical summary, not a long story.
+                    </div>
+                    <div class="step-tag-row">
+                      <div class="step-tag">Structured HPI</div>
+                      <div class="step-tag">Reports attached</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-row">
+                  <div class="step-index">2</div>
+                  <div class="step-content">
+                    <div class="step-title">
+                      AI suggests department, priority, and likely tests
+                    </div>
+                    <div class="step-body">
+                      Based on risk patterns, the system recommends a department
+                      (e.g., Gastro OPD), urgency level, and a short list of
+                      probable investigations.
+                    </div>
+                    <div class="step-tag-row">
+                      <div class="step-tag">Non-emergency vs. emergency</div>
+                      <div class="step-tag">Probable investigations</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-row">
+                  <div class="step-index">3</div>
+                  <div class="step-content">
+                    <div class="step-title">
+                      Doctor reviews pre-visit summary
+                    </div>
+                    <div class="step-body">
+                      On your dashboard, you see a concise view: suspected
+                      domain, key red flags, attached reports, and the
+                      recommended flow. You can adjust or override in one click.
+                    </div>
+                    <div class="step-tag-row">
+                      <div class="step-tag">1-page view</div>
+                      <div class="step-tag">Editable by clinician</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-row">
+                  <div class="step-index">4</div>
+                  <div class="step-content">
+                    <div class="step-title">
+                      Patient arrives prepared, visit is focused
+                    </div>
+                    <div class="step-body">
+                      Patients come to the right counter with realistic
+                      expectations about tests, time, and doctor availability —
+                      saving you triage time and front-desk friction.
+                    </div>
+                    <div class="step-tag-row">
+                      <div class="step-tag">Shorter triage</div>
+                      <div class="step-tag">Less chaos</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="steps-side-card">
+                <div class="steps-side-title">
+                  Designed for high-volume OPDs
+                </div>
+                <div class="steps-side-highlight">
+                  <div class="steps-side-row">
+                    <div class="steps-side-label">Typical deployment size</div>
+                    <div class="steps-side-value">200–1,500 OPD visits/day</div>
+                  </div>
+                  <div class="steps-side-row">
+                    <div class="steps-side-label">Primary use</div>
+                    <div class="steps-side-value">
+                      Pre-visit triage &amp; routing
+                    </div>
+                  </div>
+                  <div class="steps-side-row">
+                    <div class="steps-side-label">Integration</div>
+                    <div class="steps-side-value">
+                      Works alongside existing EMR
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    font-size: 12px;
+                    color: var(--muted-foreground);
+                    margin-top: 8px;
+                  "
+                >
+                  Our goal is simple: fewer clueless, walk-in patients; more
+                  prepared, guided consultations that respect your time and
+                  reduce unnecessary cost for them.
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="section alt">
+            <div class="section-header">
+              <div class="section-title">Who benefits the most.</div>
+              <div class="section-subtitle">
+                HealthConnect is built with both clinicians and hospital
+                operations in mind.
+              </div>
+            </div>
+            <div class="audience-layout">
+              <div class="audience-card">
+                <div class="audience-tag">For individual doctors</div>
+                <div class="audience-title">
+                  Specialists in overloaded departments
+                </div>
+                <div class="audience-body">
+                  Gastro, Neuro, Cardio, Internal Medicine clinics where each
+                  new case can be complex and time-consuming.
+                </div>
+                <div class="audience-pill-row">
+                  <div class="audience-pill">Better prepared cases</div>
+                  <div class="audience-pill">Less repeated history</div>
+                  <div class="audience-pill">Cleaner documentation</div>
+                </div>
+              </div>
+              <div class="audience-card">
+                <div class="audience-tag">For departments</div>
+                <div class="audience-title">
+                  OPD coordinators and triage teams
+                </div>
+                <div class="audience-body">
+                  Turn unstructured crowds into guided flows: right counter,
+                  right doctor, right expectation on waiting time and costs.
+                </div>
+                <div class="audience-pill-row">
+                  <div class="audience-pill">Load balancing</div>
+                  <div class="audience-pill">Queue visibility</div>
+                  <div class="audience-pill">Fewer escalations</div>
+                </div>
+              </div>
+              <div class="audience-card">
+                <div class="audience-tag">For hospitals</div>
+                <div class="audience-title">
+                  Administrators &amp; medical directors
+                </div>
+                <div class="audience-body">
+                  Offer a modern, digital intake that saves staff time, reduces
+                  patient frustration, and keeps your clinical teams at the
+                  center.
+                </div>
+                <div class="audience-pill-row">
+                  <div class="audience-pill">Differentiated experience</div>
+                  <div class="audience-pill">Lower front-desk burden</div>
+                  <div class="audience-pill">Data for planning</div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="section">
+            <div class="cta-center">
+              <div class="small-badge">Doctor &amp; hospital early access</div>
+              <div class="cta-title">
+                Bring clarity to your OPD before patients walk through the door.
+              </div>
+              <div class="cta-subtitle">
+                See how centralized data and AI-assisted triage can narrow down
+                departments, tests, and the right doctor — saving time, hassle,
+                and cost for everyone involved.
+              </div>
+              <div class="cta-actions">
+                <div class="hero-primary-btn" data-media-type="banani-button">
+                  Schedule a 20-min demo
+                </div>
+                <div class="hero-secondary-btn" data-media-type="banani-button">
+                  Talk to our clinical team
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="footer-strip">
+          <div>
+            a9 HealthConnect Portal. Pre-visit guidance only; final diagnosis
+            always rests with treating clinicians.
+          </div>
+          <div class="footer-links">
+            <div>Privacy</div>
+            <div>Terms</div>
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>
+  <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+  <style>
+    :root {
+      --background: #f7fbfe;
+      --foreground: #0f1724;
+      --border: #00000000;
+      --input: #ffffff;
+      --primary: #0b78d1;
+      --primary-foreground: #ffffff;
+      --secondary: #e9f5fb;
+      --secondary-foreground: #0b3b61;
+      --muted: #f1f5f9;
+      --muted-foreground: #97a6b3;
+      --success: #16a34a;
+      --success-foreground: #ffffff;
+      --accent: #f59e0b;
+      --accent-foreground: #09201a;
+      --destructive: #dc2626;
+      --destructive-foreground: #ffffff;
+      --warning: #f97316;
+      --warning-foreground: #ffffff;
+      --card: #ffffff;
+      --card-foreground: #0f1724;
+      --sidebar: #ffffff;
+      --sidebar-foreground: #0f1724;
+      --sidebar-primary: #0b78d1;
+      --sidebar-primary-foreground: #ffffff;
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-xl: 12px;
+      --font-family-body: Inter;
+    }
+  </style>
+</div>

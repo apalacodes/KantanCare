@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+npm-debug.log*
+build/
+.env.local
+
+# Docker volumes
+postgres_data/
+prometheus_data/
+grafana_data/
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+.DS_Store
+
+# Environment
+.env
+
+# AI Models (large files)
+models/
+*.bin
+*.pt
+
+# Data
+data/*.csv
+data/*.zip

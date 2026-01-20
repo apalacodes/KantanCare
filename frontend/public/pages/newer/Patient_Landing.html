@@ -1,0 +1,986 @@
+<div
+  class="export-wrapper"
+  style="
+    width: 1440px;
+    min-height: 812px;
+    position: relative;
+    font-family: var(--font-family-body);
+    background-color: var(--background);
+  "
+>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900&family=Geist:wght@100;200;300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:wght@200;300;400;500;600;700;800;900&family=PT+Serif:wght@400;700&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&family=Shantell+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <html>
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Symptom Assessment - Banani</title>
+      <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+      <style>
+        * {
+          box-sizing: border-box;
+        }
+        .export-wrapper {
+          margin: 0;
+          padding: 0;
+          font-family: var(--font-family-body, sans-serif);
+          background-color: var(--background);
+          color: var(--foreground);
+          height: 100vh;
+          display: flex;
+          overflow: hidden;
+        }
+
+        /* Layout */
+        .app-container {
+          display: flex;
+          width: 100%;
+          height: 100%;
+        }
+
+        /* Sidebar */
+        .sidebar {
+          width: 260px;
+          background-color: var(--sidebar);
+          border-right: 1px solid var(--border);
+          display: flex;
+          flex-direction: column;
+          padding: 24px 16px;
+          flex-shrink: 0;
+        }
+
+        .logo-area {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 0 12px;
+          margin-bottom: 32px;
+        }
+        .logo-icon {
+          width: 32px;
+          height: 32px;
+          background-color: var(--primary);
+          border-radius: var(--radius-md);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--primary-foreground);
+        }
+        .logo-text {
+          font-weight: 600;
+          font-size: 18px;
+          color: var(--sidebar-foreground);
+        }
+
+        .nav-group {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          margin-bottom: 32px;
+        }
+
+        .nav-label {
+          font-size: 11px;
+          text-transform: uppercase;
+          color: var(--muted-foreground);
+          font-weight: 600;
+          padding: 0 12px;
+          margin-bottom: 8px;
+          letter-spacing: 0.5px;
+        }
+
+        .nav-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 8px 12px;
+          border-radius: var(--radius-md);
+          color: var(--sidebar-foreground);
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .nav-item:hover {
+          background-color: var(--secondary);
+        }
+        .nav-item.active {
+          background-color: var(--sidebar-primary);
+          color: var(--sidebar-primary-foreground);
+        }
+
+        /* Main Content */
+        .main-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          background-color: var(--background);
+          overflow: hidden;
+        }
+
+        .top-bar {
+          height: 64px;
+          border-bottom: 1px solid var(--border);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 32px;
+          background-color: var(--background);
+        }
+
+        .breadcrumbs {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 14px;
+          color: var(--muted-foreground);
+        }
+        .breadcrumb-active {
+          color: var(--foreground);
+          font-weight: 500;
+        }
+
+        .user-actions {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .location-badge {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 13px;
+          color: var(--muted-foreground);
+          background-color: var(--secondary);
+          padding: 4px 10px;
+          border-radius: 20px;
+        }
+
+        /* Scrollable Form Area */
+        .scroll-area {
+          flex: 1;
+          overflow-y: auto;
+          padding: 32px;
+          display: flex;
+          justify-content: center;
+        }
+
+        .content-width {
+          max-width: 800px;
+          width: 100%;
+          padding-bottom: 80px;
+        }
+
+        .header-section {
+          margin-bottom: 32px;
+        }
+        .page-title {
+          font-size: 24px;
+          font-weight: 600;
+          color: var(--foreground);
+          margin: 0 0 8px 0;
+        }
+        .page-subtitle {
+          font-size: 15px;
+          color: var(--muted-foreground);
+          line-height: 1.5;
+        }
+
+        /* Progress Steps */
+        .progress-track {
+          display: flex;
+          align-items: center;
+          margin-bottom: 40px;
+          gap: 12px;
+        }
+        .step {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--muted-foreground);
+        }
+        .step.active {
+          color: var(--primary);
+        }
+        .step-circle {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          border: 2px solid var(--border);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+        }
+        .step.active .step-circle {
+          background-color: var(--primary);
+          border-color: var(--primary);
+          color: var(--primary-foreground);
+        }
+        .step-line {
+          flex: 1;
+          height: 2px;
+          background-color: var(--border);
+          max-width: 60px;
+        }
+
+        /* Cards */
+        .form-card {
+          background-color: var(--card);
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          padding: 24px;
+          margin-bottom: 24px;
+        }
+
+        .card-title {
+          font-size: 16px;
+          font-weight: 600;
+          margin-bottom: 16px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        /* Inputs */
+        .textarea-wrapper {
+          position: relative;
+        }
+        .custom-textarea {
+          width: 100%;
+          min-height: 120px;
+          border: 1px solid var(--border);
+          border-radius: var(--radius-md);
+          padding: 12px;
+          font-family: inherit;
+          font-size: 14px;
+          background-color: var(--input);
+          color: var(--foreground);
+          resize: none;
+        }
+        .custom-textarea:focus {
+          outline: 2px solid var(--primary);
+          outline-offset: -1px;
+        }
+        .helper-text {
+          font-size: 13px;
+          color: var(--muted-foreground);
+          margin-top: 8px;
+        }
+
+        /* Severity Scale */
+        .scale-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 4px;
+          margin-top: 16px;
+        }
+        .scale-item {
+          flex: 1;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--border);
+          background-color: var(--input);
+          cursor: pointer;
+          font-weight: 500;
+          font-size: 14px;
+          transition: all 0.2s;
+        }
+        .scale-item:first-child {
+          border-top-left-radius: var(--radius-md);
+          border-bottom-left-radius: var(--radius-md);
+        }
+        .scale-item:last-child {
+          border-top-right-radius: var(--radius-md);
+          border-bottom-right-radius: var(--radius-md);
+        }
+        .scale-item:hover {
+          background-color: var(--secondary);
+        }
+        .scale-item.selected {
+          background-color: var(--primary);
+          color: var(--primary-foreground);
+          border-color: var(--primary);
+        }
+        .scale-labels {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 8px;
+          font-size: 12px;
+          color: var(--muted-foreground);
+          padding: 0 4px;
+        }
+
+        /* Duration Chips */
+        .chip-group {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+        .chip {
+          padding: 10px 16px;
+          border-radius: 24px;
+          border: 1px solid var(--border);
+          background-color: var(--input);
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .chip:hover {
+          border-color: var(--primary);
+          background-color: var(--secondary);
+        }
+        .chip.active {
+          background-color: var(--primary);
+          color: var(--primary-foreground);
+          border-color: var(--primary);
+        }
+
+        /* Body Map Grid */
+        .body-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 12px;
+        }
+        .body-part {
+          border: 1px solid var(--border);
+          border-radius: var(--radius-md);
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          cursor: pointer;
+          background-color: var(--input);
+          transition: 0.2s;
+        }
+        .body-part:hover {
+          background-color: var(--secondary);
+          border-color: var(--primary);
+        }
+        .body-part.selected {
+          background-color: var(--secondary);
+          border: 2px solid var(--primary);
+        }
+        .part-icon {
+          opacity: 0.7;
+        }
+        .part-label {
+          font-size: 13px;
+          font-weight: 500;
+        }
+
+        /* Action Bar */
+        .action-bar {
+          position: fixed;
+          bottom: 0;
+          left: 260px;
+          right: 0;
+          padding: 24px 32px;
+          background-color: var(--background);
+          border-top: 1px solid var(--border);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          z-index: 10;
+        }
+        .privacy-note {
+          font-size: 13px;
+          color: var(--muted-foreground);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .btn {
+          height: 44px;
+          padding: 0 24px;
+          border-radius: var(--radius-md);
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          border: none;
+        }
+        .btn-primary {
+          background-color: var(--primary);
+          color: var(--primary-foreground);
+        }
+        .btn-secondary {
+          background-color: var(--secondary);
+          color: var(--secondary-foreground);
+        }
+
+        /* Responsive Grid for Duration/Severity split */
+        .grid-2 {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+          margin-bottom: 24px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+          <div class="logo-area">
+            <div class="logo-icon">
+              <div
+                style="
+                  width: 20px;
+                  height: 20px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <iconify-icon
+                  icon="lucide:activity"
+                  style="font-size: 20px; color: var(--primary-foreground)"
+                ></iconify-icon>
+              </div>
+            </div>
+            <div class="logo-text">KantanCare</div>
+          </div>
+
+          <div class="nav-group">
+            <div class="nav-item" data-media-type="banani-button">
+              <div
+                style="
+                  width: 18px;
+                  height: 18px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <iconify-icon
+                  icon="lucide:home"
+                  style="font-size: 18px"
+                ></iconify-icon>
+              </div>
+              Dashboard
+            </div>
+            <div class="nav-item active" data-media-type="banani-button">
+              <div
+                style="
+                  width: 18px;
+                  height: 18px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <iconify-icon
+                  icon="lucide:stethoscope"
+                  style="font-size: 18px"
+                ></iconify-icon>
+              </div>
+              Symptom Check
+            </div>
+            <div class="nav-item" data-media-type="banani-button">
+              <div
+                style="
+                  width: 18px;
+                  height: 18px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <iconify-icon
+                  icon="lucide:calendar"
+                  style="font-size: 18px"
+                ></iconify-icon>
+              </div>
+              Appointments
+            </div>
+            <div class="nav-item" data-media-type="banani-button">
+              <div
+                style="
+                  width: 18px;
+                  height: 18px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <iconify-icon
+                  icon="lucide:file-text"
+                  style="font-size: 18px"
+                ></iconify-icon>
+              </div>
+              History
+            </div>
+          </div>
+
+          <div class="nav-group" style="margin-top: auto">
+            <div class="nav-label">Settings</div>
+            <div class="nav-item" data-media-type="banani-button">
+              <div
+                style="
+                  width: 18px;
+                  height: 18px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <iconify-icon
+                  icon="lucide:user"
+                  style="font-size: 18px"
+                ></iconify-icon>
+              </div>
+              Profile
+            </div>
+            <div class="nav-item" data-media-type="banani-button">
+              <div
+                style="
+                  width: 18px;
+                  height: 18px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <iconify-icon
+                  icon="lucide:settings"
+                  style="font-size: 18px"
+                ></iconify-icon>
+              </div>
+              Preferences
+            </div>
+          </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+          <!-- Top Bar -->
+          <header class="top-bar">
+            <div class="breadcrumbs">
+              <span>Home</span>
+              <iconify-icon
+                icon="lucide:chevron-right"
+                style="font-size: 14px"
+              ></iconify-icon>
+              <span>Symptom Checker</span>
+              <iconify-icon
+                icon="lucide:chevron-right"
+                style="font-size: 14px"
+              ></iconify-icon>
+              <span class="breadcrumb-active">New Assessment</span>
+            </div>
+
+            <div class="user-actions">
+              <div class="location-badge">
+                <iconify-icon
+                  icon="lucide:map-pin"
+                  style="font-size: 14px"
+                ></iconify-icon>
+                <span>Seattle, WA</span>
+              </div>
+              <img
+                src="https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FSouth%20Asian%2F3"
+                style="
+                  width: 36px;
+                  height: 36px;
+                  border-radius: 50%;
+                  object-fit: cover;
+                  border: 1px solid var(--border);
+                "
+              />
+            </div>
+          </header>
+
+          <!-- Scroll Area -->
+          <div class="scroll-area">
+            <div class="content-width">
+              <div class="header-section">
+                <h1 class="page-title">Describe your symptoms</h1>
+                <div class="page-subtitle">
+                  We'll use this information to analyze your condition and
+                  recommend the best next steps.
+                </div>
+              </div>
+
+              <!-- Progress Tracker -->
+              <div class="progress-track">
+                <div class="step active">
+                  <div class="step-circle">1</div>
+                  Symptoms
+                </div>
+                <div class="step-line"></div>
+                <div class="step">
+                  <div class="step-circle">2</div>
+                  Analysis
+                </div>
+                <div class="step-line"></div>
+                <div class="step">
+                  <div class="step-circle">3</div>
+                  Results
+                </div>
+              </div>
+
+              <!-- Main Form -->
+              <div class="form-card">
+                <div class="card-title">
+                  <iconify-icon
+                    icon="lucide:message-square"
+                    style="font-size: 18px; color: var(--primary)"
+                  ></iconify-icon>
+                  What's bothering you today?
+                </div>
+                <div class="textarea-wrapper">
+                  <textarea
+                    class="custom-textarea"
+                    placeholder="e.g., I have a throbbing headache on the right side and sensitivity to light..."
+                    data-media-type="banani-button"
+                  ></textarea>
+                </div>
+                <div class="helper-text">
+                  Try to be as specific as possible about how you feel.
+                </div>
+              </div>
+
+              <div class="grid-2">
+                <div class="form-card" style="margin-bottom: 0">
+                  <div class="card-title">
+                    <iconify-icon
+                      icon="lucide:clock"
+                      style="font-size: 18px; color: var(--primary)"
+                    ></iconify-icon>
+                    Duration
+                  </div>
+                  <div class="chip-group">
+                    <div class="chip" data-media-type="banani-button">
+                      Today
+                    </div>
+                    <div class="chip active" data-media-type="banani-button">
+                      1-3 Days
+                    </div>
+                    <div class="chip" data-media-type="banani-button">
+                      1 Week
+                    </div>
+                    <div class="chip" data-media-type="banani-button">
+                      1 Month+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-card" style="margin-bottom: 0">
+                  <div class="card-title">
+                    <iconify-icon
+                      icon="lucide:alert-circle"
+                      style="font-size: 18px; color: var(--primary)"
+                    ></iconify-icon>
+                    Severity
+                  </div>
+                  <div class="scale-container">
+                    <div class="scale-item" data-media-type="banani-button">
+                      1
+                    </div>
+                    <div class="scale-item" data-media-type="banani-button">
+                      2
+                    </div>
+                    <div class="scale-item" data-media-type="banani-button">
+                      3
+                    </div>
+                    <div class="scale-item" data-media-type="banani-button">
+                      4
+                    </div>
+                    <div
+                      class="scale-item selected"
+                      data-media-type="banani-button"
+                    >
+                      5
+                    </div>
+                    <div class="scale-item" data-media-type="banani-button">
+                      6
+                    </div>
+                    <div class="scale-item" data-media-type="banani-button">
+                      7
+                    </div>
+                    <div class="scale-item" data-media-type="banani-button">
+                      8
+                    </div>
+                    <div class="scale-item" data-media-type="banani-button">
+                      9
+                    </div>
+                    <div class="scale-item" data-media-type="banani-button">
+                      10
+                    </div>
+                  </div>
+                  <div class="scale-labels">
+                    <span>Mild</span>
+                    <span>Moderate</span>
+                    <span>Severe</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-card">
+                <div class="card-title">
+                  <iconify-icon
+                    icon="lucide:user"
+                    style="font-size: 18px; color: var(--primary)"
+                  ></iconify-icon>
+                  Where is the pain located?
+                </div>
+                <div class="body-grid">
+                  <div class="body-part" data-media-type="banani-button">
+                    <iconify-icon
+                      icon="lucide:smile"
+                      class="part-icon"
+                      style="font-size: 24px"
+                    ></iconify-icon>
+                    <span class="part-label">Head / Face</span>
+                  </div>
+                  <div class="body-part" data-media-type="banani-button">
+                    <iconify-icon
+                      icon="lucide:mic"
+                      class="part-icon"
+                      style="font-size: 24px"
+                    ></iconify-icon>
+                    <span class="part-label">Throat / Neck</span>
+                  </div>
+                  <div
+                    class="body-part selected"
+                    data-media-type="banani-button"
+                  >
+                    <iconify-icon
+                      icon="lucide:heart-pulse"
+                      class="part-icon"
+                      style="font-size: 24px"
+                    ></iconify-icon>
+                    <span class="part-label">Chest</span>
+                  </div>
+                  <div class="body-part" data-media-type="banani-button">
+                    <iconify-icon
+                      icon="lucide:utensils"
+                      class="part-icon"
+                      style="font-size: 24px"
+                    ></iconify-icon>
+                    <span class="part-label">Abdomen</span>
+                  </div>
+                  <div class="body-part" data-media-type="banani-button">
+                    <iconify-icon
+                      icon="lucide:accessibility"
+                      class="part-icon"
+                      style="font-size: 24px"
+                    ></iconify-icon>
+                    <span class="part-label">Back</span>
+                  </div>
+                  <div class="body-part" data-media-type="banani-button">
+                    <iconify-icon
+                      icon="lucide:move"
+                      class="part-icon"
+                      style="font-size: 24px"
+                    ></iconify-icon>
+                    <span class="part-label">Limbs</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-card">
+                <div class="card-title">
+                  <iconify-icon
+                    icon="lucide:layers"
+                    style="font-size: 18px; color: var(--primary)"
+                  ></iconify-icon>
+                  Additional Context
+                </div>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 16px;
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 12px;
+                      padding: 12px;
+                      border: 1px solid var(--border);
+                      border-radius: var(--radius-md);
+                      background: var(--input);
+                    "
+                    data-media-type="banani-button"
+                  >
+                    <div
+                      style="
+                        width: 18px;
+                        height: 18px;
+                        border: 2px solid var(--muted-foreground);
+                        border-radius: 4px;
+                      "
+                    ></div>
+                    <span style="font-size: 14px; font-weight: 500"
+                      >Recently traveled</span
+                    >
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 12px;
+                      padding: 12px;
+                      border: 1px solid var(--primary);
+                      border-radius: var(--radius-md);
+                      background: var(--secondary);
+                    "
+                    data-media-type="banani-button"
+                  >
+                    <div
+                      style="
+                        width: 18px;
+                        height: 18px;
+                        background: var(--primary);
+                        border: 2px solid var(--primary);
+                        border-radius: 4px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <iconify-icon
+                        icon="lucide:check"
+                        style="
+                          font-size: 12px;
+                          color: var(--primary-foreground);
+                        "
+                      ></iconify-icon>
+                    </div>
+                    <span style="font-size: 14px; font-weight: 500"
+                      >Took medication recently</span
+                    >
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 12px;
+                      padding: 12px;
+                      border: 1px solid var(--border);
+                      border-radius: var(--radius-md);
+                      background: var(--input);
+                    "
+                    data-media-type="banani-button"
+                  >
+                    <div
+                      style="
+                        width: 18px;
+                        height: 18px;
+                        border: 2px solid var(--muted-foreground);
+                        border-radius: 4px;
+                      "
+                    ></div>
+                    <span style="font-size: 14px; font-weight: 500"
+                      >High fever (&gt;38°C)</span
+                    >
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 12px;
+                      padding: 12px;
+                      border: 1px solid var(--border);
+                      border-radius: var(--radius-md);
+                      background: var(--input);
+                    "
+                    data-media-type="banani-button"
+                  >
+                    <div
+                      style="
+                        width: 18px;
+                        height: 18px;
+                        border: 2px solid var(--muted-foreground);
+                        border-radius: 4px;
+                      "
+                    ></div>
+                    <span style="font-size: 14px; font-weight: 500"
+                      >Pregnant</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Action Bar -->
+          <div class="action-bar">
+            <div class="privacy-note">
+              <iconify-icon
+                icon="lucide:shield-check"
+                style="font-size: 16px; color: var(--success)"
+              ></iconify-icon>
+              Your data is encrypted and HIPAA compliant.
+            </div>
+            <div style="display: flex; gap: 12px">
+              <button class="btn btn-secondary" data-media-type="banani-button">
+                Save Draft
+              </button>
+              <button class="btn btn-primary" data-media-type="banani-button">
+                Analyze Symptoms
+                <iconify-icon
+                  icon="lucide:arrow-right"
+                  style="font-size: 16px"
+                ></iconify-icon>
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+    </body>
+  </html>
+  <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+  <style>
+    :root {
+      --background: #f7fafd;
+      --foreground: #0f1724;
+      --border: #00000014;
+      --input: #ffffff;
+      --primary: #0466c8;
+      --primary-foreground: #ffffff;
+      --secondary: #e9f2ff;
+      --secondary-foreground: #073b66;
+      --muted: #f1f5f9;
+      --muted-foreground: #98a0aa;
+      --success: #0f9d58;
+      --success-foreground: #ffffff;
+      --accent: #ffb142;
+      --accent-foreground: #1a2a31;
+      --destructive: #e02424;
+      --destructive-foreground: #ffffff;
+      --warning: #f59e0b;
+      --warning-foreground: #08131a;
+      --card: #ffffff;
+      --card-foreground: #0f1724;
+      --sidebar: #f1f7fb;
+      --sidebar-foreground: #0c1720;
+      --sidebar-primary: #0466c8;
+      --sidebar-primary-foreground: #ffffff;
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-xl: 12px;
+      --font-family-body: Inter;
+    }
+  </style>
+</div>
