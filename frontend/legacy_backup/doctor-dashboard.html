@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Kantan Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f8fafc;
+            color: #1a202c;
+        }
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+        .header h1 {
+            font-size: 22px;
+            color: #1a202c;
+            font-weight: 700;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+        }
+        .user-name {
+            color: #4a5568;
+            font-weight: 600;
+        }
+        .logout {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .logout:hover {
+            color: #764ba2;
+        }
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+        }
+        .stat-card:nth-child(2) {
+            border-left-color: #f59e0b;
+        }
+        .stat-card:nth-child(3) {
+            border-left-color: #22c55e;
+        }
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        .appointment-card {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+        .appointment-card:hover {
+            border-color: #667eea;
+            background: white;
+        }
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        .patient-info h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 6px;
+        }
+        .patient-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 4px;
+        }
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .status-confirmed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-completed {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+        .symptoms-preview {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .symptoms-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #4a5568;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .symptoms-text {
+            font-size: 14px;
+            color: #1a202c;
+            line-height: 1.6;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .button-primary {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .button-secondary {
+            padding: 10px 20px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .button-secondary:hover {
+            background: #f7fafc;
+        }
+        .button-danger {
+            padding: 10px 20px;
+            background: white;
+            color: #dc2626;
+            border: 2px solid #dc2626;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .button-danger:hover {
+            background: #fef2f2;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #718096;
+        }
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        .empty-state-text {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 16px;
+            color: #718096;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .modal-header {
+            padding: 24px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+        .close-btn {
+            font-size: 32px;
+            font-weight: 300;
+            color: #718096;
+            background: none;
+            border: none;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .close-btn:hover {
+            color: #1a202c;
+        }
+        .modal-body {
+            padding: 24px;
+        }
+        .info-group {
+            margin-bottom: 24px;
+        }
+        .info-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #718096;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .info-value {
+            font-size: 15px;
+            color: #1a202c;
+            line-height: 1.6;
+        }
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">K</div>
+            <h1>Doctor Dashboard</h1>
+        </div>
+        <div class="user-info">
+            <span class="user-name" id="doctorName">Loading...</span>
+            <a class="logout" onclick="logout()">Logout</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Loading State -->
+        <div class="loading" id="loadingState">
+            Loading dashboard...
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" style="display: none;">
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <div class="stat-value" id="statPending">0</div>
+                    <div class="stat-label">Pending Appointments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statToday">0</div>
+                    <div class="stat-label">Today's Schedule</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statCompleted">0</div>
+                    <div class="stat-label">Completed This Week</div>
+                </div>
+            </div>
+
+            <!-- Pending Appointments -->
+            <div class="section">
+                <div class="section-header">
+                    <div>
+                        <div class="section-title">Pending Appointments</div>
+                        <div class="section-subtitle">Review and approve new requests</div>
+                    </div>
+                </div>
+                <div id="pendingAppointments"></div>
+            </div>
+
+            <!-- Today's Queue -->
+            <div class="section">
+                <div class="section-header">
+                    <div>
+                        <div class="section-title">Today's Schedule</div>
+                        <div class="section-subtitle">Your confirmed appointments for today</div>
+                    </div>
+                </div>
+                <div id="todayAppointments"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient Detail Modal -->
+    <div id="patientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Patient Details</div>
+                <button class="close-btn" onclick="closePatientModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <script>
+        let currentDoctor = null;
+        let doctorData = null;
+
+        // Check authentication
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            currentDoctor = user;
+
+            try {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                
+                if (!userDoc.exists) {
+                    alert('User profile not found.');
+                    await auth.signOut();
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                doctorData = userDoc.data();
+
+                if (doctorData.role !== 'doctor') {
+                    alert('Access denied. This dashboard is for doctors only.');
+                    await auth.signOut();
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                // Display doctor info
+                document.getElementById('doctorName').textContent = doctorData.fullName || 'Doctor';
+
+                // Load appointments
+                loadDashboard();
+
+            } catch (error) {
+                console.error('Error loading doctor data:', error);
+                document.getElementById('loadingState').innerHTML = 
+                    '<div style="color: #dc2626;">Failed to load dashboard. Please refresh.</div>';
+            }
+        });
+
+        // Load dashboard data
+        async function loadDashboard() {
+            try {
+                // Hide loading, show content
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+
+                // Load stats and appointments
+                await Promise.all([
+                    loadStats(),
+                    loadPendingAppointments(),
+                    loadTodayAppointments()
+                ]);
+
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+        }
+
+        // Load statistics
+        async function loadStats() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            weekAgo.setHours(0, 0, 0, 0);
+
+            try {
+                // Pending count
+                const pendingSnapshot = await db.collection('appointments')
+                    .where('doctorId', '==', currentDoctor.uid)
+                    .where('status', '==', 'pending')
+                    .get();
+                document.getElementById('statPending').textContent = pendingSnapshot.size;
+
+                // Today's count
+                const todaySnapshot = await db.collection('appointments')
+                    .where('doctorId', '==', currentDoctor.uid)
+                    .where('date', '==', formatDate(new Date()))
+                    .where('status', 'in', ['confirmed', 'in-progress'])
+                    .get();
+                document.getElementById('statToday').textContent = todaySnapshot.size;
+
+                // Completed this week
+                const completedSnapshot = await db.collection('appointments')
+                    .where('doctorId', '==', currentDoctor.uid)
+                    .where('status', '==', 'completed')
+                    .get();
+                
+                let completedThisWeek = 0;
+                completedSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (data.completedAt && data.completedAt.toDate() >= weekAgo) {
+                        completedThisWeek++;
+                    }
+                });
+                document.getElementById('statCompleted').textContent = completedThisWeek;
+
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Load pending appointments (real-time)
+        function loadPendingAppointments() {
+            const container = document.getElementById('pendingAppointments');
+            
+            db.collection('appointments')
+                .where('doctorId', '==', currentDoctor.uid)
+                .where('status', '==', 'pending')
+                .orderBy('createdAt', 'desc')
+                .onSnapshot((snapshot) => {
+                    if (snapshot.empty) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📋</div>
+                                <div class="empty-state-text">No pending appointments</div>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    container.innerHTML = '';
+                    snapshot.forEach((doc) => {
+                        const appointment = doc.data();
+                        container.innerHTML += renderAppointmentCard(doc.id, appointment, 'pending');
+                    });
+                });
+        }
+
+        // Load today's appointments (real-time)
+        function loadTodayAppointments() {
+            const container = document.getElementById('todayAppointments');
+            const today = formatDate(new Date());
+            
+            db.collection('appointments')
+                .where('doctorId', '==', currentDoctor.uid)
+                .where('date', '==', today)
+                .where('status', 'in', ['confirmed', 'in-progress'])
+                .orderBy('time', 'asc')
+                .onSnapshot((snapshot) => {
+                    if (snapshot.empty) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📅</div>
+                                <div class="empty-state-text">No appointments scheduled for today</div>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    container.innerHTML = '';
+                    snapshot.forEach((doc) => {
+                        const appointment = doc.data();
+                        container.innerHTML += renderAppointmentCard(doc.id, appointment, 'today');
+                    });
+                });
+        }
+
+        // Render appointment card
+        function renderAppointmentCard(id, appointment, type) {
+            const statusClass = `status-${appointment.status}`;
+            const statusText = appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1);
+
+            let actions = '';
+            if (type === 'pending') {
+                actions = `
+                    <div class="action-buttons">
+                        <button class="button-primary" onclick="approveAppointment('${id}')">✓ Approve</button>
+                        <button class="button-secondary" onclick="viewPatientDetails('${id}')">View Details</button>
+                        <button class="button-danger" onclick="rejectAppointment('${id}')">✗ Reject</button>
+                    </div>
+                `;
+            } else if (type === 'today') {
+                actions = `
+                    <div class="action-buttons">
+                        <button class="button-primary" onclick="completeAppointment('${id}')">Complete Consultation</button>
+                        <button class="button-secondary" onclick="viewPatientDetails('${id}')">View Details</button>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="appointment-card">
+                    <div class="appointment-header">
+                        <div class="patient-info">
+                            <h3>${appointment.patientName} (${appointment.patientAge || '?'}${appointment.patientGender ? appointment.patientGender.charAt(0).toUpperCase() : ''})</h3>
+                            <div class="patient-meta">📅 ${formatDateDisplay(appointment.date)} at ${appointment.time}</div>
+                            <div class="patient-meta">🎥 ${appointment.type === 'video' ? 'Video Call' : 'In-Person'}</div>
+                        </div>
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </div>
+                    
+                    <div class="symptoms-preview">
+                        <div class="symptoms-title">Reported Symptoms</div>
+                        <div class="symptoms-text">${appointment.symptoms || 'No symptoms provided'}</div>
+                    </div>
+                    
+                    ${actions}
+                </div>
+            `;
+        }
+
+        // Approve appointment
+        async function approveAppointment(appointmentId) {
+            if (!confirm('Approve this appointment?')) return;
+
+            try {
+                await db.collection('appointments').doc(appointmentId).update({
+                    status: 'confirmed',
+                    confirmedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                alert('✅ Appointment approved!');
+                loadStats(); // Refresh stats
+            } catch (error) {
+                console.error('Error approving appointment:', error);
+                alert('Failed to approve appointment. Please try again.');
+            }
+        }
+
+        // Reject appointment
+        async function rejectAppointment(appointmentId) {
+            const reason = prompt('Reason for rejection (optional):');
+            
+            try {
+                await db.collection('appointments').doc(appointmentId).update({
+                    status: 'rejected',
+                    rejectionReason: reason || 'No reason provided',
+                    rejectedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                alert('Appointment rejected.');
+                loadStats();
+            } catch (error) {
+                console.error('Error rejecting appointment:', error);
+                alert('Failed to reject appointment. Please try again.');
+            }
+        }
+
+        // Complete appointment
+        async function completeAppointment(appointmentId) {
+            const notes = prompt('Add consultation notes (optional):');
+            
+            try {
+                await db.collection('appointments').doc(appointmentId).update({
+                    status: 'completed',
+                    doctorNotes: notes || '',
+                    completedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                alert('✅ Consultation marked as complete!');
+                loadStats();
+            } catch (error) {
+                console.error('Error completing appointment:', error);
+                alert('Failed to complete appointment. Please try again.');
+            }
+        }
+
+        // View patient details
+        async function viewPatientDetails(appointmentId) {
+            try {
+                const appointmentDoc = await db.collection('appointments').doc(appointmentId).get();
+                const appointment = appointmentDoc.data();
+                
+                const patientDoc = await db.collection('users').doc(appointment.patientId).get();
+                const patient = patientDoc.data();
+
+                const modalBody = document.getElementById('modalBody');
+                modalBody.innerHTML = `
+                    <div class="profile-grid">
+                        <div class="info-group">
+                            <div class="info-label">Full Name</div>
+                            <div class="info-value">${patient.fullName}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">${patient.email}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Age</div>
+                            <div class="info-value">${patient.age || 'Not provided'}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Gender</div>
+                            <div class="info-value">${patient.gender || 'Not provided'}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Blood Type</div>
+                            <div class="info-value">${patient.bloodType || 'Not provided'}</div>
+                        </div>
+                        <div class="info-group">
+                            <div class="info-label">Weight</div>
+                            <div class="info-value">${patient.weight ? patient.weight + ' kg' : 'Not provided'}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <div class="info-label">🛡️ Allergies</div>
+                        <div class="info-value">${patient.allergies || 'None reported'}</div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <div class="info-label">💊 Current Medications</div>
+                        <div class="info-value">${patient.currentMedications || 'None reported'}</div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <div class="info-label">📋 Chronic Conditions</div>
+                        <div class="info-value">${patient.chronicConditions || 'None reported'}</div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <div class="info-label">📝 Current Symptoms</div>
+                        <div class="info-value">${appointment.symptoms || 'No symptoms provided'}</div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <div class="info-label">📅 Appointment</div>
+                        <div class="info-value">${formatDateDisplay(appointment.date)} at ${appointment.time}</div>
+                    </div>
+                `;
+
+                document.getElementById('patientModal').classList.add('show');
+            } catch (error) {
+                console.error('Error loading patient details:', error);
+                alert('Failed to load patient details.');
+            }
+        }
+
+        // Close patient modal
+        function closePatientModal() {
+            document.getElementById('patientModal').classList.remove('show');
+        }
+
+        // Logout
+        async function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                try {
+                    await auth.signOut();
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    alert('Failed to logout. Please try again.');
+                }
+            }
+        }
+
+        // Helper: Format date for storage (YYYY-MM-DD)
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Helper: Format date for display
+        function formatDateDisplay(dateStr) {
+            const date = new Date(dateStr);
+            const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('patientModal');
+            if (event.target == modal) {
+                closePatientModal();
+            }
+        }
+    </script>
+    <script src="ai-widget.js"></script>
+</body>
+</html>

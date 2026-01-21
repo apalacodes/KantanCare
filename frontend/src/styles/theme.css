@@ -1,0 +1,46 @@
+/* Theme variables for KantanCare */
+:root{
+  --background: #f7fafd;
+  --foreground: #0f1724;
+  --card: #ffffff;
+  --card-foreground: #0f1724;
+  --input: #ffffff;
+  --border: rgba(0,0,0,0.08);
+
+  --primary: #0466c8;
+  --primary-foreground: #ffffff;
+  --secondary: #e9f2ff;
+  --secondary-foreground: #073b66;
+
+  --muted: #f1f5f9;
+  --muted-foreground: #98a0aa;
+
+  --success: #0f9d58;
+  --warning: #f59e0b;
+  --destructive: #e02424;
+
+  --accent: #ffb142;
+  --accent-foreground: #1a2a31;
+
+  --sidebar: #f1f7fb;
+  --sidebar-foreground: #0c1720;
+  --sidebar-primary: #0466c8;
+  --sidebar-primary-foreground: #ffffff;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  --font-family-body: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  --sidebar-width: 260px;
+  --topbar-height: 64px;
+  --content-max-width: 900px;
+}

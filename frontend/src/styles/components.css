@@ -1,0 +1,235 @@
+/* components.css - Reusable UI Components */
+
+/* Cards */
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.card:last-child {
+  margin-bottom: 0;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--foreground);
+}
+
+.card-icon {
+  font-size: 18px;
+  color: var(--primary);
+}
+
+.card-content {
+  color: var(--foreground);
+}
+
+/* Buttons */
+.btn {
+  height: 44px;
+  padding: 0 var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  border: none;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0356a8;
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #d4e7ff;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--secondary);
+  border-color: var(--primary);
+}
+
+.btn-icon {
+  width: 44px;
+  padding: 0;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0 12px;
+  font-family: var(--font-family-body);
+  font-size: 14px;
+  background-color: var(--input);
+  color: var(--foreground);
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(4, 102, 200, 0.1);
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  font-family: var(--font-family-body);
+  font-size: 14px;
+  background-color: var(--input);
+  color: var(--foreground);
+  resize: vertical;
+  transition: all 0.2s ease;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(4, 102, 200, 0.1);
+}
+
+.form-helper {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  margin-top: var(--spacing-sm);
+}
+
+/* Chips */
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chip {
+  padding: 10px var(--spacing-md);
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background-color: var(--input);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.chip:hover {
+  border-color: var(--primary);
+  background-color: var(--secondary);
+}
+
+.chip.active {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+
+/* Scale Selector */
+.scale-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: var(--spacing-md);
+}
+
+.scale-item {
+  flex: 1;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  background-color: var(--input);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.scale-item:first-child {
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.scale-item:last-child {
+  border-top-right-radius: var(--radius-md);
+}
+
+/* Modal for profile warnings */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2,6,23,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 24px;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 560px;
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(2,6,23,0.18);
+  border: 1px solid var(--border);
+}
+
+.modal-card h3 { margin: 0 0 8px 0; }
+.modal-card p { margin: 0; color: var(--muted-foreground); }

@@ -1,0 +1,636 @@
+/* 
+:root {
+  --background: #f7fafd;
+  --foreground: #0f1724;
+  --card-foreground: #0f1724;
+  --input: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+
+  --primary: #0466c8;
+  --primary-foreground: #ffffff;
+  --secondary: #e9f2ff;
+  --secondary-foreground: #073b66;
+
+  --muted: #f1f5f9;
+  --muted-foreground: #98a0aa;
+
+  --success: #0f9d58;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #08131a;
+  --destructive: #e02424;
+  --destructive-foreground: #ffffff;
+  --accent: #ffb142;
+  --accent-foreground: #1a2a31;
+
+  --card: #ffffff;
+  --sidebar: #f1f7fb;
+  --sidebar-foreground: #0c1720;
+  --sidebar-primary: #0466c8;
+  --sidebar-primary-foreground: #ffffff;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  --font-family-body: Inter, sans-serif;
+  
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  
+  --sidebar-width: 260px;
+  --topbar-height: 64px;
+  --content-max-width: 800px;
+} */
+
+
+
+<div class="export-wrapper" style=" width: 1440px; min-height: 812px; position: relative; font-family: var(--font-family-body); background-color: var(--background); " > <link rel="preconnect" href="https://fonts.googleapis.com" /> <link rel="preconnect" href=
+
+pasted
+
+
+sidebar.html
+19 lines
+
+html
+
+
+topbar.html
+11 lines
+
+html
+
+
+components.css
+34 lines
+
+css
+
+
+layout.css
+121 lines
+
+css
+
+
+theme.css
+33 lines
+
+css
+
+im trying to fix the css an html here : help me recode the frontend - i will provide other files to you
+
+9:20 PM
+I'll help you recode this frontend! I can see you have a symptom assessment interface for KantanCare.
+
+To better assist you, I need to understand what you're trying to fix. Could you clarify:
+
+What issues are you experiencing? (e.g., layout problems, styling inconsistencies, responsiveness issues)
+What's your goal? (e.g., modernize the design, fix specific bugs, restructure the code)
+What other files do you have? (Please share them so I can see the complete picture)
+Do you want to:
+Keep the current design and just clean up the code?
+Redesign it entirely?
+Make it more modular/maintainable?
+Add new features?
+From what I can see, the current setup has:
+
+A sidebar navigation
+A main content area with a symptom form
+Progress steps
+Various input types (textarea, chips, scale, body map)
+An action bar at the bottom
+Once you share the other files and clarify your goals, I can create a clean, well-structured version for you. I'm ready to help reorganize this into:
+
+Separate, modular CSS files
+Clean HTML structure
+Better component organization
+Modern best practices
+Please share the additional files and let me know what specific improvements you're looking for!
+
+
+Patient_Appointment.html
+605 lines
+
+html
+
+
+Patient_Landing.html
+987 lines
+
+html
+
+i want to reconstruct the initial foundations then create the pages individually according to the same styles and layouts. here are the first patient appointment and patient landing : i want to use the same styles - in blue but non redundant so that html and css files can be reused
+
+9:24 PM
+Perfect! I'll help you create a clean, modular foundation with reusable CSS and HTML components. Let me restructure this into a professional, non-redundant system.
+
+theme.css - CSS Variables
+Code 
+layout.css - Base Layout Styles
+Code 
+components.css - Reusable Components
+Code 
+Now let me create the HTML template structure:
+
+base-template.html - Reusable Page Template
+Code 
+Now let me create the Symptom Check page using the modular components:
+
+symptom-check.html - Symptom Assessment Page
+Interactive artifact 
+Perfect! Now let me create a simple JavaScript file for interactive functionality:
+
+main.js - Interactive Component Logic
+Code 
+Now let me create a README to explain the structure:
+
+README.md - Project Structure Guide
+Document 
+Perfect! I've created a complete, modular frontend foundation for KantanCare. Here's what I've built for you:
+
+📦 What You Got
+1. CSS Files (Non-redundant, reusable)
+theme.css - All design variables (colors, spacing, fonts)
+layout.css - Core structure (sidebar, topbar, content areas)
+components.css - Reusable UI components (buttons, cards, forms, etc.)
+2. Complete Working Page
+symptom-check.html - Fully functional symptom assessment page with all components
+3. Templates & Documentation
+base-template.html - Starter template for new pages
+main.js - Interactive behaviors (chips, scales, checkboxes)
+README.md - Complete documentation
+🎯 Key Features
+✅ Single source of truth - All styles defined once in CSS variables
+✅ Fully modular - Reuse components across all pages
+✅ Blue theme - Professional medical aesthetic
+✅ Interactive - Click behaviors for all form elements
+✅ Responsive - Mobile-friendly layouts
+✅ Documented - Clear examples for every component
+
+🚀 How to Use
+For new pages: Copy base-template.html and modify the content section
+For styling: Use classes from components.css
+For colors: Modify theme.css variables to rebrand
+For interactions: Include main.js
+All your pages will now share the same clean, professional appearance with zero redundant code! Would you like me to create additional pages (Dashboard, Appointments, History) using this foundation?
+
+
+
+You are out of free messages until 1:45 AM
+Upgrade
+
+
+
+Claude is AI and can make mistakes. Please double-check responses.
+/* components.css - Reusable UI Components */
+
+/* Cards */
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.card:last-child {
+  margin-bottom: 0;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--foreground);
+}
+
+.card-icon {
+  font-size: 18px;
+  color: var(--primary);
+}
+
+.card-content {
+  color: var(--foreground);
+}
+
+/* Buttons */
+.btn {
+  height: 44px;
+  padding: 0 var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  border: none;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0356a8;
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #d4e7ff;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--secondary);
+  border-color: var(--primary);
+}
+
+.btn-icon {
+  width: 44px;
+  padding: 0;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: var(--spacing-sm);
+}
+
+.form-input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0 12px;
+  font-family: var(--font-family-body);
+  font-size: 14px;
+  background-color: var(--input);
+  color: var(--foreground);
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(4, 102, 200, 0.1);
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  font-family: var(--font-family-body);
+  font-size: 14px;
+  background-color: var(--input);
+  color: var(--foreground);
+  resize: vertical;
+  transition: all 0.2s ease;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(4, 102, 200, 0.1);
+}
+
+.form-helper {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  margin-top: var(--spacing-sm);
+}
+
+/* Chips */
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chip {
+  padding: 10px var(--spacing-md);
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background-color: var(--input);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.chip:hover {
+  border-color: var(--primary);
+  background-color: var(--secondary);
+}
+
+.chip.active {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+
+/* Scale Selector */
+.scale-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: var(--spacing-md);
+}
+
+.scale-item {
+  flex: 1;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  background-color: var(--input);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.scale-item:first-child {
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.scale-item:last-child {
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.scale-item:hover {
+  background-color: var(--secondary);
+}
+
+.scale-item.selected {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+  position: relative;
+  z-index: 1;
+}
+
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-sm);
+  font-size: 12px;
+  color: var(--muted-foreground);
+  padding: 0 4px;
+}
+
+/* Body Part Selector */
+.body-part {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  background-color: var(--input);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.body-part:hover {
+  background-color: var(--secondary);
+  border-color: var(--primary);
+}
+
+.body-part.selected {
+  background-color: var(--secondary);
+  border: 2px solid var(--primary);
+}
+
+.body-part-icon {
+  font-size: 24px;
+  opacity: 0.7;
+}
+
+.body-part-label {
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Checkbox */
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--input);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.checkbox-item:hover {
+  background-color: var(--secondary);
+}
+
+.checkbox-item.checked {
+  border-color: var(--primary);
+  background-color: var(--secondary);
+}
+
+.checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--muted-foreground);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.checkbox-item.checked .checkbox-box {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.checkbox-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+/* Progress Steps */
+.progress-steps {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 12px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.step.active {
+  color: var(--primary);
+}
+
+.step.completed {
+  color: var(--success);
+}
+
+.step-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background-color: var(--background);
+}
+
+.step.active .step-circle {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.step.completed .step-circle {
+  background-color: var(--success);
+  border-color: var(--success);
+  color: var(--success-foreground);
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background-color: var(--border);
+  max-width: 60px;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.badge-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.badge-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.badge-success {
+  background-color: var(--success);
+  color: var(--success-foreground);
+}
+
+.badge-warning {
+  background-color: var(--warning);
+  color: var(--warning-foreground);
+}
+
+.badge-muted {
+  background-color: var(--muted);
+  color: var(--muted-foreground);
+}
+
+/* Info Note */
+.info-note {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+
+.info-note iconify-icon {
+  flex-shrink: 0;
+}
+
+/* Utilities */
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-0 { margin-bottom: 0; }
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+.mb-xl { margin-bottom: var(--spacing-xl); }
+
+.mt-0 { margin-top: 0; }
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+.mt-xl { margin-top: var(--spacing-xl); }

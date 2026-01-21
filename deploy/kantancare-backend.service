@@ -1,0 +1,15 @@
+[Unit]
+Description=KantanCare FastAPI backend (uvicorn)
+After=network.target
+
+[Service]
+Type=simple
+User=bokwe
+WorkingDirectory=/home/bokwe/KantanCare/backend
+EnvironmentFile=/home/bokwe/KantanCare/.env
+ExecStart=/home/bokwe/KantanCare/.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000 --log-level info --proxy-headers
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

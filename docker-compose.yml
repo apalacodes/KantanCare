@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+	backend:
+		build: ./backend
+		environment:
+			- OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+		ports:
+			- "8000:8000"
+		restart: unless-stopped
+
+	frontend:
+		image: nginx:stable-alpine
+		ports:
+			- "80:80"
+		volumes:
+			- ./frontend:/usr/share/nginx/html:ro
+		restart: unless-stopped
+

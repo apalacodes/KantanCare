@@ -1,0 +1,16 @@
+[Unit]
+Description=KantanCare React frontend (dev server)
+After=network.target
+
+[Service]
+Type=simple
+User=bokwe
+WorkingDirectory=/home/bokwe/KantanCare/frontend
+# Ensure PATH includes node/npm if installed via nvm; adjust if needed
+Environment=PATH=/usr/bin:/bin:/usr/local/bin
+ExecStart=/bin/bash -lc 'npm start'
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
