@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../services/firebase';
@@ -37,9 +37,13 @@ const MedicalProfileSetup = ({ user }) => {
     instPhone: '',
     instEmail: '',
     specializations: '',
-    facilityType: '',
+    facilityTypes: [],
     licenseNumber: '',
-    operatingHours: '',
+    operatingDayFrom: '',
+    operatingDayTo: '',
+    operatingTime: '',
+    latitude: '',
+    longitude: '',
     website: '',
     description: ''
   });
@@ -60,6 +64,140 @@ const MedicalProfileSetup = ({ user }) => {
       [e.target.name]: e.target.value
     });
   };
+
+  const FACILITY_OPTIONS = ['Hospital', 'Clinic', 'Pharmacy', 'Laboratory', 'Rehabilitation', 'Telehealth', 'Private Practice', 'Community Health Center'];
+
+  const toggleFacilityType = (type) => {
+    setInstitutionData(prev => {
+      const exists = prev.facilityTypes.includes(type);
+      const next = exists ? prev.facilityTypes.filter(t => t !== type) : [...prev.facilityTypes, type];
+      return { ...prev, facilityTypes: next };
+    });
+  };
+
+  // simple day + time selection will be used for operating hours
+
+  const handleLatLngChange = (e) => {
+    const { name, value } = e.target;
+    setInstitutionData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Map modal state and refs
+  const [mapOpen, setMapOpen] = useState(false);
+  const mapRef = useRef(null);
+  const leafletLoadedRef = useRef(false);
+  const mapInstanceRef = useRef(null);
+  const markerRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const openMap = () => {
+    setMapOpen(true);
+  };
+
+  useEffect(() => {
+    if (!mapOpen) return;
+
+    const loadLeaflet = async () => {
+      if (leafletLoadedRef.current) {
+        initMap();
+        return;
+      }
+
+      // load CSS
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+
+      // load script
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      script.onload = () => {
+        leafletLoadedRef.current = true;
+        initMap();
+      };
+      document.body.appendChild(script);
+    };
+
+    const initMap = () => {
+      try {
+        const L = window.L;
+        if (!L || !mapRef.current) return;
+
+        // clear previous map node
+        mapRef.current.innerHTML = '';
+
+        const lat = parseFloat(institutionData.latitude) || -1.2921;
+        const lng = parseFloat(institutionData.longitude) || 36.8219;
+
+        const map = L.map(mapRef.current).setView([lat, lng], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        const marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+        marker.on('dragend', function (e) {
+          const pos = e.target.getLatLng();
+          setInstitutionData(prev => ({ ...prev, latitude: pos.lat.toFixed(6), longitude: pos.lng.toFixed(6) }));
+        });
+
+        mapInstanceRef.current = map;
+        markerRef.current = marker;
+
+        map.on('click', function (e) {
+          const { lat, lng } = e.latlng;
+          marker.setLatLng([lat, lng]);
+          setInstitutionData(prev => ({ ...prev, latitude: lat.toFixed(6), longitude: lng.toFixed(6) }));
+        });
+      } catch (err) {
+        console.error('Map init error', err);
+      }
+    };
+
+    loadLeaflet();
+    // lock scroll while modal open
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, [mapOpen]);
+
+  const handleSearch = async () => {
+    if (!searchQuery) return;
+    try {
+      const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(searchQuery)}`;
+      const resp = await fetch(url);
+      const places = await resp.json();
+      console.log('geocode places', places);
+      if (places && places.length > 0) {
+        const p = places[0];
+        const lat = parseFloat(p.lat);
+        const lon = parseFloat(p.lon);
+        const instName = p.display_name ? p.display_name.split(',')[0].trim() : (p.name || '');
+        setInstitutionData(prev => ({ ...prev, instName, latitude: lat.toFixed(6), longitude: lon.toFixed(6) }));
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.setView([lat, lon], 13);
+          if (markerRef.current) {
+            markerRef.current.setLatLng([lat, lon]);
+          } else if (window.L) {
+            markerRef.current = window.L.marker([lat, lon], { draggable: true }).addTo(mapInstanceRef.current);
+            markerRef.current.on('dragend', function (e) {
+              const pos = e.target.getLatLng();
+              setInstitutionData(prev => ({ ...prev, latitude: pos.lat.toFixed(6), longitude: pos.lng.toFixed(6) }));
+            });
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Geocode error', err);
+    }
+  };
+
+  // close modal on Escape
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setMapOpen(false); };
+    if (mapOpen) window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [mapOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -307,14 +445,24 @@ const MedicalProfileSetup = ({ user }) => {
 
                   <div className="form-group">
                     <label htmlFor="facilityType">Facility Type</label>
-                    <input
-                      type="text"
-                      id="facilityType"
-                      name="facilityType"
-                      value={institutionData.facilityType}
-                      onChange={handleInstitutionChange}
-                      placeholder="e.g., Hospital, Clinic, Lab"
-                    />
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      {FACILITY_OPTIONS.map(opt => (
+                        <button
+                          key={opt}
+                          type="button"
+                          onClick={() => toggleFacilityType(opt)}
+                          style={{
+                            padding: '6px 10px',
+                            borderRadius: '16px',
+                            border: institutionData.facilityTypes.includes(opt) ? '1px solid #2b6cb0' : '1px solid #e2e8f0',
+                            background: institutionData.facilityTypes.includes(opt) ? '#ebf8ff' : 'transparent',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="form-group">
@@ -404,14 +552,70 @@ const MedicalProfileSetup = ({ user }) => {
 
                 <div className="form-group">
                   <label htmlFor="operatingHours">Operating Hours</label>
-                  <input
-                    type="text"
-                    id="operatingHours"
-                    name="operatingHours"
-                    value={institutionData.operatingHours}
-                    onChange={handleInstitutionChange}
-                    placeholder="e.g., Mon-Fri 08:00-17:00"
-                  />
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                      <label style={{ display: 'block', marginBottom: '6px' }}>Select day</label>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <select name="operatingDayFrom" value={institutionData.operatingDayFrom} onChange={(e) => setInstitutionData(prev => ({ ...prev, operatingDayFrom: e.target.value }))} style={{ padding: '8px', borderRadius: '6px', width: '50%' }}>
+                          <option value="">From</option>
+                          <option value="Mon">Mon</option>
+                          <option value="Tue">Tue</option>
+                          <option value="Wed">Wed</option>
+                          <option value="Thu">Thu</option>
+                          <option value="Fri">Fri</option>
+                          <option value="Sat">Sat</option>
+                          <option value="Sun">Sun</option>
+                        </select>
+
+                        <select name="operatingDayTo" value={institutionData.operatingDayTo} onChange={(e) => setInstitutionData(prev => ({ ...prev, operatingDayTo: e.target.value }))} style={{ padding: '8px', borderRadius: '6px', width: '50%' }}>
+                          <option value="">To</option>
+                          <option value="Mon">Mon</option>
+                          <option value="Tue">Tue</option>
+                          <option value="Wed">Wed</option>
+                          <option value="Thu">Thu</option>
+                          <option value="Fri">Fri</option>
+                          <option value="Sat">Sat</option>
+                          <option value="Sun">Sun</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div style={{ flex: 1 }}>
+                      <label style={{ display: 'block', marginBottom: '6px' }}>Select time</label>
+                      <input type="time" value={institutionData.operatingTime} onChange={(e) => setInstitutionData(prev => ({ ...prev, operatingTime: e.target.value }))} style={{ padding: '8px', borderRadius: '6px', border: '1px solid #e2e8f0', width: '100%' }} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-group" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <div style={{ flex: 1 }}>
+                    <label htmlFor="latitude">Latitude</label>
+                    <input
+                      type="text"
+                      id="latitude"
+                      name="latitude"
+                      value={institutionData.latitude}
+                      onChange={handleLatLngChange}
+                      placeholder="e.g., -1.292066"
+                    />
+                  </div>
+
+                  <div style={{ flex: 1 }}>
+                    <label htmlFor="longitude">Longitude</label>
+                    <input
+                      type="text"
+                      id="longitude"
+                      name="longitude"
+                      value={institutionData.longitude}
+                      onChange={handleLatLngChange}
+                      placeholder="e.g., 36.821945"
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ visibility: 'hidden' }}>pick</label>
+                    <button type="button" onClick={openMap} className="btn" style={{ padding: '8px 10px' }}>Pick on map</button>
+                  </div>
                 </div>
 
                 <div className="form-group">
@@ -438,6 +642,22 @@ const MedicalProfileSetup = ({ user }) => {
                     style={{ width: '100%', padding: '12px 16px', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '16px' }}
                   />
                 </div>
+                {mapOpen && (
+                  <div onClick={() => setMapOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 60 }}>
+                    <div onClick={(e) => e.stopPropagation()} style={{ width: '90%', maxWidth: '900px', height: '70%', background: '#fff', borderRadius: '8px', overflow: 'hidden', position: 'relative', display: 'flex', flexDirection: 'column' }}>
+                        <div style={{ padding: '10px 12px', borderBottom: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', background: '#fff', zIndex: 90 }}>
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search place or address" style={{ padding: '8px', borderRadius: '6px', border: '1px solid #e2e8f0', width: '320px' }} />
+                            <button onClick={handleSearch} style={{ padding: '8px 10px', borderRadius: '6px' }}>Search</button>
+                          </div>
+                          <div>
+                            <button onClick={() => setMapOpen(false)} style={{ padding: '8px 10px', background: '#fff', border: '1px solid #e2e8f0', borderRadius: '6px' }}>Close</button>
+                          </div>
+                        </div>
+                        <div ref={mapRef} style={{ width: '100%', flex: 1 }} />
+                      </div>
+                  </div>
+                )}
               </>
             )}
 
