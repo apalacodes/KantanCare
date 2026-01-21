@@ -1,3 +1,72 @@
 .env
+.env.*
 .venv
-frontend/node_modules
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.sqlite3
+*.db
+.python-version
+
+# Byte-compiled / distribution
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Testing / coverage
+.tox/
+.nox/
+.coverage
+.coverage.*
+.pytest_cache/
+htmlcov/
+coverage/
+
+# Type checkers
+.mypy_cache/
+.pyre/
+
+# Node
+node_modules/
+frontend/node_modules/
+frontend/build/
+frontend/public/static/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Secrets, keys and envs
+*.pem
+*.key
+credentials.json
+secrets.json
+.env.local
+.env.production
+
+# Docker
+docker-compose.override.yml
+.docker/

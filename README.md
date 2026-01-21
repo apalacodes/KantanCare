@@ -1,6 +1,8 @@
 KantanCare — Local development setup
 ===================================
 
+KantanCare is a compact medical frontend + FastAPI backend repository that provides a static React-like frontend, patient/doctor dashboard pages, and a simple AI recommendation/chat endpoint for prototyping telehealth workflows.
+
 This repository contains a FastAPI backend and a static frontend (served by the backend in development).
 
 Quick start (recommended)
