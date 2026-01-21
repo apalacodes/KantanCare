@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Appointments - KantanCare</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+
+    <style>
+
+
+      /* Base Styles */
+      * {
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family-body);
+        background-color: var(--background);
+        color: var(--foreground);
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      h1, h2, h3, h4, p {
+        margin: 0;
+      }
+
+      /* Layout */
+      .app-container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 260px;
+        background-color: var(--sidebar);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding: 24px 16px;
+        flex-shrink: 0;
+      }
+
+      .logo-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 12px;
+        margin-bottom: 32px;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        background-color: var(--primary);
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-foreground);
+      }
+
+      .logo-text {
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--sidebar-foreground);
+      }
+
+      .nav-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 32px;
+      }
+
+      .nav-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        font-weight: 600;
+        padding: 0 12px;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+      }
+
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--background);
+        overflow: hidden;
+      }
+
+      /* Top Bar */
+      .top-bar {
+        height: 64px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        background-color: var(--background);
+        flex-shrink: 0;
+      }
+
+      .breadcrumbs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: var(--muted-foreground);
+      }
+
+      .breadcrumb-active {
+        color: var(--foreground);
+        font-weight: 500;
+      }
+
+      .user-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .location-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--muted-foreground);
+        background-color: var(--secondary);
+        padding: 4px 10px;
+        border-radius: 20px;
+      }
+
+      .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid var(--border);
+      }
+
+      /* Scroll Area */
+      .scroll-area {
+        flex: 1;
+        overflow-y: auto;
+        padding: 32px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .content-width {
+        max-width: 1200px;
+        width: 100%;
+        padding-bottom: 40px;
+      }
+
+      /* Header Section */
+      .header-section {
+        margin-bottom: 32px;
+      }
+
+      .page-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--foreground);
+        margin-bottom: 8px;
+      }
+
+      .page-subtitle {
+        font-size: 15px;
+        color: var(--muted-foreground);
+        line-height: 1.5;
+      }
+
+      /* Progress Steps */
+      .progress-track {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+        gap: 12px;
+      }
+
+      .step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted-foreground);
+      }
+
+      .step.active {
+        color: var(--primary);
+      }
+
+      .step-circle {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        background-color: var(--background);
+      }
+
+      .step.active .step-circle {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        color: var(--primary-foreground);
+      }
+
+      .step-line {
+        flex: 1;
+        height: 2px;
+        background-color: var(--border);
+        max-width: 60px;
+      }
+
+      /* Cards */
+      .card {
+        background-color: var(--card);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      .form-card {
+        background-color: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        margin-bottom: 24px;
+        display: flex;
+        gap: 16px;
+        align-items: start;
+      }
+
+      .icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .bg-warning {
+        background-color: rgba(245, 158, 11, 0.1);
+        color: var(--warning);
+      }
+
+      /* Badges */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .badge-yellow {
+        background-color: var(--warning);
+        color: var(--warning-foreground);
+      }
+
+      .badge-gray {
+        background-color: var(--secondary);
+        color: var(--muted-foreground);
+      }
+
+      .badge-green {
+        background-color: var(--success);
+        color: var(--success-foreground);
+      }
+
+      /* Analysis Grid */
+      .analysis-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 24px;
+      }
+
+      /* Doctor Cards */
+      .doctor-card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+
+      .doctor-card:hover {
+        border-color: var(--primary);
+        box-shadow: 0 2px 8px rgba(4, 102, 200, 0.1);
+      }
+
+      .doctor-card.active {
+        border-color: var(--primary);
+        background-color: rgba(4, 102, 200, 0.02);
+      }
+
+      .doctor-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--border);
+      }
+
+      /* Clinic Map */
+      .clinic-map {
+        height: 140px;
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted-foreground);
+        font-size: 13px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .clinic-item {
+        padding: 16px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .clinic-item:last-child {
+        border-bottom: none;
+      }
+
+      .clinic-tag {
+        display: inline-block;
+        padding: 2px 8px;
+        background-color: var(--muted);
+        border-radius: 4px;
+        font-size: 11px;
+        color: var(--muted-foreground);
+      }
+
+      .step-number {
+        width: 28px;
+        height: 28px;
+        background: var(--muted);
+        color: var(--muted-foreground);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 600;
+        flex-shrink: 0;
+      }
+
+      .hover-bg:hover {
+        background-color: var(--muted);
+      }
+
+      /* Utility Classes */
+      .flex {
+        display: flex;
+      }
+
+      .flex-col {
+        flex-direction: column;
+      }
+
+      .flex-1 {
+        flex: 1;
+      }
+
+      .items-start {
+        align-items: flex-start;
+      }
+
+      .items-center {
+        align-items: center;
+      }
+
+      .justify-between {
+        justify-content: space-between;
+      }
+
+      .gap-2 {
+        gap: 8px;
+      }
+
+      .gap-3 {
+        gap: 12px;
+      }
+
+      .gap-4 {
+        gap: 16px;
+      }
+
+      .gap-6 {
+        gap: 24px;
+      }
+
+      .grid {
+        display: grid;
+      }
+
+      .grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .p-0 {
+        padding: 0;
+      }
+
+      .p-4 {
+        padding: 16px;
+      }
+
+      .p-6 {
+        padding: 24px;
+      }
+
+      .pt-3 {
+        padding-top: 12px;
+      }
+
+      .mt-1 {
+        margin-top: 4px;
+      }
+
+      .mt-2 {
+        margin-top: 8px;
+      }
+
+      .mt-3 {
+        margin-top: 12px;
+      }
+
+      .mb-1 {
+        margin-bottom: 4px;
+      }
+
+      .mb-3 {
+        margin-bottom: 12px;
+      }
+
+      .border-b {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .border-t {
+        border-top: 1px solid var(--border);
+      }
+
+      .bg-secondary {
+        background-color: var(--secondary);
+      }
+
+      .text-xs {
+        font-size: 12px;
+      }
+
+      .text-sm {
+        font-size: 14px;
+      }
+
+      .text-lg {
+        font-size: 18px;
+      }
+
+      .font-medium {
+        font-weight: 500;
+      }
+
+      .font-semibold {
+        font-weight: 600;
+      }
+
+      .text-muted-foreground {
+        color: var(--muted-foreground);
+      }
+
+      .text-primary {
+        color: var(--primary);
+      }
+
+      @media (max-width: 968px) {
+        .analysis-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+
+
+      /* Base Styles */
+      * {
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family-body);
+        background-color: var(--background);
+        color: var(--foreground);
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      h1, h2, h3, h4, p {
+        margin: 0;
+      }
+
+      /* Layout */
+      .app-container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 260px;
+        background-color: var(--sidebar);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding: 24px 16px;
+        flex-shrink: 0;
+      }
+
+      .logo-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 12px;
+        margin-bottom: 32px;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        background-color: var(--primary);
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-foreground);
+      }
+
+      .logo-text {
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--sidebar-foreground);
+      }
+
+      .nav-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 32px;
+      }
+
+      .nav-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        font-weight: 600;
+        padding: 0 12px;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: var(--radius-md);
+        color: var(--sidebar-foreground);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .nav-item:hover {
+        background-color: var(--secondary);
+      }
+
+      .nav-item.active {
+        background-color: var(--sidebar-primary);
+        color: var(--sidebar-primary-foreground);
+      }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        .export-wrapper {
+          margin: 0;
+          font-family:
+            -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+            Arial, sans-serif;
+          background-color: var(--background);
+          color: var(--foreground);
+          display: flex;
+          height: 100vh;
+          overflow: hidden;
+        }
+
+        /* Layout Utilities */
+        .flex {
+          display: flex;
+        }
+        .flex-col {
+          flex-direction: column;
+        }
+        .items-center {
+          align-items: center;
+        }
+        .items-start {
+          align-items: flex-start;
+        }
+        .justify-between {
+          justify-content: space-between;
+        }
+        .justify-center {
+          justify-content: center;
+        }
+        .gap-1 {
+          gap: 4px;
+        }
+        .gap-2 {
+          gap: 8px;
+        }
+        .gap-3 {
+          gap: 12px;
+        }
+        .gap-4 {
+          gap: 16px;
+        }
+        .gap-6 {
+          gap: 24px;
+        }
+        .p-4 {
+          padding: 16px;
+        }
+        .p-6 {
+          padding: 24px;
+        }
+        .px-6 {
+          padding-left: 24px;
+          padding-right: 24px;
+        }
+        .py-2 {
+          padding-top: 8px;
+          padding-bottom: 8px;
+        }
+        .w-full {
+          width: 100%;
+        }
+        .h-full {
+          height: 100%;
+        }
+        .flex-1 {
+          flex: 1;
+        }
+        .border-b {
+          border-bottom: 1px solid var(--border);
+        }
+        .border-r {
+          border-right: 1px solid var(--border);
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        p {
+          margin: 0;
+        }
+        .text-xs {
+          font-size: 12px;
+        }
+        .text-sm {
+          font-size: 14px;
+        }
+        .text-base {
+          font-size: 16px;
+        }
+        .text-lg {
+          font-size: 18px;
+        }
+        .font-medium {
+          font-weight: 500;
+        }
+        .font-semibold {
+          font-weight: 600;
+        }
+        .font-bold {
+          font-weight: 700;
+        }
+        .text-muted {
+          color: var(--muted-foreground);
+        }
+        .text-primary {
+          color: var(--primary);
+        }
+
+        /* Components */
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px 16px;
+          border-radius: var(--radius-md);
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+          border: 1px solid transparent;
+        }
+        .btn-primary {
+          background-color: var(--primary);
+          color: var(--primary-foreground);
+        }
+        .btn-secondary {
+          background-color: var(--secondary);
+          color: var(--secondary-foreground);
+        }
+        .btn-outline {
+          background-color: transparent;
+          border: 1px solid var(--border);
+          color: var(--foreground);
+        }
+        .btn-ghost {
+          background-color: transparent;
+          color: var(--muted-foreground);
+        }
+        .btn-ghost:hover {
+          background-color: var(--muted);
+          color: var(--foreground);
+        }
+        .btn-sm {
+          padding: 4px 8px;
+          font-size: 12px;
+          height: 28px;
+        }
+
+        .card {
+          background-color: var(--card);
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--border);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .badge {
+          display: inline-flex;
+          align-items: center;
+          padding: 2px 8px;
+          border-radius: 9999px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+        .badge-blue {
+          background-color: var(--accent);
+          color: var(--accent-foreground);
+        }
+        .badge-green {
+          background-color: var(--success);
+          color: var(--success-foreground);
+        }
+        .badge-yellow {
+          background-color: var(--warning);
+          color: var(--warning-foreground);
+        }
+        .badge-gray {
+          background-color: var(--secondary);
+          color: var(--muted-foreground);
+        }
+
+        /* Sidebar */
+        .sidebar {
+          width: 260px;
+          background-color: var(--sidebar);
+          flex-shrink: 0;
+          z-index: 20;
+        }
+
+        /* Master-Detail Layout */
+        .master-list {
+          width: 380px;
+          background-color: var(--background);
+          overflow-y: auto;
+          border-right: 1px solid var(--border);
+        }
+        .detail-view {
+          flex: 1;
+          background-color: var(--card);
+          overflow-y: auto;
+        }
+
+        /* List Items */
+        .appt-item {
+          padding: 16px;
+          border-bottom: 1px solid var(--border);
+          cursor: pointer;
+          transition: background 0.2s;
+          background-color: var(--card);
+        }
+        .appt-item:hover {
+          background-color: var(--muted);
+        }
+        .appt-item.selected {
+          background-color: var(--accent);
+          border-left: 3px solid var(--primary);
+        }
+        .appt-item.selected h4 {
+          color: var(--accent-foreground);
+        }
+
+        .icon-box {
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        /* Tabs */
+        .tab-group {
+          display: flex;
+          gap: 4px;
+          padding: 4px;
+          background: var(--secondary);
+          border-radius: var(--radius-md);
+          width: fit-content;
+        }
+        .tab {
+          padding: 6px 12px;
+          border-radius: var(--radius-sm);
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--muted-foreground);
+          cursor: pointer;
+        }
+        .tab.active {
+          background: var(--card);
+          color: var(--foreground);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Grid for details */
+        .detail-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 16px;
+        }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <nav class="sidebar">
+        <div class="logo-area">
+          <div class="logo-icon">
+            <iconify-icon
+              icon="lucide:activity"
+              style="font-size: 20px; color: var(--primary-foreground)"
+            ></iconify-icon>
+          </div>
+          <div class="logo-text">KantanCare</div>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-item">
+            <iconify-icon icon="lucide:home" style="font-size: 18px"></iconify-icon>
+            Dashboard
+          </div>
+          <div class="nav-item ">
+            <iconify-icon icon="lucide:stethoscope" style="font-size: 18px"></iconify-icon>
+            <a href="Symptom_Check.html" style="color: inherit; text-decoration: none;">Symptom Check</a>
+
+          </div>
+          <div class="nav-item active">
+            <iconify-icon icon="lucide:calendar" style="font-size: 18px"></iconify-icon>
+            <a href="Appointments.html" style="color: inherit; text-decoration: none;">Appointments</a>
+
+          </div>
+          <div class="nav-item">
+            <iconify-icon icon="lucide:file-text" style="font-size: 18px"></iconify-icon>
+            <a href="History.html" style="color: inherit; text-decoration: none;">History</a>
+          </div>
+        </div>
+
+        <div class="nav-group" style="margin-top: auto">
+          <div class="nav-label">Settings</div>
+          <div class="nav-item">
+            <iconify-icon icon="lucide:user" style="font-size: 18px"></iconify-icon>
+            Profile
+          </div>
+          <div class="nav-item">
+            <iconify-icon icon="lucide:settings" style="font-size: 18px"></iconify-icon>
+            Preferences
+          </div>
+        </div>
+      </nav>
+ <!-- Main Layout -->
+      <div class="flex flex-1 overflow-hidden">
+        <!-- Middle Column: Appointments List -->
+        <div class="master-list flex flex-col">
+          <div class="p-4 border-b bg-card sticky top-0 z-10">
+            <h2 class="text-lg font-semibold mb-4">Appointments</h2>
+            <div class="tab-group mb-2">
+              <div class="tab active" data-media-type="banani-button">
+                Active
+              </div>
+              <div class="tab" data-media-type="banani-button">Past</div>
+              <div class="tab" data-media-type="banani-button">Drafts</div>
+            </div>
+          </div>
+
+          <div class="flex-1 overflow-y-auto">
+            <!-- Item 1: Selected, Under Review -->
+            <div class="appt-item selected" data-media-type="banani-button">
+              <div class="flex justify-between items-start mb-2">
+                <div class="badge badge-yellow">Under Review</div>
+                <span class="text-xs text-muted-foreground"
+                  >Req: 2 hrs ago</span
+                >
+              </div>
+              <h4 class="font-semibold text-sm mb-1">
+                Chest Discomfort &amp; Fatigue
+              </h4>
+              <p class="text-xs text-muted-foreground mb-3">
+                Matching Specialist • Nearest Hospital
+              </p>
+              <div
+                class="flex items-center gap-3 text-xs text-muted-foreground"
+              >
+                <span class="flex items-center gap-1"
+                  ><iconify-icon
+                    icon="lucide:map-pin"
+                    style="font-size: 12px"
+                  ></iconify-icon>
+                  Finding Location</span
+                >
+                <span class="flex items-center gap-1"
+                  ><iconify-icon
+                    icon="lucide:user"
+                    style="font-size: 12px"
+                  ></iconify-icon>
+                  Matching Dr.</span
+                >
+              </div>
+            </div>
+
+            <!-- Item 2: Confirmed -->
+            <div class="appt-item" data-media-type="banani-button">
+              <div class="flex justify-between items-start mb-2">
+                <div class="badge badge-green">Confirmed</div>
+                <span class="text-xs text-muted-foreground"
+                  >Tomorrow, 10:00 AM</span
+                >
+              </div>
+              <h4 class="font-semibold text-sm mb-1">
+                Dermatology Consultation
+              </h4>
+              <p class="text-xs text-muted-foreground mb-3">
+                Dr. Emily Liu • City Health Clinic
+              </p>
+              <div
+                class="flex items-center gap-3 text-xs text-muted-foreground"
+              >
+                <span class="flex items-center gap-1"
+                  ><iconify-icon
+                    icon="lucide:video"
+                    style="font-size: 12px"
+                  ></iconify-icon>
+                  Teleconsultation</span
+                >
+              </div>
+            </div>
+
+            <!-- Item 3: Under Confirmation -->
+            <div class="appt-item" data-media-type="banani-button">
+              <div class="flex justify-between items-start mb-2">
+                <div class="badge badge-blue">Confirming</div>
+                <span class="text-xs text-muted-foreground"
+                  >Today, 2:30 PM</span
+                >
+              </div>
+              <h4 class="font-semibold text-sm mb-1">Follow-up: Migraine</h4>
+              <p class="text-xs text-muted-foreground mb-3">
+                Dr. James Wilson • University Hospital
+              </p>
+              <div
+                class="flex items-center gap-3 text-xs text-muted-foreground"
+              >
+                <span class="flex items-center gap-1"
+                  ><iconify-icon
+                    icon="lucide:building-2"
+                    style="font-size: 12px"
+                  ></iconify-icon>
+                  Physical Visit</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Detail View -->
+        <div class="detail-view flex flex-col">
+          <!-- Header -->
+          <header
+            class="h-16 border-b bg-card px-6 flex items-center justify-between sticky top-0 z-10"
+          >
+            <div class="flex items-center gap-3">
+              <div class="icon-box bg-warning text-warning-foreground">
+                <iconify-icon
+                  icon="lucide:clock"
+                  style="font-size: 20px"
+                ></iconify-icon>
+              </div>
+              <div>
+                <h2 class="text-base font-semibold">Request #req-2921</h2>
+                <p class="text-xs text-muted-foreground">
+                  Submitted Oct 24, 2023 • 09:15 AM
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button
+                class="btn btn-outline btn-sm text-destructive hover:bg-destructive/10"
+                data-media-type="banani-button"
+              >
+                Cancel Request
+              </button>
+              <button
+                class="btn btn-outline btn-sm"
+                data-media-type="banani-button"
+              >
+                Edit Symptoms
+              </button>
+            </div>
+          </header>
+
+          <div class="p-8 max-w-4xl mx-auto w-full flex flex-col gap-6">
+            <!-- Status Banner -->
+            <div class="card border-warning/50 bg-warning/5">
+              <div class="p-4 flex gap-3">
+                <div
+                  class="bg-warning text-warning-foreground rounded-full p-1 h-fit"
+                >
+                  <iconify-icon
+                    icon="lucide:loader-2"
+                    style="font-size: 18px"
+                  ></iconify-icon>
+                </div>
+                <div class="flex-1">
+                  <h3
+                    class="text-sm font-semibold text-warning-foreground mb-1"
+                  >
+                    Under Clinical Review
+                  </h3>
+                  <p class="text-sm text-muted-foreground mb-3">
+                    Our AI has analyzed your symptoms. A triage nurse is
+                    currently verifying the "Best Match" recommendations before
+                    confirming your slot.
+                  </p>
+                  <div class="flex items-center gap-2">
+                    <span
+                      class="text-xs font-medium text-warning-foreground bg-warning/20 px-2 py-1 rounded"
+                      >Est. Wait: 15 mins</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Best Match Section -->
+            <div class="detail-grid">
+              <!-- Doctor Match -->
+              <div class="card p-0 flex flex-col h-full">
+                <div class="p-4 border-b bg-secondary/30">
+                  <div class="flex justify-between items-center">
+                    <span
+                      class="text-xs font-bold text-primary tracking-wide uppercase"
+                      >Best Matching Doctor</span
+                    >
+                    <span class="badge badge-green">98% Match</span>
+                  </div>
+                </div>
+                <div class="p-4 flex-1 flex flex-col gap-3">
+                  <div class="flex items-start gap-3">
+                    <img
+                      src="https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F35-50%2FEuropean%2F2"
+                      alt="Doctor"
+                      class="w-12 h-12 rounded-full object-cover"
+                      style="width: 48px; height: 48px"
+                    />
+                    <div>
+                      <h4 class="font-semibold text-sm">Dr. Alan Grant</h4>
+                      <p class="text-xs text-muted-foreground">
+                        Cardiologist • 15 years exp
+                      </p>
+                      <div
+                        class="flex items-center gap-1 mt-1 text-xs text-muted-foreground"
+                      >
+                        <iconify-icon
+                          icon="lucide:star"
+                          style="font-size: 12px; color: #fbbf24"
+                        ></iconify-icon>
+                        4.9 (124 reviews)
+                      </div>
+                    </div>
+                  </div>
+                  <p
+                    class="text-sm text-muted-foreground bg-secondary/50 p-3 rounded"
+                  >
+                    "Selected based on reported chest discomfort and fatigue
+                    history. Dr. Grant specializes in preventative cardiology."
+                  </p>
+                </div>
+                <div class="p-3 border-t bg-muted/20">
+                  <button
+                    class="btn btn-outline btn-sm w-full"
+                    data-media-type="banani-button"
+                  >
+                    View Profile
+                  </button>
+                </div>
+              </div>
+
+              <!-- Hospital Match -->
+              <div class="card p-0 flex flex-col h-full">
+                <div class="p-4 border-b bg-secondary/30">
+                  <div class="flex justify-between items-center">
+                    <span
+                      class="text-xs font-bold text-primary tracking-wide uppercase"
+                      >Nearest Hospital</span
+                    >
+                    <span class="badge badge-blue">0.8 miles</span>
+                  </div>
+                </div>
+                <div
+                  class="p-0 relative h-32 w-full overflow-hidden bg-secondary"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&amp;fit=crop&amp;q=80&amp;w=600&amp;h=300"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                      opacity: 0.8;
+                    "
+                    alt="Map Preview"
+                  />
+                  <div
+                    style="
+                      position: absolute;
+                      bottom: 8px;
+                      right: 8px;
+                      background: white;
+                      padding: 4px 8px;
+                      border-radius: 4px;
+                      font-size: 10px;
+                      font-weight: bold;
+                    "
+                  >
+                    Map View
+                  </div>
+                </div>
+                <div class="p-4 flex-1">
+                  <h4 class="font-semibold text-sm">City Memorial Hospital</h4>
+                  <p class="text-xs text-muted-foreground mb-2">
+                    4500 Grand Ave, Downtown
+                  </p>
+                  <div class="flex gap-2 mb-2">
+                    <span class="badge badge-gray text-xs"
+                      >Emergency Ready</span
+                    >
+                    <span class="badge badge-gray text-xs">Lab On-site</span>
+                  </div>
+                  <div
+                    class="flex items-center gap-2 text-xs text-success-foreground"
+                  >
+                    <iconify-icon
+                      icon="lucide:clock"
+                      style="font-size: 12px"
+                    ></iconify-icon>
+                    Next Available Slot: Today, 2:15 PM
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Appointment Configuration -->
+            <div class="card">
+              <div class="p-4 border-b">
+                <h3 class="text-sm font-semibold">Appointment Preferences</h3>
+              </div>
+              <div class="p-6 flex flex-col gap-4">
+                <!-- Toggle Type -->
+                <div
+                  class="flex items-center justify-between p-3 border rounded-lg bg-secondary/10"
+                >
+                  <div class="flex items-center gap-3">
+                    <div class="p-2 bg-blue-100 text-blue-700 rounded-md">
+                      <iconify-icon
+                        icon="lucide:building-2"
+                        style="font-size: 20px; color: var(--primary)"
+                      ></iconify-icon>
+                    </div>
+                    <div>
+                      <span class="block text-sm font-medium"
+                        >Physical Visit</span
+                      >
+                      <span class="block text-xs text-muted-foreground"
+                        >Recommended for physical examination</span
+                      >
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-primary">Selected</span>
+                    <iconify-icon
+                      icon="lucide:check-circle-2"
+                      style="font-size: 18px; color: var(--primary)"
+                    ></iconify-icon>
+                  </div>
+                </div>
+
+                <!-- Teleconsult Option -->
+                <div
+                  class="flex items-center justify-between p-3 border rounded-lg hover:bg-muted cursor-pointer opacity-60"
+                  data-media-type="banani-button"
+                >
+                  <div class="flex items-center gap-3">
+                    <div class="p-2 bg-gray-100 text-gray-700 rounded-md">
+                      <iconify-icon
+                        icon="lucide:video"
+                        style="font-size: 20px"
+                      ></iconify-icon>
+                    </div>
+                    <div>
+                      <span class="block text-sm font-medium"
+                        >Teleconsultation</span
+                      >
+                      <span class="block text-xs text-muted-foreground"
+                        >Video call with doctor</span
+                      >
+                    </div>
+                  </div>
+                  <button class="btn btn-outline btn-sm">Switch</button>
+                </div>
+              </div>
+              <div class="p-4 border-t bg-secondary/30 flex justify-end gap-3">
+                <span class="text-xs text-muted-foreground self-center mr-auto"
+                  >*Cancellation allowed up to 1 hr before</span
+                >
+                <button
+                  class="btn btn-secondary"
+                  data-media-type="banani-button"
+                >
+                  Hold Slot
+                </button>
+                <button class="btn btn-primary" data-media-type="banani-button">
+                  Confirm Appointment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>
+  <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+  <style>:root {
+        --background: #f7fafd;
+        --foreground: #0f1724;
+        --card: #ffffff;
+        --card-foreground: #0f1724;
+        --input: #ffffff;
+        --border: rgba(0, 0, 0, 0.08);
+        --primary: #0466c8;
+        --primary-foreground: #ffffff;
+        --secondary: #e9f2ff;
+        --secondary-foreground: #073b66;
+        --muted: #f1f5f9;
+        --muted-foreground: #98a0aa;
+        --success: #0f9d58;
+        --success-foreground: #ffffff;
+        --warning: #f59e0b;
+        --warning-foreground: #08131a;
+        --destructive: #e02424;
+        --destructive-foreground: #ffffff;
+        --accent: #ffb142;
+        --accent-foreground: #1a2a31;
+        --sidebar: #f1f7fb;
+        --sidebar-foreground: #0c1720;
+        --sidebar-primary: #0466c8;
+        --sidebar-primary-foreground: #ffffff;
+        --radius-sm: 4px;
+        --radius-md: 6px;
+        --radius-lg: 8px;
+        --radius-xl: 12px;
+        --font-family-body: Inter, sans-serif;
+        --spacing-xs: 4px;
+        --spacing-sm: 8px;
+        --spacing-md: 16px;
+        --spacing-lg: 24px;
+        --spacing-xl: 32px;
+      }
+  </style>
+</div>
+
+      

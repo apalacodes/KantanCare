@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Symptom Assessment - KantanCare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      :root {
+        --background: #f7fafd;
+        --foreground: #0f1724;
+        --border: #00000014;
+        --input: #ffffff;
+        --primary: #0466c8;
+        --primary-foreground: #ffffff;
+        --secondary: #e9f2ff;
+        --secondary-foreground: #073b66;
+        --muted: #f1f5f9;
+        --muted-foreground: #98a0aa;
+        --success: #0f9d58;
+        --success-foreground: #ffffff;
+        --accent: #ffb142;
+        --accent-foreground: #1a2a31;
+        --destructive: #e02424;
+        --destructive-foreground: #ffffff;
+        --warning: #f59e0b;
+        --warning-foreground: #08131a;
+        --card: #ffffff;
+        --card-foreground: #0f1724;
+        --sidebar: #f1f7fb;
+        --sidebar-foreground: #0c1720;
+        --sidebar-primary: #0466c8;
+        --sidebar-primary-foreground: #ffffff;
+        --radius-sm: 4px;
+        --radius-md: 6px;
+        --radius-lg: 8px;
+        --radius-xl: 12px;
+        --font-family-body: Inter, sans-serif;
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family-body);
+        background-color: var(--background);
+        color: var(--foreground);
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      h1, h2, h3, h4, p {
+        margin: 0;
+      }
+
+      .app-container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 260px;
+        background-color: var(--sidebar);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding: 24px 16px;
+        flex-shrink: 0;
+      }
+
+      .logo-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 12px;
+        margin-bottom: 32px;
+      }
+      
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        background-color: var(--primary);
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-foreground);
+      }
+      
+      .logo-text {
+        font-weight: 600;
+        font-size: 18px;
+        color: var(--sidebar-foreground);
+      }
+
+      .nav-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 32px;
+      }
+
+      .nav-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        font-weight: 600;
+        padding: 0 12px;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: var(--radius-md);
+        color: var(--sidebar-foreground);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      
+      .nav-item:hover {
+        background-color: var(--secondary);
+      }
+      
+      .nav-item.active {
+        background-color: var(--sidebar-primary);
+        color: var(--sidebar-primary-foreground);
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--background);
+        overflow: hidden;
+      }
+
+      .top-bar {
+        height: 64px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        background-color: var(--background);
+      }
+
+      .breadcrumbs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: var(--muted-foreground);
+      }
+      
+      .breadcrumb-active {
+        color: var(--foreground);
+        font-weight: 500;
+      }
+
+      .user-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .location-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--muted-foreground);
+        background-color: var(--secondary);
+        padding: 4px 10px;
+        border-radius: 20px;
+      }
+
+      .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid var(--border);
+      }
+
+      /* Scrollable Form Area */
+      .scroll-area {
+        flex: 1;
+        overflow-y: auto;
+        padding: 32px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .content-width {
+        max-width: 800px;
+        width: 100%;
+        padding-bottom: 100px;
+      }
+
+      .header-section {
+        margin-bottom: 32px;
+      }
+      
+      .page-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--foreground);
+        margin: 0 0 8px 0;
+      }
+      
+      .page-subtitle {
+        font-size: 15px;
+        color: var(--muted-foreground);
+        line-height: 1.6;
+      }
+
+      /* Progress Steps */
+      .progress-track {
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+        gap: 12px;
+      }
+      
+      .step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted-foreground);
+      }
+      
+      .step.active {
+        color: var(--primary);
+      }
+      
+      .step-circle {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        background-color: var(--background);
+      }
+      
+      .step.active .step-circle {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        color: var(--primary-foreground);
+      }
+      
+      .step-line {
+        flex: 1;
+        height: 2px;
+        background-color: var(--border);
+        max-width: 60px;
+      }
+
+      /* Cards */
+      .form-card {
+        background-color: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        margin-bottom: 24px;
+        transition: box-shadow 0.2s;
+      }
+
+      .form-card:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      }
+
+      .card-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Inputs */
+      .textarea-wrapper {
+        position: relative;
+      }
+      
+      .custom-textarea {
+        width: 100%;
+        min-height: 140px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 14px;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.6;
+        background-color: var(--input);
+        color: var(--foreground);
+        resize: vertical;
+        transition: all 0.2s;
+      }
+      
+      .custom-textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(4, 102, 200, 0.1);
+      }
+      
+      .custom-textarea::placeholder {
+        color: var(--muted-foreground);
+        opacity: 0.6;
+      }
+      
+      .helper-text {
+        font-size: 13px;
+        color: var(--muted-foreground);
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .char-count {
+        font-size: 12px;
+        color: var(--muted-foreground);
+        text-align: right;
+        margin-top: 6px;
+      }
+
+      /* Severity Scale */
+      .scale-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 4px;
+        margin-top: 16px;
+      }
+      
+      .scale-item {
+        flex: 1;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border);
+        background-color: var(--input);
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.2s;
+        position: relative;
+      }
+      
+      .scale-item:first-child {
+        border-top-left-radius: var(--radius-md);
+        border-bottom-left-radius: var(--radius-md);
+      }
+      
+      .scale-item:last-child {
+        border-top-right-radius: var(--radius-md);
+        border-bottom-right-radius: var(--radius-md);
+      }
+      
+      .scale-item:hover {
+        background-color: var(--secondary);
+        transform: translateY(-2px);
+      }
+      
+      .scale-item.selected {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+        border-color: var(--primary);
+        transform: scale(1.05);
+        z-index: 1;
+      }
+      
+      .scale-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--muted-foreground);
+        padding: 0 4px;
+      }
+
+      /* Duration Chips */
+      .chip-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      
+      .chip {
+        padding: 10px 16px;
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        background-color: var(--input);
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-weight: 500;
+      }
+      
+      .chip:hover {
+        border-color: var(--primary);
+        background-color: var(--secondary);
+        transform: translateY(-1px);
+      }
+      
+      .chip.active {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+        border-color: var(--primary);
+        box-shadow: 0 2px 8px rgba(4, 102, 200, 0.3);
+      }
+
+      /* Body Map Grid */
+      .body-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 12px;
+      }
+      
+      .body-part {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 20px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        cursor: pointer;
+        background-color: var(--input);
+        transition: all 0.2s;
+      }
+      
+      .body-part:hover {
+        background-color: var(--secondary);
+        border-color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(4, 102, 200, 0.1);
+      }
+      
+      .body-part.selected {
+        background-color: var(--secondary);
+        border: 2px solid var(--primary);
+        box-shadow: 0 2px 12px rgba(4, 102, 200, 0.2);
+      }
+      
+      .part-icon {
+        opacity: 0.7;
+        transition: opacity 0.2s;
+      }
+
+      .body-part:hover .part-icon,
+      .body-part.selected .part-icon {
+        opacity: 1;
+      }
+      
+      .part-label {
+        font-size: 13px;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      /* Checkbox Group */
+      .checkbox-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .checkbox-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--input);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .checkbox-item:hover {
+        background-color: var(--muted);
+        border-color: var(--primary);
+      }
+
+      .checkbox-item.checked {
+        border: 1px solid var(--primary);
+        background: var(--secondary);
+      }
+
+      .checkbox-box {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--muted-foreground);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.2s;
+      }
+
+      .checkbox-item.checked .checkbox-box {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .checkbox-label {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      /* Action Bar */
+      .action-bar {
+        position: fixed;
+        bottom: 0;
+        left: 260px;
+        right: 0;
+        padding: 20px 32px;
+        background: linear-gradient(to top, var(--background) 80%, transparent);
+        backdrop-filter: blur(8px);
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 10;
+      }
+      
+      .privacy-note {
+        font-size: 13px;
+        color: var(--muted-foreground);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      
+      .btn {
+        height: 44px;
+        padding: 0 24px;
+        border-radius: var(--radius-md);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        transition: all 0.2s;
+      }
+      
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+      
+      .btn-primary {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+        box-shadow: 0 2px 8px rgba(4, 102, 200, 0.2);
+      }
+
+      .btn-primary:hover {
+        background-color: #0356a8;
+        box-shadow: 0 4px 12px rgba(4, 102, 200, 0.3);
+      }
+      
+      .btn-secondary {
+        background-color: var(--secondary);
+        color: var(--secondary-foreground);
+        border: 1px solid var(--border);
+      }
+
+      .btn-secondary:hover {
+        background-color: #d4e7ff;
+      }
+
+      /* Grid for Duration/Severity */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+
+        .checkbox-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .body-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        .action-bar {
+          left: 0;
+        }
+      }
+
+      /* Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .form-card {
+        animation: fadeIn 0.3s ease-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <nav class="sidebar">
+        <div class="logo-area">
+          <div class="logo-icon">
+            <iconify-icon
+              icon="lucide:activity"
+              style="font-size: 20px; color: var(--primary-foreground)"
+            ></iconify-icon>
+          </div>
+          <div class="logo-text">KantanCare</div>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-item">
+            <iconify-icon icon="lucide:home" style="font-size: 18px"></iconify-icon>
+            Dashboard
+          </div>
+          <div class="nav-item active">
+            <iconify-icon icon="lucide:stethoscope" style="font-size: 18px"></iconify-icon>
+            <a href="Symptom_Check.html" style="color: inherit; text-decoration: none;">Symptom Check</a>
+          </div>
+          <div class="nav-item">
+            <iconify-icon icon="lucide:calendar" style="font-size: 18px"></iconify-icon>
+            <a href="Appointments.html" style="color: inherit; text-decoration: none;">Appointments</a>
+          </div>
+          <div class="nav-item">
+            <iconify-icon icon="lucide:file-text" style="font-size: 18px"></iconify-icon>
+            <a href="History.html" style="color: inherit; text-decoration: none;"> History</a>
+          </div>
+        </div>
+
+        <div class="nav-group" style="margin-top: auto">
+          <div class="nav-label">Settings</div>
+          <div class="nav-item">
+            <iconify-icon icon="lucide:user" style="font-size: 18px"></iconify-icon>
+            Profile
+          </div>
+          <div class="nav-item">
+            <iconify-icon icon="lucide:settings" style="font-size: 18px"></iconify-icon>
+            Preferences
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+          <div class="breadcrumbs">
+            <span>Home</span>
+            <iconify-icon icon="lucide:chevron-right" style="font-size: 14px"></iconify-icon>
+            <span>Symptom Checker</span>
+            <iconify-icon icon="lucide:chevron-right" style="font-size: 14px"></iconify-icon>
+            <span class="breadcrumb-active">New Assessment</span>
+          </div>
+
+          <div class="user-actions">
+            <div class="location-badge">
+              <iconify-icon icon="lucide:map-pin" style="font-size: 14px"></iconify-icon>
+              <span>KTM, Nepal</span>
+            </div>
+            <img
+              src="https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FSouth%20Asian%2F3"
+              alt="User Avatar"
+              class="user-avatar"
+            />
+          </div>
+        </header>
+
+        <!-- Scroll Area -->
+        <div class="scroll-area">
+          <div class="content-width">
+            <div class="header-section">
+              <h1 class="page-title">Describe your symptoms</h1>
+              <div class="page-subtitle">
+                We'll use this information to analyze your condition and recommend the best next steps. Please be as detailed as possible.
+              </div>
+            </div>
+
+            <!-- Progress Tracker -->
+            <div class="progress-track">
+              <div class="step active">
+                <div class="step-circle">1</div>
+                Symptoms
+              </div>
+              <div class="step-line"></div>
+              <div class="step">
+                <div class="step-circle">2</div>
+                Analysis
+              </div>
+              <div class="step-line"></div>
+              <div class="step">
+                <div class="step-circle">3</div>
+                Results
+              </div>
+            </div>
+
+            <!-- Main Form -->
+            <div class="form-card">
+              <div class="card-title">
+                <iconify-icon
+                  icon="lucide:message-square"
+                  style="font-size: 18px; color: var(--primary)"
+                ></iconify-icon>
+                What's bothering you today?
+              </div>
+              <div class="textarea-wrapper">
+                <textarea
+                  id="symptomsText"
+                  class="custom-textarea"
+                  placeholder="e.g., I have a persistent cough that started 3 days ago, along with mild chest discomfort and a low-grade fever around 38°C..."
+                  maxlength="500"
+                ></textarea>
+              </div>
+              <div class="char-count">
+                <span id="charCount">0</span>/500 characters
+              </div>
+              <div class="helper-text">
+                <iconify-icon icon="lucide:info" style="font-size: 14px"></iconify-icon>
+                Include details about onset, triggers, and any changes in symptoms
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-card" style="margin-bottom: 0">
+                <div class="card-title">
+                  <iconify-icon
+                    icon="lucide:clock"
+                    style="font-size: 18px; color: var(--primary)"
+                  ></iconify-icon>
+                  Duration
+                </div>
+                <div class="chip-group">
+                  <div class="chip" data-duration="today">Today</div>
+                  <div class="chip active" data-duration="1-3days">1-3 Days</div>
+                  <div class="chip" data-duration="1week">1 Week</div>
+                  <div class="chip" data-duration="1month">1 Month+</div>
+                </div>
+              </div>
+
+              <div class="form-card" style="margin-bottom: 0">
+                <div class="card-title">
+                  <iconify-icon
+                    icon="lucide:alert-circle"
+                    style="font-size: 18px; color: var(--primary)"
+                  ></iconify-icon>
+                  Severity Level
+                </div>
+                <div class="scale-container" id="severityScale">
+                  <div class="scale-item" data-severity="1">1</div>
+                  <div class="scale-item" data-severity="2">2</div>
+                  <div class="scale-item" data-severity="3">3</div>
+                  <div class="scale-item" data-severity="4">4</div>
+                  <div class="scale-item selected" data-severity="5">5</div>
+                  <div class="scale-item" data-severity="6">6</div>
+                  <div class="scale-item" data-severity="7">7</div>
+                  <div class="scale-item" data-severity="8">8</div>
+                  <div class="scale-item" data-severity="9">9</div>
+                  <div class="scale-item" data-severity="10">10</div>
+                </div>
+                <div class="scale-labels">
+                  <span>Mild</span>
+                  <span>Moderate</span>
+                  <span>Severe</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <div class="card-title">
+                <iconify-icon
+                  icon="lucide:user"
+                  style="font-size: 18px; color: var(--primary)"
+                ></iconify-icon>
+                Where is the discomfort located?
+              </div>
+              <div class="body-grid" id="bodyParts">
+                <div class="body-part" data-part="head">
+                  <iconify-icon
+                    icon="lucide:smile"
+                    class="part-icon"
+                    style="font-size: 24px; color: var(--primary)"
+                  ></iconify-icon>
+                  <span class="part-label">Head / Face</span>
+                </div>
+                <div class="body-part" data-part="throat">
+                  <iconify-icon
+                    icon="lucide:mic"
+                    class="part-icon"
+                    style="font-size: 24px; color: var(--accent)"
+                  ></iconify-icon>
+                  <span class="part-label">Throat / Neck</span>
+                </div>
+                <div class="body-part selected" data-part="chest">
+                  <iconify-icon
+                    icon="lucide:heart-pulse"
+                    class="part-icon"
+                    style="font-size: 24px; color: var(--destructive)"
+                  ></iconify-icon>
+                  <span class="part-label">Chest</span>
+                </div>
+                <div class="body-part" data-part="abdomen">
+                  <iconify-icon
+                    icon="lucide:utensils"
+                    class="part-icon"
+                    style="font-size: 24px; color: var(--warning)"
+                  ></iconify-icon>
+                  <span class="part-label">Abdomen</span>
+                </div>
+                <div class="body-part" data-part="back">
+                  <iconify-icon
+                    icon="lucide:accessibility"
+                    class="part-icon"
+                    style="font-size: 24px; color: #8b5cf6"
+                  ></iconify-icon>
+                  <span class="part-label">Back</span>
+                </div>
+                <div class="body-part" data-part="limbs">
+                  <iconify-icon
+                    icon="lucide:move"
+                    class="part-icon"
+                    style="font-size: 24px; color: var(--success)"
+                  ></iconify-icon>
+                  <span class="part-label">Limbs</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <div class="card-title">
+                <iconify-icon
+                  icon="lucide:layers"
+                  style="font-size: 18px; color: var(--primary)"
+                ></iconify-icon>
+                Additional Context
+              </div>
+              <div class="checkbox-grid" id="contextChecks">
+                <div class="checkbox-item" data-context="travel">
+                  <div class="checkbox-box"></div>
+                  <span class="checkbox-label">Recently traveled</span>
+                </div>
+                <div class="checkbox-item checked" data-context="medication">
+                  <div class="checkbox-box">
+                    <iconify-icon
+                      icon="lucide:check"
+                      style="font-size: 12px; color: var(--primary-foreground)"
+                    ></iconify-icon>
+                  </div>
+                  <span class="checkbox-label">Took medication recently</span>
+                </div>
+                <div class="checkbox-item" data-context="fever">
+                  <div class="checkbox-box"></div>
+                  <span class="checkbox-label">High fever (>38°C)</span>
+                </div>
+                <div class="checkbox-item" data-context="pregnant">
+                  <div class="checkbox-box"></div>
+                  <span class="checkbox-label">Pregnant</span>
+                </div>
+              </div>
+
+<div style="height: 80px;"></div>
+          <!-- Floating Action Bar -->
+          <div class="action-bar">
+            <div class="privacy-note">
+              <iconify-icon
+                icon="lucide:shield-check"
+                style="font-size: 16px; color: var(--success)"
+              ></iconify-icon>
+              Your data is encrypted and HIPAA compliant.
+            </div>
+            <div style="display: flex; gap: 12px">
+              <button class="btn btn-secondary" data-media-type="banani-button">
+                Save Draft
+              </button>
+              <button class="btn btn-primary" data-media-type="banani-button">
+                <a href="Patient_Summary.html" style="color: inherit; text-decoration: none;">Analyze Symptoms</a>
+                <iconify-icon
+                  icon="lucide:arrow-right"
+                  style="font-size: 16px"
+                ></iconify-icon>
+              </button>
+            </div>
+          </div>
+
+                  </div>
+                              </div>
+          </div>
+        </main>
+      </div>
+    </body>
+  </html>
+        
