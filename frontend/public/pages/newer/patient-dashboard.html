@@ -311,43 +311,6 @@
         margin-bottom: 24px;
       }
 
-      /* Symptom Input */
-      .symptom-input h3 {
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 12px;
-      }
-
-      .symptom-input textarea {
-        width: 100%;
-        padding: 14px 16px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: var(--radius-lg);
-        font-size: 15px;
-        background: rgba(255, 255, 255, 0.15);
-        color: white;
-        resize: vertical;
-        min-height: 100px;
-        font-family: inherit;
-        transition: all 0.2s;
-      }
-
-      .symptom-input textarea::placeholder {
-        color: rgba(255, 255, 255, 0.6);
-      }
-
-      .symptom-input textarea:focus {
-        outline: none;
-        border-color: rgba(255, 255, 255, 0.6);
-        background: rgba(255, 255, 255, 0.2);
-      }
-
-      .info-text {
-        font-size: 13px;
-        color: rgba(255, 255, 255, 0.85);
-        margin-top: 8px;
-      }
-
       .btn-primary {
         padding: 14px 28px;
         background: white;
@@ -465,18 +428,14 @@
       <!-- Sidebar Navigation -->
       <aside class="sidebar">
         <div class="logo-area">
-          <div class="logo-icon">
-            <iconify-icon
-              icon="lucide:activity"
-              style="font-size: 20px; color: var(--primary-foreground)"
-            ></iconify-icon>
-          </div>
+          <div class="logo-icon">K</div>
           <div class="logo-text">KantanCare</div>
         </div>
 
         <nav class="nav-group">
+          <div class="nav-label">MAIN</div>
           <a href="patient-dashboard.html" class="nav-item active">
-            <iconify-icon icon="lucide:home" style="font-size: 18px"></iconify-icon>
+            <iconify-icon icon="lucide:layout-dashboard" style="font-size: 18px"></iconify-icon>
             Dashboard
           </a>
           <a href="Symptom_Check.html" class="nav-item">
@@ -491,11 +450,6 @@
             <iconify-icon icon="lucide:clipboard-list" style="font-size: 18px"></iconify-icon>
             History
           </a>
-              
-        <div class="nav-item ">
-            <iconify-icon icon="lucide:clipboard-plus" style="font-size: 18px"></iconify-icon>
-            <a href="medical-records.html" style="color: inherit; text-decoration: none;">Records</a>
-          </div>
         </nav>
 
         <div class="spacer"></div>
@@ -552,16 +506,11 @@
             <!-- Hero Section -->
             <div class="hero-section">
               <h2 id="welcomeMessage">Welcome back!</h2>
-              <p>How are you feeling today? Describe your symptoms below for AI-powered health recommendations.</p>
+              <p>How are you feeling today? Get AI-powered health recommendations by checking your symptoms.</p>
               
-              <div class="symptom-input">
-                <h3>Describe Your Symptoms</h3>
-                <textarea id="symptomText" placeholder="E.g., I've been experiencing a persistent cough and mild fever for the past 3 days..."></textarea>
-                <div class="info-text">💡 Be as specific as possible about what you're feeling and when it started</div>
-                <button class="btn-primary" onclick="submitSymptoms()">
-                  Get AI Recommendations
-                </button>
-              </div>
+              <button class="btn-primary" onclick="window.location.href='Symptom_Check.html'">
+                Check Your Symptoms Now
+              </button>
             </div>
 
             <!-- Medical Profile Summary -->
@@ -738,21 +687,6 @@
             }
         }
 
-        // Submit symptoms (placeholder - will connect to AI in Phase 2)
-        function submitSymptoms() {
-            const symptoms = document.getElementById('symptomText').value.trim();
-            
-            if (!symptoms) {
-                alert('Please describe your symptoms first.');
-                return;
-            }
-
-            // For now, show a message that this feature is coming soon
-            alert('✨ AI Analysis Feature Coming Soon!\n\nYour symptoms will be analyzed using Bio_ClinicalBERT to provide:\n• Symptom summary\n• Suggested tests\n• Recommended specialists\n• Nearby clinics\n\nThis feature will be implemented in Phase 2.');
-            
-            // Clear input
-            document.getElementById('symptomText').value = '';
-        }
     </script>
   </body>
 </html>

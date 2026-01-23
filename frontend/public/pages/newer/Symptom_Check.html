@@ -669,7 +669,7 @@
         <div class="nav-group">
           <div class="nav-item">
             <iconify-icon icon="lucide:home" style="font-size: 18px"></iconify-icon>
-            <a href="patient-dashboard.html" style="color: inherit; text-decoration: none;">Dashboard</a>
+            Dashboard
           </div>
           <div class="nav-item active">
             <iconify-icon icon="lucide:stethoscope" style="font-size: 18px"></iconify-icon>
@@ -683,22 +683,17 @@
             <iconify-icon icon="lucide:file-text" style="font-size: 18px"></iconify-icon>
             <a href="History.html" style="color: inherit; text-decoration: none;"> History</a>
           </div>
-              
-        <div class="nav-item ">
-            <iconify-icon icon="lucide:clipboard-plus" style="font-size: 18px"></iconify-icon>
-            <a href="medical-records.html" style="color: inherit; text-decoration: none;">Records</a>
-          </div>
         </div>
 
         <div class="nav-group" style="margin-top: auto">
           <div class="nav-label">Settings</div>
           <div class="nav-item">
             <iconify-icon icon="lucide:user" style="font-size: 18px"></iconify-icon>
-            <a href="medical-profile-setup.html" style="color: inherit; text-decoration: none;">Profile</a>
+            Profile
           </div>
-            <div class="nav-item">
-            <iconify-icon icon="lucide:log-out" style="font-size: 18px"></iconify-icon>
-            <a class="logout-link" onclick="logout()">Logout</a>
+          <div class="nav-item">
+            <iconify-icon icon="lucide:settings" style="font-size: 18px"></iconify-icon>
+            Preferences
           </div>
         </div>
       </nav>
@@ -948,6 +943,133 @@
           </div>
         </main>
       </div>
+
+      <script>
+        // Character counter for symptoms textarea
+        const symptomsText = document.getElementById('symptomsText');
+        const charCount = document.getElementById('charCount');
+        
+        if (symptomsText && charCount) {
+          symptomsText.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+          });
+        }
+
+        // Duration chip selection
+        const durationChips = document.querySelectorAll('.chip[data-duration]');
+        durationChips.forEach(chip => {
+          chip.addEventListener('click', function() {
+            durationChips.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+          });
+        });
+
+        // Severity scale selection
+        const severityItems = document.querySelectorAll('.scale-item[data-severity]');
+        severityItems.forEach(item => {
+          item.addEventListener('click', function() {
+            severityItems.forEach(i => i.classList.remove('selected'));
+            this.classList.add('selected');
+          });
+        });
+
+        // Body parts selection (allow multiple)
+        const bodyParts = document.querySelectorAll('.body-part[data-part]');
+        bodyParts.forEach(part => {
+          part.addEventListener('click', function() {
+            this.classList.toggle('selected');
+          });
+        });
+
+        // Context checkboxes
+        const checkboxItems = document.querySelectorAll('.checkbox-item[data-context]');
+        checkboxItems.forEach(item => {
+          item.addEventListener('click', function() {
+            this.classList.toggle('checked');
+            
+            // Update checkbox visual
+            const checkbox = this.querySelector('.checkbox-box');
+            if (this.classList.contains('checked')) {
+              if (!checkbox.querySelector('iconify-icon')) {
+                checkbox.innerHTML = '<iconify-icon icon="lucide:check" style="font-size: 12px; color: var(--primary-foreground)"></iconify-icon>';
+              }
+            } else {
+              checkbox.innerHTML = '';
+            }
+          });
+        });
+
+        // Save Draft button
+        const saveDraftBtn = document.querySelector('.btn-secondary');
+        if (saveDraftBtn) {
+          saveDraftBtn.addEventListener('click', function() {
+            // Collect form data
+            const formData = {
+              symptoms: symptomsText ? symptomsText.value : '',
+              duration: document.querySelector('.chip.active')?.dataset.duration || '',
+              severity: document.querySelector('.scale-item.selected')?.dataset.severity || '',
+              bodyParts: Array.from(document.querySelectorAll('.body-part.selected')).map(p => p.dataset.part),
+              context: Array.from(document.querySelectorAll('.checkbox-item.checked')).map(c => c.dataset.context)
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('symptomDraft', JSON.stringify(formData));
+            alert('Draft saved successfully!');
+          });
+        }
+
+        // Load draft on page load
+        window.addEventListener('DOMContentLoaded', function() {
+          const draft = localStorage.getItem('symptomDraft');
+          if (draft) {
+            try {
+              const formData = JSON.parse(draft);
+              
+              // Restore symptoms text
+              if (formData.symptoms && symptomsText) {
+                symptomsText.value = formData.symptoms;
+                charCount.textContent = formData.symptoms.length;
+              }
+              
+              // Restore duration
+              if (formData.duration) {
+                durationChips.forEach(c => c.classList.remove('active'));
+                const durationChip = document.querySelector(`.chip[data-duration="${formData.duration}"]`);
+                if (durationChip) durationChip.classList.add('active');
+              }
+              
+              // Restore severity
+              if (formData.severity) {
+                severityItems.forEach(i => i.classList.remove('selected'));
+                const severityItem = document.querySelector(`.scale-item[data-severity="${formData.severity}"]`);
+                if (severityItem) severityItem.classList.add('selected');
+              }
+              
+              // Restore body parts
+              if (formData.bodyParts) {
+                formData.bodyParts.forEach(part => {
+                  const bodyPart = document.querySelector(`.body-part[data-part="${part}"]`);
+                  if (bodyPart) bodyPart.classList.add('selected');
+                });
+              }
+              
+              // Restore context
+              if (formData.context) {
+                formData.context.forEach(ctx => {
+                  const contextItem = document.querySelector(`.checkbox-item[data-context="${ctx}"]`);
+                  if (contextItem) {
+                    contextItem.classList.add('checked');
+                    const checkbox = contextItem.querySelector('.checkbox-box');
+                    checkbox.innerHTML = '<iconify-icon icon="lucide:check" style="font-size: 12px; color: var(--primary-foreground)"></iconify-icon>';
+                  }
+                });
+              }
+            } catch (e) {
+              console.error('Error loading draft:', e);
+            }
+          }
+        });
+      </script>
     </body>
   </html>
         
