@@ -1,0 +1,295 @@
+id,name,type,address,location_id
+1,Dhorpatan Polyclinic,CLINIC,"Gongabu , Kathmandu",1
+2,Singapurgorkha Polyclinic,CLINIC,"Koteshwor , Kathmandu",1
+3,Helping Health Medical Centre,CLINIC,"Gongabu , Naya Bus Park, Kathmandu",1
+4,Abida International Medical Center,CLINIC,"Itahari , Sunsari",2
+5,N.M.C. Diagnostic Medical Center,DIAGNOSTIC CENTER,"Linkroad, Birjung,Parsantaj Miya",3
+6,Helping Health Diagnostic Centre,DIAGNOSTIC CENTER,"Basundhara , Kathmandu",1
+7,Bishwas Medical And Polyclinic .,CLINIC,"Tribhuwanpark ,Ghorahi, Dang",4
+8,Munal Diagnostic Center,DIAGNOSTIC CENTER,"Itahari , Sunsari",2
+9,Chhabdi Barahi Tanahu Polyclinic,CLINIC,"Gongabu , Kathmandu",1
+10,Prime Health Care Centre,CLINIC,"Chabahil , Kathmandu",1
+11,Janamaitri Hospital,HOSPITAL,"Balaju Chowk, Kathmandu",1
+12,Prudential Medical Center,CLINIC,Baneshwor,5
+13,Rakshya Polyclinic And Diagnostic Center .,CLINIC,"Gongabu, Nayabaspark, Kathmandu",1
+14,Anugraha Polyclinic,CLINIC,"Nayabaspark , Kathmandu",1
+15,Family Health Care International & Research Centre,CLINIC,"Dhumbarahi Chowk, Kathmandu",1
+16,Alisa Polyclinic,CLINIC,"Sitamangal Kalimati Tol, Kathmandu",1
+17,Khajana Medical & Polyclinic Centre,CLINIC,"K.M.C. , Pingalasthan, Kathmandu",1
+18,Alkhaleej Medical Center,CLINIC,"Kathmandu , Chucheepati",6
+19,Sulav Health Polyclinic And Pathology,CLINIC,"Maitidevi , Sastrimargh, Kathmandu",1
+20,Medidia Diagnostic Center,DIAGNOSTIC CENTER,Bansbari. Kathmandu,7
+21,Ma Janaki International Polyclinic & Diagnostic Center,CLINIC,"Old Baneshwor, Kathmandu",1
+22,Fishtail Imaging & Diagnostic Centre,DIAGNOSTIC CENTER,"Ghairapatan , Pokhara",8
+23,Lifecare Prince Diagnostic Center,DIAGNOSTIC CENTER,"Tripureshwor, Kathmandu",1
+24,Kantipur Diagnostic Centre,DIAGNOSTIC CENTER,"Kantipath, Jyatha, Kathmadu",1
+25,Jaljala Polyclinic And Diagnostic Center,CLINIC,"Nayabaspark , Kathmandu",1
+26,Sumeru Diagnostic Centre,DIAGNOSTIC CENTER,"Pulchowk , Lalitpur",10
+27,Sikhar Medical And Diagnostic Center .,DIAGNOSTIC CENTER,"Gongabu, Nayabapark, Kathmandu",1
+28,Anurag Polyclinic And Medical Center,CLINIC,"Gaushala , Kathmandu",1
+29,Samajkalyan Polyclinic And Diagnostic Center .,CLINIC,"Gongabu , Kathmandu",1
+30,Sai Kripa Polyclinic And Medical Center,CLINIC,"Gongabu , Kathmandu",1
+31,Srijanshi Polyclinic .,CLINIC,"Gothatar , Kathmandu",1
+32,Madina Medical Center .,CLINIC,"Kalimati Tole , Kathmandu",1
+33,Saiba Medical Center .,CLINIC,"Jwagel , Lalitpur",10
+34,Saudi Medical Centre,CLINIC,"Kupondole, Lalitpur",10
+35,Health Care Clinic,CLINIC,"Tripureshwor, Kathmandu",1
+36,Life Trust Medi Diagnostic,DIAGNOSTIC CENTER,"Anandanagar Marg, Dhubarahi , Kathmandu",1
+37,Siddhi Polyclinic Health Services .,CLINIC,"Dillibazar, Kathmandu",1
+38,Helping Health Polyclinic,CLINIC,"Maitidevi, Kathmandu",1
+39,Pooja Diagnostic Center,DIAGNOSTIC CENTER,"Birtamod, Jhapa",11
+40,Pradhan Diagnostic Center,DIAGNOSTIC CENTER,"Birtamod, Jhapa",11
+41,Nishant Medical Diagnostic Center .,DIAGNOSTIC CENTER,"Damak , Jhapa",11
+42,Aarambha Medical And Diagnostic Center .,DIAGNOSTIC CENTER,"Itahari , Sunsari",2
+43,Kankai Diagnostic Center .,DIAGNOSTIC CENTER,"Anarmani , Jhapa",11
+44,Sudha Medical & Diagnostic Centre,DIAGNOSTIC CENTER,"Sinamangal, Kathmandu",1
+45,Buddha Diagnostic And Medical Services .,DIAGNOSTIC CENTER,"Damak , Jhapa",11
+46,L & R Polyclinic & Diagnostic Center,CLINIC,"Tilganga, Kathmandu",1
+47,"Omkar Polyclinic, Medical Diagnostic And Therapeutic Center .",CLINIC,"Bagdol , Lalitpur",10
+48,Samrat Polyclinic And Medical Center .,CLINIC,"Chhabahil , Kathmandu",1
+49,Diamond Polyclinic And Diagnostic Center,CLINIC,"Samakhusi , Kathmandu",1
+50,Birtamod Diagnostic Center .,DIAGNOSTIC CENTER,"Anarmani , Jhapa",11
+51,Eon Medical Center .,CLINIC,"Lazimpat , Kathmandu",1
+52,Ekata Medical Centre,CLINIC,"Anamnagar , Kathmandu",1
+53,Al Masur Diagnostic Center,DIAGNOSTIC CENTER,"New Baneshwor, Kathmandu",1
+54,Aqua Diagnostic Services .,DIAGNOSTIC CENTER,"Pinglasthan , Kathmandu",1
+55,Rajam Medical Centre,CLINIC,"Kathmandu , Chabahil, Kathmandu",1
+56,Sudha Polyclinic,CLINIC,"Koteshwor , Kathmandu",1
+57,South Asian Health Care Centre,CLINIC,"Gaushala , Kathmandu",1
+58,Dynasty Medical Centre,CLINIC,"Gaushala, Pingalasthan, Kathmandu",1
+59,Green City Hospital,HOSPITAL,"Dhapasi , Kathmandu",1
+60,Chhimeki Polyclinic .,CLINIC,"Santinagar, Kathmandu",1
+61,Himal International Medical Center .,CLINIC,"Shantinagar Gate, Kathmandu",1
+62,Trishuli Medical & Clinic,CLINIC,"Sinamangal , Kathmandu",1
+63,Namaste Nepal Medical Center & Polyclinic,CLINIC,"Gongabu, Kathmandu",1
+64,Kasthamandap Health Care,CLINIC,"Battisputali, Kathmandu",1
+65,Kaniska Health Care Centre,CLINIC,"Tinkune, Kathmandu",1
+66,Frendship Health Care Center .,CLINIC,"Maharajgunj , Kathmandu",1
+67,Remind Polyclinic Diagnostic Center .,CLINIC,"Ka.Ma.Na.Pa. , Kathmandu",1
+68,Buddha International Medical Center,CLINIC,New Baneshwor Kathmandu,12
+69,Kantipur Medicla Center,CLINIC,"Itahari , Sunsari",2
+70,Saksham Medical Centre,CLINIC,"Gongabu , Kathmandu",1
+71,Sahara Health Care,CLINIC,"New Baneshwor, Kathmandu",1
+72,Panasiya Medical Center,CLINIC,"Newbaneshwor, Santinagar, Kathmandu",1
+73,World Wide Medical Center,CLINIC,"Battisputali , Kathmandu",1
+74,Moulakali Polyclinic Diagnostic Center .,CLINIC,"Samakhusi , Kathmandu",1
+75,Peace Medical Center,CLINIC,"Bashundhara , Kathmandu",1
+76,Kohalpur Health Care .,CLINIC,"Kohalpur , Banke",13
+77,Upatyaka Pathology & Clinic,CLINIC,"Pulchowk , Lalitpur",10
+78,Apple International Polyclinic,CLINIC,"Tripureshwor, Kathmandu",1
+79,Nepal Janata Diagnostic And Polyclinic .,CLINIC,"Koteshwor , Kathmandu",1
+80,Sunshine Medical Centre,CLINIC,"Naya Baneshwor, Kathmandu",1
+81,Sunapati Polyclinic & Health Center,CLINIC,"Gwarko, Lalitpur",10
+82,Cosmos Medical Center,CLINIC,"Gaushala, Kathmandu",1
+83,Sunshine Health Care Center,CLINIC,"Prithivi Chowk, Pokhara",8
+84,Lalupate Medical Center .,CLINIC,"Pinglasthan , Kathmandu",1
+85,Shree Janasewa Polyclinic And Medical Center,CLINIC,"Koteshwor , Kathmandu",1
+86,Himalaya Diagnostic Clinic,CLINIC,"Koteshwor , Kathmandu",1
+87,Merapick Medical Center .,CLINIC,"Mitrapark, Chabahil, Kathmandu",1
+88,Glory Medical Centre,CLINIC,"Basundhara , Kathmandu",1
+89,Ghumanu Lifecare Medical And Diagnostic Center,DIAGNOSTIC CENTER,"Damak , Jhapa",11
+90,Royal Medical Center .,CLINIC,"Bhagawanbahal, Thamel, Kathmandu",1
+91,Titan Health Care Centre,CLINIC,"Basundhara , Kathmandu",1
+92,Sudha Medical Center .,CLINIC,"Butwal , Rupandehi",14
+93,Everest International Polyclinic Diagnostic Center,CLINIC,"Nepalgunj , Banke",13
+94,Alka Hospital .,HOSPITAL,"Jawalakhel, Lalitpur",10
+95,Madhyapaschim Polyclinic,CLINIC,"Nepalgunj , Banke",13
+96,Subba Pathology And Clinic .,CLINIC,"Kupandol, Lalitpur",10
+97,Sunsari Diagnostic Center .,DIAGNOSTIC CENTER,"Itahari , Sunsari",2
+98,All Nepal Hospital,HOSPITAL,"Samakhusi , Ranibari Marg",15
+99,P.K. Diagnostic Center .,DIAGNOSTIC CENTER,"Sinamangal , Kathmandu",1
+100,Community Health Care Cooperative .,CLINIC,"Itahari , Sunsari",2
+101,Budha Subba Medical Centre,CLINIC,"Damak , Jhapa",11
+102,Dikshya Swastya Sewa Kendra .,CLINIC,"Janakpur , Dhanusha",16
+103,Nepolian Health Care Center .,CLINIC,"Balaju , Kathmandu",1
+104,U.V. Swasthya Clinic .,CLINIC,"Basundhara , Kathmandu",1
+105,Asian Polyclinic Diagnostic Center,CLINIC,"Bagbajar, Kathmandu",1
+106,Asian Plus Medical Center .,CLINIC,"Gongabu , Kathmandu",1
+107,Siddhartha Polyclinic .,CLINIC,"Bagbajar, Kathmandu",1
+108,Nepal Siddharth Sadan Polyclinic,CLINIC,"Gongabu , Kathmandu",1
+109,Nippon Polyclinic And Diagnostic Center .,CLINIC,"Sherchan Plaza, Balaju , Kathmandu",1
+110,Medicare National Polyclinic .,CLINIC,"Bashundhara , Kathmandu",1
+111,Kuleshwor Polyclinic,CLINIC,"Kuleshwor , Kathmandu",1
+112,Paradise International Medical Centre,CLINIC,"Kupondole , Lalitpur",10
+113,Everest Health Home Services,CLINIC,"Mid Baneshwor, Kathmandu",1
+114,Satyasai Diagnostic Center .,DIAGNOSTIC CENTER,"Gouridhara, Tukucha, Kathmandu",1
+115,Siddhakali Medical And Polyclinic Center,CLINIC,"Gongabu , Kathmandu",1
+116,Asia Pacific Polyclinic,CLINIC,"Ka.Ma.Pa. ,Thapathali, Kathmandu",1
+117,Kist Polyclinic And Medical Center .,CLINIC,"Balkumari,Kharibot , Lalitpur",10
+118,Golfspring Medical Center,CLINIC,"Basundhara , Kathmandu",1
+119,Well Care Hospital & Research Centre,HOSPITAL,"Maitidevi, Ratopool, Kathmandu",1
+120,Universal Diagnostic Center .,DIAGNOSTIC CENTER,"Putalisadak , Kathmandu",1
+121,Goldengate Polyclinic And Diabetes Center,CLINIC,"Nakkhuchowk , Lalitpur",10
+122,Siddharth Pathology,DIAGNOSTIC CENTER,"Pokhara, Kaski",17
+123,Purnima Medical Centre,CLINIC,"Lalitpur , Jwagal",18
+124,Purnima Plus Medical Center .,CLINIC,"Gongabu , Kathmandu",1
+125,Purnachandra Diagnostic Center,DIAGNOSTIC CENTER,"Gausala, Kathmandu",1
+126,Baba Medical Center .,CLINIC,"Chappal Karkhana , Kathmandu",1
+127,Aruna Medical Center,CLINIC,"Samakhusi , Kathmandu",1
+128,Pooja Medical Diagnostic Center,DIAGNOSTIC CENTER,"Batisputali , Kathmandu",1
+129,Fusion Swasthya Polyclinic,CLINIC,"Maharajgunj, Kathmandu",1
+130,United Diagnostic Center,DIAGNOSTIC CENTER,"Sinamangal , Kathmandu",1
+131,Maata Mahalaxmi Medicare .,CLINIC,"Batisputali , Kathmandu",1
+132,Sinamangal Healthcare And Diagnostic Center .,DIAGNOSTIC CENTER,"Sinamangal , Kathmandu",1
+133,Sagarmatha Polyclinic And Diagnostic Center .,CLINIC,"Kalimati Chowk , Kathmandu",1
+134,Aashirbad Swasthya Sewa Clinic,CLINIC,"Balkhu , Kathmandu",1
+135,South Asian Polyclinic And Diagnostic Center .,CLINIC,"Goushala , Kathmandu",1
+136,Praptee Polyclinc,CLINIC,"Tripureshwor, Kathmandu",1
+137,Bhanu Memorial Polyclinic And Diagnostic Center .,CLINIC,"Gongabu Chowk , Kathmandu",1
+138,Bright Polyclinic & Diagnostic Centre,CLINIC,"Samakhusi , Kathmandu",1
+139,Bindhyabasini Medical And Research Center,CLINIC,"Tinkune, Kathmandu",1
+140,Lumbini Diagnostic And Research Center,DIAGNOSTIC CENTER,Butwal,19
+141,B.B. Health Care Center,CLINIC,"Balaju , Kathmandu",1
+142,Aishwarya Polyclinic And Diagnostic Center,CLINIC,"Balaju , Kathmandu",1
+143,Janaki International Medical Center .,CLINIC,"Nayabuspark, Kathmandu",1
+144,Shailung Polyclinic And Diagnostic Center .,CLINIC,"Itahari , Sunsari",2
+145,Saibaba Polyclinic And Medical Center .,CLINIC,"Gongabu , Kathmandu",1
+146,Safal Medical Center .,CLINIC,"Sinamangal , Kathmandu",1
+147,Tribeni Devi Polyclinic And Health Care Center,CLINIC,"Samakhusi , Kathmandu",1
+148,Sewa Polyclinic .,CLINIC,"Basundhara , Kathmandu",1
+149,Trimurti Medical Center,CLINIC,"Dhapasi ,Bashundhara, Kathmandu",1
+150,Namuna Medical Center,CLINIC,"Oldbaneshwor, Kathmandu",1
+151,Sunrise Polyclinic & Diagnostic Center,CLINIC,"Maharajung, Kathmandu",1
+152,Asian Raze Medical Centre,CLINIC,"Chappal Karkhana , Kathmandu",1
+153,M.V. Polyclinic And Diagnostic Center,CLINIC,"Sinamangal , Kathmandu",1
+154,Perfect Diagnostic Center .,DIAGNOSTIC CENTER,"Battisputali , Kathmandu",1
+155,Frontline Polyclinic Centre,CLINIC,"Himshikhar Marga , Kathmandu",1
+156,H.R. Diagnostic Center .,DIAGNOSTIC CENTER,"Battisputali , Kathmandu",1
+157,Life Medical Center,CLINIC,"Kalimatidol , Kathmandu",1
+158,Syrup Health Care Center,CLINIC,"Dhapasi , Kathmandu",1
+159,Syrup Medical Center .,CLINIC,"Gongabu , Kathmandu",1
+160,Nagarjun Health Care Center,CLINIC,"Balaju , Kathmandu",1
+161,Ombuddha Medical Center,CLINIC,"Sankhamul , Kathmandu",1
+162,Fusion Polyclinic & Diagnostic Centre,CLINIC,"Shankhamul Road, Naya Baneshwor, Kathmandu",1
+163,Suryodaya Medical Center .,CLINIC,"Kuleshwor , Kathmandu",1
+164,Santipur Polyclinic .,CLINIC,"Thulobharyang, Kathmandu",1
+165,Shikhar Public Polyclinic Center,CLINIC,"Gongabu , Kathmandu",1
+166,City Top Polyclinic & Medical Center,CLINIC,"Sinamangal , Kathmandu",1
+167,Relief Health Care .,CLINIC,"Lazimpat , Kathmandu",1
+168,N.S. Medical Center .,CLINIC,"Gongabu , Kathmandu",1
+169,Valley Polyclinic International Health Center,CLINIC,"Samakhusi , Kathmandu",1
+170,International Health Care And Diagnostic Center .,DIAGNOSTIC CENTER,"Newbaneshwor, Kathmandu",1
+171,Sudha Health Care,CLINIC,"Maharajgunj, Kathmandu",1
+172,Texas Polyclinic & Diagnostic Centre,CLINIC,"Bimansthal , Kathmandu",1
+173,Social Medical Health Care Center,CLINIC,"Gongabu Chowk, Kathmandu",1
+174,Markopolo Medical Center,CLINIC,"Samakhusi , Kathmandu",1
+175,Aquality Health Care & Diagnostic Centre,DIAGNOSTIC CENTER,"Sinamangal , Kathmandu",1
+176,Trust Medical Centre,CLINIC,"Dhumbarahi, Kathmandu",1
+177,K. R. Medical Centre,CLINIC,"Samakhusi , Kathmandu",1
+178,Alfresco Polyclinic .,CLINIC,"Balaju , Kathmandu",1
+179,Shavya Medical Center,CLINIC,Maharajgunj Kathmanu,21
+180,A Clinic For Health Nepal,CLINIC,"Narayan Gopal Chowk, Kathmandu",1
+181,Paradise Polyclinic & Diagnostic Centre,CLINIC,"Basundhara , Kathmandu",1
+182,Unicorn Polyclinic .,CLINIC,"Pingalasthan, Kathmandu",1
+183,Gurudev Diagnostic & Polyclinic Centre,CLINIC,"Balaju , Kathmandu",1
+184,Samrat Medical Hall .,CLINIC,"Kalimatidol , Kathmandu",1
+185,Sarbottam Polyclinic,CLINIC,"Basundhara , Kathmandu",1
+186,Sungava Polyclinic .,CLINIC,"Newbaneshwor, Ekata Marga, Kathmandu",1
+187,Revive Polyclinic,CLINIC,"Pingalasthan, Kathmandu",1
+188,Chetana Swastaha Sewa Kendra,CLINIC,"Minbhawan, Shantinagar, Kathmandu",1
+189,Nawadurga Polyclinic .,CLINIC,"Anamnagar, Kathmandu",1
+190,Top Need Medical Centre,CLINIC,"Gongabu , Samakhusi, Ring Road",22
+191,Oscar Medical Center .,CLINIC,"Dhapasi , Bashundhara, Kathmandu",1
+192,Pathivare Medical Center .,CLINIC,"Hanumansthan , Itahari",24
+193,Royal Nepal Polyclinc And Diagnostic Center .,DIAGNOSTIC CENTER,"Gongabu , Kathmandu",1
+194,Medicine Buddha Polyclinic .,CLINIC,"Gongabu , Newbuspark, Kathmandu",1
+195,Tribeni Medical Center,CLINIC,"Gaushala, Pingalastan, Kathmandu",1
+196,Sampripti Medical Center .,CLINIC,"Mitranagar, Newbuspark, Kathmandu",1
+197,Maa Laxmi Polyclinic .,CLINIC,"Saamakhusi , Kathmandu",1
+198,Super Healthcare And Diagnostic Center,DIAGNOSTIC CENTER,"Gongabu, New Buspark, Kathmandu",1
+199,Lotus Polyclinic And Diagnostic Center,CLINIC,"Gongabu, Newbuspark, Kathmandu",1
+200,Super Diagnostic Center .,DIAGNOSTIC CENTER,"Saamakhusi , Kathmandu",1
+201,Om Siddhi Polyclinic And Medical Center .,CLINIC,"Sundhara , Kathmandu",1
+202,Bright Medical Center .,CLINIC,"Gongabu, Kathmandu",1
+203,Nepal Janaswathya Kendra,CLINIC,"Balaju , Kathmandu",1
+204,Dhaulagiri Health Care Center,CLINIC,"Newbuspark, Kathmandu",1
+205,Namo Buddha Medical Centre,CLINIC,"Gaushala, Kathmandu",1
+206,Akbar Medical Center .,CLINIC,"Tilganga, Kathmandu",1
+207,Healthy Life International Medical Center,CLINIC,"Anamnagar , Kathmandu",1
+208,Nozomy Polyclinic .,CLINIC,"Sinamangal , Kathmandu",1
+209,Janata Medical Center .,CLINIC,"Tinkune, Kathmandu",1
+210,Megha Medical Center .,CLINIC,"Saamakhusi , Kathmandu",1
+211,Sai Polyclinic And Diagnostic Center,CLINIC,"Sankhamul , Newbuspark",26
+212,Swarnim Polyclinic .,CLINIC,"Sundhara , Kathmandu",1
+213,Capital Medical Center .,CLINIC,"Kathmandu , Mitranagar",27
+214,Space Medical Center .,CLINIC,"Chabil , Kathmandu",1
+215,Public Health Polyclinic & Diagnostic Centre,CLINIC,"Samakhusi , Kathmandu",1
+216,Shan Health Care & Polyclinic,CLINIC,"Battisputali , Kathmandu",1
+217,Reliable Polyclinic And Pyathology Lab .,CLINIC,"Kupandol, Laliypur",28
+218,Nita Polyclinic And Diagnostic Center .,CLINIC,"Maharajgunj , Kathmandu",1
+219,Reliance Medicare And Research Center,CLINIC,"Gaushala, Ratopul, Kathmandu",1
+220,Subba Medical Center,CLINIC,"Bashundhara , Kathmandu",1
+221,Prashanti Health Care Center .,CLINIC,"Jawalakhel , Pulchowk,Lalitpur",10
+222,New World View Medical Centre,CLINIC,"Basundhara , Kathmandu",1
+223,Clink Medical Centre,CLINIC,"Kalimati Dol, Kathmandu",1
+224,Reliance Health Care Center .,CLINIC,"Dhapasi , Kathmandu",1
+225,Amitav Buddha Medical Centre,CLINIC,"Narayan Gopal Chowk, Kathmandu",1
+226,Universal Medical Health Care Center,CLINIC,"Mitranagar, Gongabu, Kathmandu",1
+227,Srijana Medical Centre & Polyclinic,CLINIC,"Chabahil , Kathmandu",1
+228,Om Medical Diagnostic Centre,DIAGNOSTIC CENTER,"Birtamode , Jhapa",11
+229,Seasons Polyclinic .,CLINIC,"Gongabu , Kathmandu",1
+230,Merit Multicare Medical Center,CLINIC,"Madhyamarga, Santinagar, Kathmandu",1
+231,Riza Polyclinic And Diagnostic Center .,CLINIC,"Chabahil , Kathmandu",1
+232,Jalbinayak Polyclinic And Medical Center,CLINIC,"Gongabu , Newbuspark, Kathmandu",1
+233,Meridian Health Care,CLINIC,"Maharajgunj, Kathmandu",1
+234,Manjushree Medical Center .,CLINIC,"Gouridhara, Tukucha, Kathmandu",1
+235,Kshemadevi Polyclinic,CLINIC,Baneshwor,5
+236,Asian Medical Diagnostic Center .,DIAGNOSTIC CENTER,"Samakhusi , Kathmandu",1
+237,Dhorpatan Medical Centre,CLINIC,"Samakhusi , Kathmandu",1
+238,D.N.A. Polyclinic And Medical Center,CLINIC,"Gongabu, Kathmandu",1
+239,Curex Diagnostic Center,DIAGNOSTIC CENTER,"Basundhara , Kathmandu",1
+240,International Polyclinic And Diagnostic Center .,CLINIC,"Birtamod, Jhapa",11
+241,Kohinoor Medical Center .,CLINIC,"Narayangopal Chowk, Kathmandu",1
+242,J.M. Medical Center .,CLINIC,"Tripureshwor, Kathmandu",1
+243,Dynamic Medical Center And Polyclinic,CLINIC,"Sukedhara , Tamuplaza, Kathmandu",1
+244,Kankai Hospital,HOSPITAL,"Birtamod, Jhapa",11
+245,Janakpur International Polyclinic And Diagnostic Center .,CLINIC,"Janakpur , Dhanusha",16
+246,D. And P. Polyclinic And Diagnostic Center,CLINIC,"Balaju , Kathmandu",1
+247,Bharatpur Diagnostic Center,DIAGNOSTIC CENTER,"Bharatpur , Chitawan",29
+248,Biratnagar Hospital,HOSPITAL,Biratnagar,30
+249,Om Polyclinic & Medical Centre,CLINIC,"Itahari , Sunsari",2
+250,Sagarmatha Clinic And Medical Center,CLINIC,"Samakhusi , Kathmandu",1
+251,Subarna Medical & Research,CLINIC,"Ghorahi Municipality, Dang",4
+252,Manmohan Memorial Purwanchal Chhetriya Samudayik Hospital,HOSPITAL,"Anarmani , Jhapa",11
+253,Nepal Diagnostic Center .,DIAGNOSTIC CENTER,"Sundhara , Kathmandu",1
+254,Samanantar Polyclinic Medical Center .,CLINIC,"Bashundhara , Kathmandu",1
+255,Akhanda Polyclinic .,CLINIC,"Battisputali , Kathmandu",1
+256,Diamond Polyclinic .,CLINIC,"Mitranagar , Kathmandu",1
+257,Shanti Buddha Medical Center,CLINIC,"Laxmipur , Jhapa",11
+258,Cambridge Medical Institute,CLINIC,"Biratnagar, Morang",31
+259,Global Medical Center .,CLINIC,"Saamakhusi Chowk, Kathmandu",1
+260,Green Medical Center,CLINIC,"Gousala , Pingalasthan, Kathmandu",1
+261,Buddha Sai Diagnostic Center .,DIAGNOSTIC CENTER,"Itahari , Sunsari",2
+262,U. And P. Polyclinci,CLINIC,"Suizatar , Kalanki , Kathmandu",1
+263,Alliance Medical And Research Center,CLINIC,"Banasthali Chwok, Kathmandu",1
+264,S. S. Polyclinic,CLINIC,"Narayan Gopal Chowk, Kathmandu",1
+265,Dibyajyoti Polyclinic,CLINIC,"Newbaneshwor , Kathmandu",1
+266,Bindhyawasini Medical Center,CLINIC,Dhapasi,32
+267,Shubhalaxmi Diagnostic Center,DIAGNOSTIC CENTER,Anarmani Jhapa,33
+268,Godawari Diagnostic .,DIAGNOSTIC CENTER,"Anarmani , Jhapa",11
+269,Rose International Medical Center,CLINIC,"Gongabu , Kathmandu",1
+270,Diyas Polyclinic And Medical Center,CLINIC,"Sundhara , Kathmandu",1
+271,Metro Clinic,CLINIC,"Thapathali , Kathmandu",1
+272,Meditech Hospital Anusandhan Kendra,HOSPITAL,"Butwal, Rupandehi",14
+273,United Medical Center,CLINIC,"Lazimpat , Kathmandu",1
+274,Madhu Health Service And Counseling Center,CLINIC,"Bashundhara , Kathmandu",1
+275,Nawajiban Hospital .,HOSPITAL,"Dhangadhi, Kailali",34
+276,Health Care Diagnostic,DIAGNOSTIC CENTER,"Sinamangal, Kathmandu",1
+277,Kunta Polyclinc,CLINIC,"Tilganga, Kathmandu",1
+278,Ojaswi Polyclinic .,CLINIC,"Narayangopal Chowk, Kathmandu",1
+279,Shubham Polyclinic And Diagnostic Center,CLINIC,"Newbaneshwor Chowk, Kathmandu",1
+280,Star Health Care Diagnostic Center,DIAGNOSTIC CENTER,"Kupandol , Lalitpur",10
+281,Anmol Medical Center,CLINIC,"Sinamangal , Kathmandu",1
+282,Manjushree Polyclinic And Diagnostic Center,CLINIC,"Dharan , Sunsari",2
+283,Peoples Health Care Center,CLINIC,Kathmandu,1
+284,Himal Medical Center,CLINIC,"Swayambhu, Kathmandu",1
+285,Lovely Dental Care,CLINIC, "Baneshwor, Kathmandu",5
+286,Nabin Health Care,CLINIC,"Maharajgunj, Kathmandu",21
+287,Kathmandu Smile Dental Clinic,CLINIC, "Dillibazar, Kathmandu",1
+288,Oshan Ultra Care Clinic,CLINIC,"Balkumari, Lalitpur",1
+289,Skin Arts Aesthetics,CLINIC,"Dhumbarahi, Kathmandu",1
+290,Kirtipur Smile Dental Clinic,CLINIC,"Kirtipur, Kathmandu",1
+291,Bright Line Dental Care,CLINIC,"Putalisadak, Kathmandu",1
+292,Core-Smile Dental Clinic,CLINIC,"Baneshwor, Kathmandu",5
+293,JD Dental Home,CLINIC,"New Baneshwor, Kathmandu",5
+294,Utpala Clinic,CLINIC,"Pulchowk, Lalitpur",10
