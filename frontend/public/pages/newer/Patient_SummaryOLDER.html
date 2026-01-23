@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Symptom Summary - KantanCare</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Symptom Summary - KantanCare</title>
 
- <style>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+
+    <style>
       /* Theme Variables */
       :root {
         --background: #f7fafd;
@@ -559,7 +568,8 @@
         }
       }
     </style>
-</head>
+  </head>
+
   <body>
     <div class="app-container">
       <!-- Sidebar -->
@@ -610,139 +620,296 @@
         </div>
       </nav>
 
-    <main class="main-content">
-      <header class="top-bar">
-        <div class="breadcrumbs">
-          <span>Home</span>
-          <iconify-icon icon="lucide:chevron-right" style="font-size: 14px"></iconify-icon>
-          <span>Symptom Checker</span>
-          <iconify-icon icon="lucide:chevron-right" style="font-size: 14px"></iconify-icon>
-          <span>New Assessment</span>
-          <iconify-icon icon="lucide:chevron-right" style="font-size: 14px"></iconify-icon>
-          <span class="breadcrumb-active">Results</span>
-        </div>
-        <div class="user-actions">
-          <div class="location-badge">
-            <iconify-icon icon="lucide:map-pin" style="font-size: 14px"></iconify-icon>
-            <span>KTM, Nepal</span>
-          </div>
-          <img src="https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FSouth%20Asian%2F3" alt="User Avatar" class="user-avatar" />
-        </div>
-      </header>
-
-      <div class="scroll-area">
-        <div class="content-width">
-          <div class="header-section">
-            <h1 class="page-title">Symptom Summary</h1>
-            <div class="page-subtitle">
-              Based on your summary, description and medical records here is your analysis.
-              Please note that this is not a medical diagnosis. For an accurate diagnosis, your report has been sent for review and consultation to your selected healthcare professional.
-            </div>
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+          <div class="breadcrumbs">
+            <span>Home</span>
+            <iconify-icon icon="lucide:chevron-right" style="font-size: 14px"></iconify-icon>
+            <span>Symptom Checker</span>
+            <iconify-icon icon="lucide:chevron-right" style="font-size: 14px"></iconify-icon>
+            <span>New Assessment</span>
+            <iconify-icon icon="lucide:chevron-right" style="font-size: 14px"></iconify-icon>
+            <span class="breadcrumb-active">Results</span>
           </div>
 
-          <div class="progress-track">
-            <div class="step">
-              <div class="step-circle">1</div>
-              Symptoms
+          <div class="user-actions">
+            <div class="location-badge">
+                <!-- <div class="user-info">
+                <span class="user-name" id="userName"></span>
+            <a class="logout" onclick="logout()">Logout</a>
+        </div> -->
+              <iconify-icon icon="lucide:map-pin" style="font-size: 14px"></iconify-icon>
+              <span>KTM, Nepal</span>
             </div>
-            <div class="step-line"></div>
-            <div class="step">
-              <div class="step-circle">2</div>
-              Analysis
-            </div>
-            <div class="step-line"></div>
-            <div class="step active">
-              <div class="step-circle">3</div>
-              Results
-            </div>
+            <img
+              src="https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FSouth%20Asian%2F3"
+              alt="User Avatar"
+              class="user-avatar"
+            />
           </div>
+        </header>
 
-          <!-- Diagnostic Alert -->
-          <div class="form-card" id="diagnosticAlert">
-            <div class="icon-box bg-warning">
-              <iconify-icon icon="lucide:alert-triangle" style="font-size: 24px"></iconify-icon>
+        <!-- Scroll Area -->
+        <div class="scroll-area">
+          <div class="content-width">
+            <div class="header-section">
+              <h1 class="page-title">Symptom Summary</h1>
+              <div class="page-subtitle">
+                Based on your summary, description and medical records here is your analysis.
+                Please note that this is not a medical diagnosis. For an accurate diagnosis, your report has been sent for review and consultation to your selected healthcare professional.
+              </div>
             </div>
-            <div class="flex-1">
-              <h2 class="text-lg font-semibold mb-1">Possible Diagnostics!</h2>
-              <p class="text-muted-foreground text-sm mb-3" id="diagnosticSummary">Loading analysis...</p>
-              <div class="flex gap-2" id="diagnosticBadges"></div>
-            </div>
-          </div>
 
-          <div class="analysis-grid">
-            <div class="flex flex-col gap-6">
-              <!-- Tests -->
-              <div class="card">
-                <div class="p-4 border-b bg-secondary flex justify-between items-center">
-                  <h3 class="font-semibold flex items-center gap-2">
-                    <iconify-icon icon="lucide:microscope" style="font-size: 18px; color: var(--primary)"></iconify-icon>
-                    Recommended Diagnostic Tests
-                  </h3>
-                  <span class="text-xs text-muted-foreground">Review with doctor</span>
+            <!-- Progress Tracker -->
+            <div class="progress-track">
+              <div class="step">
+                <div class="step-circle">1</div>
+                Symptoms
+              </div>
+              <div class="step-line"></div>
+              <div class="step">
+                <div class="step-circle">2</div>
+                Analysis
+              </div>
+              <div class="step-line"></div>
+              <div class="step active">
+                <div class="step-circle">3</div>
+                Results
+              </div>
+            </div>
+
+            Diagnostic Alert
+            <div class="form-card">
+              <div class="icon-box bg-warning">
+                <iconify-icon icon="lucide:alert-triangle" style="font-size: 24px"></iconify-icon>
+              </div>
+              <div class="flex-1">
+                <h2 class="text-lg font-semibold mb-1">
+                  Possible Diagnostics!
+                </h2>
+                <p class="text-muted-foreground text-sm mb-3">
+                  Your symptoms (persistent cough, mild fever, chest discomfort)
+                  align with acute respiratory inflammation. While not
+                  immediately critical, medical attention is recommended within
+                  24 hours.
+                </p>
+                <div class="flex gap-2">
+                  <span class="badge badge-yellow">Moderate Severity</span>
+                  <span class="badge badge-gray">Contagious likely</span>
                 </div>
-                <div class="p-0" id="testsContainer">
-                  <div class="flex items-center gap-4 p-4">
-                    <span class="text-sm text-muted-foreground">Loading recommendations...</span>
+              </div>
+            </div>
+
+            <div class="analysis-grid">
+              <!-- Left Column: Recommendations -->
+              <div class="flex flex-col gap-6">
+                <!-- Tests to be done -->
+                <div class="card">
+                  <div class="p-4 border-b bg-secondary flex justify-between items-center">
+                    <h3 class="font-semibold flex items-center gap-2">
+                      <iconify-icon icon="lucide:microscope" style="font-size: 18px; color: var(--primary)"></iconify-icon>
+                      Recommended Diagnostic Tests
+                    </h3>
+                    <span class="text-xs text-muted-foreground">Review with doctor</span>
+                  </div>
+                  <div class="p-0">
+                    <div class="flex items-center gap-4 p-4 border-b hover-bg">
+                      <div class="step-number">1</div>
+                      <div class="flex-1">
+                        <h4 class="text-sm font-medium">Complete Blood Count (CBC)</h4>
+                        <p class="text-xs text-muted-foreground">
+                          To check for infection markers (white blood cell count).
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 border-b hover-bg">
+                      <div class="step-number">2</div>
+                      <div class="flex-1">
+                        <h4 class="text-sm font-medium">Chest X-Ray (PA View)</h4>
+                        <p class="text-xs text-muted-foreground">
+                          To rule out pneumonia or other lung consolidations.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 hover-bg">
+                      <div class="step-number">3</div>
+                      <div class="flex-1">
+                        <h4 class="text-sm font-medium">Spirometry (Optional)</h4>
+                        <p class="text-xs text-muted-foreground">
+                          If wheezing persists, checks lung function capacity.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Relief Remedies -->
+                <div class="card">
+                  <div class="p-4 border-b bg-secondary">
+                    <h3 class="font-semibold flex items-center gap-2">
+                      <iconify-icon icon="lucide:coffee" style="font-size: 18px; color: var(--success-foreground)"></iconify-icon>
+                      Immediate Relief Remedies
+                    </h3>
+                  </div>
+                  <div class="p-6 grid grid-cols-2 gap-4">
+                    <div class="flex gap-3 items-start">
+                      <iconify-icon icon="lucide:droplets" style="font-size: 20px; color: var(--primary)"></iconify-icon>
+                      <div>
+                        <h4 class="text-sm font-medium">Hydration</h4>
+                        <p class="text-xs text-muted-foreground">
+                          Drink plenty of warm fluids to thin mucus.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex gap-3 items-start">
+                      <iconify-icon icon="lucide:moon" style="font-size: 20px; color: #8b5cf6"></iconify-icon>
+                      <div>
+                        <h4 class="text-sm font-medium">Rest</h4>
+                        <p class="text-xs text-muted-foreground">
+                          Avoid physical exertion to aid recovery.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex gap-3 items-start">
+                      <iconify-icon icon="lucide:thermometer" style="font-size: 20px; color: #ef4444"></iconify-icon>
+                      <div>
+                        <h4 class="text-sm font-medium">Humidifier</h4>
+                        <p class="text-xs text-muted-foreground">
+                          Use moist air to soothe irritated airways.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex gap-3 items-start">
+                      <iconify-icon icon="lucide:pill" style="font-size: 20px; color: var(--muted-foreground)"></iconify-icon>
+                      <div>
+                        <h4 class="text-sm font-medium">OTC Meds</h4>
+                        <p class="text-xs text-muted-foreground">
+                          Antipyretics for fever (Consult pharmacist).
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Remedies -->
-              <div class="card">
-                <div class="p-4 border-b bg-secondary">
-                  <h3 class="font-semibold flex items-center gap-2">
-                    <iconify-icon icon="lucide:coffee" style="font-size: 18px; color: var(--success)"></iconify-icon>
-                    Immediate Relief Remedies
-                  </h3>
-                </div>
-                <div class="p-6 grid grid-cols-2 gap-4" id="remediesContainer">
-                  <span class="text-sm text-muted-foreground">Loading remedies...</span>
-                </div>
-              </div>
-            </div>
+              <!-- Right Column: Find Care -->
+              <div class="flex flex-col gap-6">
+                <!-- Recommended Specialists -->
+                <div class="card flex flex-col">
+                  <div class="p-4 border-b">
+                    <h3 class="font-semibold text-sm">Recommended Specialists</h3>
+                  </div>
+                  <div class="p-4 flex flex-col gap-4">
+                    <!-- Doctor Card 1 -->
+                    <div class="doctor-card active">
+                      <div class="flex items-start gap-3">
+                        <img
+                          src="https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F35-50%2FEuropean%2F5"
+                          alt="Dr. Robert Chen"
+                          class="doctor-avatar"
+                        />
+                        <div>
+                          <h4 class="text-sm font-semibold">Dr. Robert Chen</h4>
+                          <p class="text-xs text-muted-foreground">
+                            Pulmonologist • 12y exp
+                          </p>
+                          <div class="flex gap-2 mt-2">
+                            <span class="badge badge-green text-xs">Available Today</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-3 pt-3 border-t flex justify-between items-center">
+                        <span class="text-xs font-medium text-primary">Next slot: 2:00 PM</span>
+                        <iconify-icon icon="lucide:arrow-right" style="font-size: 14px; color: var(--primary)"></iconify-icon>
+                      </div>
+                    </div>
 
-            <div class="flex flex-col gap-6">
-              <!-- Doctors -->
-              <div class="card flex flex-col">
-                <div class="p-4 border-b">
-                  <h3 class="font-semibold text-sm">Recommended Specialists</h3>
+                    <!-- Doctor Card 2 -->
+                    <div class="doctor-card">
+                      <div class="flex items-start gap-3">
+                        <img
+                          src="https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F35-50%2FAfrican%2F2"
+                          alt="Dr. Sarah Johnson"
+                          class="doctor-avatar"
+                        />
+                        <div>
+                          <h4 class="text-sm font-semibold">Dr. Sarah Johnson</h4>
+                          <p class="text-xs text-muted-foreground">
+                            General Physician • 8y exp
+                          </p>
+                          <div class="flex gap-2 mt-2">
+                            <span class="badge badge-gray text-xs">Video Consult</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-3 pt-3 border-t flex justify-between items-center">
+                        <span class="text-xs font-medium text-muted-foreground">Next slot: Tomorrow</span>
+                        <iconify-icon icon="lucide:arrow-right" style="font-size: 14px; color: var(--muted-foreground)"></iconify-icon>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="p-4 flex flex-col gap-4" id="doctorsContainer">
-                  <span class="text-sm text-muted-foreground">Loading specialists...</span>
-                </div>
-              </div>
 
-              <!-- Clinics -->
-              <div class="card flex flex-col">
-                <div class="p-4 border-b">
-                  <h3 class="font-semibold text-sm">Suggested Clinics</h3>
+                <!-- Nearby Clinics -->
+                <div class="card flex flex-col">
+                  <div class="p-4 border-b">
+                    <h3 class="font-semibold text-sm">Suggested Clinics</h3>
+                  </div>
+                  <div class="clinic-map">
+                    <iconify-icon icon="lucide:map" style="font-size: 32px; opacity: 0.5;"></iconify-icon>
+                  </div>
+                  <div class="p-0">
+                    <div class="clinic-item">
+                      <div class="flex justify-between">
+                        <span class="text-sm font-medium">City Diagnostic Lab</span>
+                        <span class="text-xs text-muted-foreground">0.5 mi</span>
+                      </div>
+                      <div class="flex gap-2 mt-1">
+                        <span class="clinic-tag">X-Ray</span>
+                        <span class="clinic-tag">Blood Work</span>
+                      </div>
+                    </div>
+                    <div class="clinic-item">
+                      <div class="flex justify-between">
+                        <span class="text-sm font-medium">Green Valley Urgent Care</span>
+                        <span class="text-xs text-muted-foreground">1.2 mi</span>
+                      </div>
+                      <div class="flex gap-2 mt-1">
+                        <span class="clinic-tag">Walk-in</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="clinic-map">
-                  <iconify-icon icon="lucide:map" style="font-size: 32px; opacity: 0.5;"></iconify-icon>
-                </div>
-                <div class="p-0" id="clinicsContainer"></div>
-              </div>
-            </div>
-          </div>
 
+                          <!-- Floating Action Bar -->
           <div class="action-bar">
             <div class="privacy-note">
-              <iconify-icon icon="lucide:shield-check" style="font-size: 16px; color: var(--success)"></iconify-icon>
-              This Summary is for preliminary diagnostic advice. Book an appointment for accurate diagnosis.
+              <iconify-icon
+                icon="lucide:shield-check"
+                style="font-size: 16px; color: var(--success)"
+              ></iconify-icon>
+              Please note that this Summary is for pre-liminary diagnostic advice and sent for Professional Review. Book an appointment for accurate diagnosis.
             </div>
             <div style="display: flex; gap: 12px">
-              <button class="btn btn-secondary">Tele-Consultation Available!</button>
-              <a href="#" class="btn btn-primary">
-                Book Appointment
-                <iconify-icon icon="lucide:arrow-right" style="font-size: 16px"></iconify-icon>
-              </a>
+              <button class="btn btn-secondary" data-media-type="banani-button">
+                Tele-Consultation Available !
+              </button>
+              <button class="btn btn-primary" data-media-type="banani-button">
+                <a href="Appointment.html" style="color: inherit; text-decoration: none;">Book Appointment</a>
+                <iconify-icon
+                  icon="lucide:arrow-right"
+                  style="font-size: 16px"
+                ></iconify-icon>
+              </button>
+            </div>
+          </div> 
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
-  </div>
-<script src="medi.js">
-  </script>
-</body>
+      </main>
+    </div>
+  </body>
 </html>

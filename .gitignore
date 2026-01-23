@@ -37,7 +37,11 @@ models/
 *.pt
 
 # Data
-# data/*.csv
+data/*.csv
 data/*.zip
 data/old/*.py
 data/old/*.csv
+
+backend/testinllm.py
+backend/newoldmain.py
+backend/badmain.py
