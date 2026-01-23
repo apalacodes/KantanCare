@@ -874,7 +874,7 @@
         <div class="nav-group">
           <div class="nav-item">
             <iconify-icon icon="lucide:home" style="font-size: 18px"></iconify-icon>
-            Dashboard
+            <a href="patient-dashboard.html" style="color: inherit; text-decoration: none;">Dashboard</a>
           </div>
           <div class="nav-item ">
             <iconify-icon icon="lucide:stethoscope" style="font-size: 18px"></iconify-icon>
@@ -888,17 +888,22 @@
             <iconify-icon icon="lucide:file-text" style="font-size: 18px"></iconify-icon>
             <a href="History.html" style="color: inherit; text-decoration: none;">History</a>
           </div>
+    
+        <div class="nav-item ">
+            <iconify-icon icon="lucide:clipboard-plus" style="font-size: 18px"></iconify-icon>
+            <a href="medical-records.html" style="color: inherit; text-decoration: none;">Records</a>
+          </div>
         </div>
 
         <div class="nav-group" style="margin-top: auto">
           <div class="nav-label">Settings</div>
           <div class="nav-item">
             <iconify-icon icon="lucide:user" style="font-size: 18px"></iconify-icon>
-            Profile
+            <a href="medical-profile-setup.html" style="color: inherit; text-decoration: none;">Profile</a>
           </div>
           <div class="nav-item">
-            <iconify-icon icon="lucide:settings" style="font-size: 18px"></iconify-icon>
-            Preferences
+            <iconify-icon icon="lucide:log-out" style="font-size: 18px"></iconify-icon>
+            <a class="logout-link" onclick="logout()">Logout</a>
           </div>
         </div>
       </nav>
