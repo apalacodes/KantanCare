@@ -424,18 +424,22 @@
     </style>
   </head>
   <body>
-    <div class="app-container">
+<div class="app-container">
       <!-- Sidebar Navigation -->
       <aside class="sidebar">
         <div class="logo-area">
-          <div class="logo-icon">K</div>
+          <div class="logo-icon">
+            <iconify-icon
+              icon="lucide:activity"
+              style="font-size: 20px; color: var(--primary-foreground)"
+            ></iconify-icon>
+          </div>
           <div class="logo-text">KantanCare</div>
         </div>
 
         <nav class="nav-group">
-          <div class="nav-label">MAIN</div>
           <a href="patient-dashboard.html" class="nav-item active">
-            <iconify-icon icon="lucide:layout-dashboard" style="font-size: 18px"></iconify-icon>
+            <iconify-icon icon="lucide:home" style="font-size: 18px"></iconify-icon>
             Dashboard
           </a>
           <a href="Symptom_Check.html" class="nav-item">
@@ -450,6 +454,11 @@
             <iconify-icon icon="lucide:clipboard-list" style="font-size: 18px"></iconify-icon>
             History
           </a>
+              
+        <div class="nav-item ">
+            <iconify-icon icon="lucide:clipboard-plus" style="font-size: 18px"></iconify-icon>
+            <a href="medical-records.html" style="color: inherit; text-decoration: none;">Records</a>
+          </div>
         </nav>
 
         <div class="spacer"></div>
