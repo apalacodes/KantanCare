@@ -21,7 +21,6 @@ for row in rows[1:]:
     if len(cols) == 4:
         data.append({
             "SN": cols[0].get_text(strip=True),
-            "Regd_No": cols[1].get_text(strip=True),
             "Name": cols[2].get_text(strip=True),
             "Address": cols[3].get_text(strip=True),
         })
