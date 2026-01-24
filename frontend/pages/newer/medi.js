@@ -185,7 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Display function (used for results page)
   function displayResults(results) {
-    document.getElementById('diagnosticSummary').textContent = results.summary || 'Analysis complete';
+    // document.getElementById('diagnosticSummary').textContent = results.summary || 'Analysis complete';
+  document.getElementById('diagnosticSummary').textContent = results.summary;
 
     const badgesHtml = `
       <span class="badge badge-yellow">${results.diagnostic_alert?.severity || 'Moderate'} Severity</span>

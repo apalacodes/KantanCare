@@ -10,18 +10,14 @@ from dotenv import load_dotenv
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import json
-from google import genai
 import typing_extensions as typing
 from database import get_db_connection
 from psycopg2.extras import RealDictCursor
+from openai import OpenAI 
 
-
-#  gemini LLM client configuration
-
-# GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-# client = genai.Client(api_key=GEMINI_API_KEY)
-# if not GEMINI_API_KEY:
-#     raise ValueError("GEMINI_API_KEY is missing from environment variables"
+# LLM client configuration
+client = OpenAI( base_url="https://openrouter.ai/api/v1", 
+                api_key=os.getenv("API_KEY"))
 
 
 # ---------------------------
@@ -122,26 +118,7 @@ class SymptomData(BaseModel):
     severity: Optional[int] = None
     bodyParts: Optional[List[str]] = []
     context: Optional[List[str]] = []
-# OLDER VERSION BELOW WITH DOCTOR RESULT -------------------------------------------
-# class DoctorResult(BaseModel):
-#     doctor_name: str
-#     specialty: str
-#     qualification: str
-#     hospital_name: str
-#     hospital_type: str
-#     city: str
-#     district: str
-#     country: str
-#     next_available: Optional[str] = None
-# class AnalysisResponse(BaseModel):
-#     summary: str
-#     diagnostic_alert: dict
-#     recommended_tests: List[dict]
-#     relief_remedies: List[dict]
-#     recommended_doctors: List[DoctorResult]
-#     nearby_clinics: List[dict]
-#     keywords: List[str]
-# OLDER VERSION ABOVE WITH DOCTOR RESULT -------------------------------------------
+
 class AnalysisResponse(BaseModel):
     summary: str
     diagnostic_alert: dict
@@ -151,101 +128,54 @@ class AnalysisResponse(BaseModel):
     nearby_clinics: List[dict]
     keywords: List[str]
 
-# # ---------------------------
-# # Function: Generate comprehensive medical analysis
-# # ---------------------------
-# def generate_medical_analysis(description: str, duration: str, severity: int, 
-#                               location: List[str], context: List[str]):
-#     """Generate medical analysis using Gemini LLM"""
-    
-#     # Build context string
-#     context_str = ", ".join(context) if context else "None"
-#     location_str = ", ".join(location)
-    
-#     prompt = f"""You are a medical AI assistant helping with pre-consultation symptom analysis.
-
-# Patient Information:
-# - Symptom Description: {description}
-# - Duration: {duration}
-# - Severity (1-10): {severity}
-# - Body Location: {location_str}
-# - Additional Context: {context_str}
-
-# Please provide a comprehensive analysis in JSON format with the following structure:
-
-# {{
-#   "diagnostic_summary": "A 2-3 sentence explanation of what the symptoms might indicate",
-#   "severity_level": "Mild/Moderate/Severe",
-#   "contagious_likely": true/false,
-#   "recommended_tests": [
-#     {{"name": "Test Name", "reason": "Why this test is needed"}},
-#     ...
-#   ],
-#   "relief_remedies": [
-#     {{"remedy": "Remedy name", "description": "How it helps"}},
-#     ...
-#   ],
-#   "specialist_keywords": ["keyword1", "keyword2", ...],
-#   "urgency": "within_24_hours/within_week/routine_checkup",
-#   "recommended_actions": ["action1", "action2", ...]
-# }}
-
-# Important: 
-# 1. Be medically accurate but avoid making definitive diagnoses
-# 2. Focus on common conditions that match the symptoms
-# 3. Recommend appropriate medical specialties
-# 4. Suggest realistic next steps
-# 5. Return ONLY valid JSON, no additional text"""
-
-#     try:
-#         message = genai.GenerativeModel(
-#             model_name="gemini-1.5-flash",
-#         generation_config={
-#             "response_mime_type": "application/json",
-#             "response_schema": MedicalSummary,
-#             "temperature": 0.2,
-#             "top_p": 0.9,
-#             "max_output_tokens": 512
-#         }
-#     )
-# # Gemini Flash is used for fast, low-latency medical summarization.
-# # Deterministic settings are chosen to ensure consistency and safety.
-
-        
-#         response_text = message.content[0].text
-        
-#         # Clean response if it has markdown code blocks
-#         if "```json" in response_text:
-#             response_text = response_text.split("```json")[1].split("```")[0].strip()
-#         elif "```" in response_text:
-#             response_text = response_text.split("```")[1].split("```")[0].strip()
-        
-#         analysis = json.loads(response_text)
-#         return analysis
-        
-#     except json.JSONDecodeError as e:
-#         print(f"JSON decode error: {e}")
-#         print(f"Response text: {response_text}")
-#         # Return a fallback response
-#         return {
-#             "diagnostic_summary": "Unable to process analysis. Please consult a healthcare professional.",
-#             "severity_level": "Moderate",
-#             "contagious_likely": False,
-#             "recommended_tests": [],
-#             "relief_remedies": [],
-#             "specialist_keywords": ["general physician"],
-#             "urgency": "within_week",
-#             "recommended_actions": ["Consult a doctor"]
-#         }
-#     except Exception as e:
-#         print(f"Error in AI analysis: {e}")
-#         raise HTTPException(status_code=500, detail=f"AI analysis failed: {str(e)}")
-
-
 @app.post("/symptom-check",response_model=AnalysisResponse)
 def analyze_symptoms(data: SymptomData):
+    myprompt = f""" You are a medical diagnostic assistant.
+    Patient reports the following.
+- Symptom Description: {data.description}
+- Duration: {data.duration or 'N/A'}
+- Severity (1-10): {data.severity or 'N/A'}
+- Body Location: {', '.join(data.bodyParts) if data.bodyParts else 'N/A'}
+- Additional Context: {', '.join(data.context) if data.context else 'N/A'}
+    Please provide a comprehensive analysis-upto 3 tests and 2 quick remedies each in JSON format with the following structure:
+
+    "description":"only problem keywords for database query"
+    "diagnostic_summary": "A 2 sentence explanation of what the symptoms might indicate",
+     "recommended_tests": [
+        {{"name": "Test Name", "reason": "Why this test is needed"}},
+     ...
+     ],
+    "relief_remedies": [
+      {{"remedy": "Remedy name", "description": "How it helps"}},
+      ...
+      ],
+     Return ONLY valid JSON, no additional text
+"""
+
+# ---------------------------
+# Call OpenRouter chat endpoint
+# ---------------------------
+    completion = client.chat.completions.create(
+        model="openai/gpt-5.2",
+        messages=[
+        {"role": "user", "content": myprompt}],
+        max_tokens=1000,
+        stream=False  # change to True if you want streaming 
+        ) 
+    output_text = completion.choices[0].message.content
+    try:
+        llm_data = json.loads(output_text)
+    except json.JSONDecodeError:
+        llm_data = {
+            "description": "",
+            "diagnostic_summary": "Unable to parse LLM output.",
+            "recommended_tests": [],
+            "relief_remedies": []
+        }
+    print("LLM Data:", llm_data)
+
     # 1. Map symptom → specialties
-    specialties = get_specialties_from_problem(data.description)
+    specialties = get_specialties_from_problem(llm_data.get("description", ""))
     
     # # 2. Get doctors + clinics
     # doctors_and_clinics = get_doctors_and_clinics(
@@ -284,53 +214,17 @@ def analyze_symptoms(data: SymptomData):
             })
     doctors = doctors[:5]
     return {
-        "summary": f"Based on your symptoms, you may need a {', '.join(specialties)} consultation.",
+        "summary": f"Based on your symptoms, you may need a {', '.join(specialties)} consultation. {llm_data.get('diagnostic_summary', '')}",
         "diagnostic_alert": {
             "severity": "Moderate",
             "contagious": False
         },
-        "recommended_tests": [],
-        "relief_remedies": [],
+        "recommended_tests": llm_data.get("recommended_tests", []),
+        "relief_remedies": llm_data.get("relief_remedies", []),
         "recommended_doctors": doctors,
         "nearby_clinics": clinics,
         "keywords": specialties
     }
-# OLDER CODE HERE -------------------------------------------------------
-    # for row in rows:
-    #     doctors.append({
-    #         "doctor_name": row["doctor_name"],
-    #         "specialty": row["specialty"],
-    #         "qualification": row["qualification"],
-    #         "hospital_name": row["hospital_name"],
-    #         "hospital_type": row["hospital_type"],
-    #         "city": row["city"],
-    #         "district": row["district"],
-    #         "country": row["country"],
-    #     })
-    #     if row["hospital_name"] not in clinics_seen:
-    #         clinics_seen.add(row["hospital_name"])
-    #         clinics.append({
-    #             "name": row["hospital_name"],
-    #             "type": row["hospital_type"],
-    #             "address": row["address"],
-    #             "city": row["city"],
-    #             "district": row["district"],
-    #             "country": row["country"]
-    #         })
-
-    # return {
-    #      # LLM OUTPUT -----------------
-    #     "summary": "Please consult the recommended doctors and nearby clinics.",
-    #     "diagnostic_alert": {"severity": "Moderate", "contagious": False, "urgency": "within_week"},
-    #     "recommended_tests": [],
-    #     "relief_remedies": [],
-    #     # LLM OUTPUT ------------------
-    #     "recommended_doctors": doctors,
-    #     "nearby_clinics": clinics,
-    #     "keywords": specialties
-    # }
-# OLDER CODE HERE -------------------------------------------------------
-# ---------------------------
 # Health check endpoint
 # ---------------------------
 @app.get("/health")
