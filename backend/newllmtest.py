@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 client = OpenAI(
   base_url="https://openrouter.ai/api/v1",
-  api_key="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")
+  api_key="KEY")
 
 # ---------------------------
 # Define structured schema
