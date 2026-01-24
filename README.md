@@ -69,7 +69,7 @@ It helps users understand symptoms, get AI-generated medical summaries, find nea
 - **Database:** Supabase (PostgreSQL)
 - **AI:** OpenRouter (GPT-2.5)
 - **APIs:** REST-based architecture
-- 
+  
 ##  API Documentation
 
 KantanCare uses a REST-based API built with FastAPI.
