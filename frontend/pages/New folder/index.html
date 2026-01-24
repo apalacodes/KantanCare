@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KantanCare - AI-Powered Healthcare Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      :root {
+        --background: #f7fafd;
+        --foreground: #0f1724;
+        --border: #00000014;
+        --input: #ffffff;
+        --primary: #0466c8;
+        --primary-foreground: #ffffff;
+        --secondary: #e9f2ff;
+        --secondary-foreground: #073b66;
+        --muted: #f1f5f9;
+        --muted-foreground: #98a0aa;
+        --success: #0f9d58;
+        --success-foreground: #ffffff;
+        --accent: #ffb142;
+        --accent-foreground: #1a2a31;
+        --destructive: #e02424;
+        --destructive-foreground: #ffffff;
+        --warning: #f59e0b;
+        --warning-foreground: #08131a;
+        --card: #ffffff;
+        --card-foreground: #0f1724;
+        --radius-sm: 4px;
+        --radius-md: 6px;
+        --radius-lg: 8px;
+        --radius-xl: 12px;
+        --font-family-body: Inter, sans-serif;
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-family-body);
+        background-color: var(--background);
+        color: var(--foreground);
+        min-height: 100vh;
+      }
+
+      h1, h2, h3, h4, p {
+        margin: 0;
+      }
+
+      .landing-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+      }
+
+      .content-wrapper {
+        max-width: 1200px;
+        width: 100%;
+      }
+
+      /* Hero Section */
+      .hero-section {
+        background: var(--card);
+        border-radius: var(--radius-xl);
+        padding: 60px 40px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        margin-bottom: 40px;
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .logo {
+        width: 80px;
+        height: 80px;
+        background: var(--primary);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        font-weight: 700;
+        color: white;
+        box-shadow: 0 4px 12px rgba(4, 102, 200, 0.3);
+      }
+
+      .brand-name {
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--primary);
+        letter-spacing: -1px;
+      }
+
+      h1 {
+        font-size: 56px;
+        font-weight: 800;
+        color: var(--foreground);
+        margin-bottom: 24px;
+        letter-spacing: -1.5px;
+        line-height: 1.1;
+      }
+
+      .tagline {
+        font-size: 24px;
+        color: var(--muted-foreground);
+        margin-bottom: 40px;
+        font-weight: 500;
+        line-height: 1.6;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 48px;
+      }
+
+      .button-primary {
+        padding: 18px 48px;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        border: none;
+        border-radius: var(--radius-xl);
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        box-shadow: 0 4px 14px rgba(4, 102, 200, 0.3);
+        letter-spacing: 0.5px;
+      }
+
+      .button-primary:hover {
+        background: #0353a4;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(4, 102, 200, 0.4);
+      }
+
+      .button-secondary {
+        padding: 18px 48px;
+        background: var(--secondary);
+        color: var(--primary);
+        border: none;
+        border-radius: var(--radius-xl);
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        letter-spacing: 0.5px;
+      }
+
+      .button-secondary:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(4, 102, 200, 0.3);
+      }
+
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 40px 0;
+      }
+
+      /* Features Grid */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin-top: 48px;
+      }
+
+      .feature-card {
+        background: var(--muted);
+        border-radius: var(--radius-xl);
+        padding: 32px;
+        text-align: center;
+        transition: all 0.3s;
+        border: 1px solid var(--border);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(4, 102, 200, 0.15);
+        border-color: var(--primary);
+      }
+
+      .feature-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+
+      .feature-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--foreground);
+        margin-bottom: 12px;
+      }
+
+      .feature-description {
+        font-size: 15px;
+        color: var(--muted-foreground);
+        line-height: 1.6;
+      }
+
+      /* Info Section */
+      .info-section {
+        text-align: center;
+        background: var(--primary);
+        color: white;
+        padding: 40px;
+        border-radius: var(--radius-xl);
+        box-shadow: 0 4px 12px rgba(4, 102, 200, 0.3);
+      }
+
+      .info-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .info-text {
+        font-size: 16px;
+        opacity: 0.95;
+        line-height: 1.6;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero-section {
+          padding: 40px 24px;
+        }
+
+        h1 {
+          font-size: 36px;
+        }
+
+        .brand-name {
+          font-size: 32px;
+        }
+
+        .tagline {
+          font-size: 18px;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+        }
+
+        .button-primary,
+        .button-secondary {
+          width: 100%;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="landing-container">
+      <div class="content-wrapper">
+        <div class="hero-section">
+          <div class="logo-container">
+            <div class="logo">K</div>
+            <div class="brand-name">KantanCare</div>
+          </div>
+          
+          <h1>AI-Powered Healthcare<br>Management System</h1>
+          
+          <p class="tagline">
+            Streamline your healthcare journey with intelligent symptom analysis,<br>
+            smart routing, and personalized recommendations.
+          </p>
+          
+          <div class="cta-buttons">
+            <a href="register.html" class="button-primary">Get Started</a>
+            <a href="login.html" class="button-secondary">Sign In</a>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <iconify-icon icon="lucide:brain" style="font-size: 48px; color: var(--primary)"></iconify-icon>
+              </div>
+              <div class="feature-title">AI-Guided Analysis</div>
+              <div class="feature-description">
+                Advanced symptom analysis using Bio_ClinicalBERT trained on 880M clinical words
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <iconify-icon icon="lucide:hospital" style="font-size: 48px; color: var(--primary)"></iconify-icon>
+              </div>
+              <div class="feature-title">Smart Routing</div>
+              <div class="feature-description">
+                Find the nearest available healthcare provider based on your needs and location
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <iconify-icon icon="lucide:clipboard-list" style="font-size: 48px; color: var(--primary)"></iconify-icon>
+              </div>
+              <div class="feature-title">Medical Profile</div>
+              <div class="feature-description">
+                Complete medical history management for better diagnosis and treatment
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <iconify-icon icon="lucide:clock" style="font-size: 48px; color: var(--primary)"></iconify-icon>
+              </div>
+              <div class="feature-title">Queue-Aware Booking</div>
+              <div class="feature-description">
+                Real-time appointment scheduling with wait time estimation
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <iconify-icon icon="lucide:flask-conical" style="font-size: 48px; color: var(--primary)"></iconify-icon>
+              </div>
+              <div class="feature-title">Test Recommendations</div>
+              <div class="feature-description">
+                Context-aware diagnostic test suggestions based on your symptoms
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <iconify-icon icon="lucide:user-round-search" style="font-size: 48px; color: var(--primary)"></iconify-icon>
+              </div>
+              <div class="feature-title">Specialist Matching</div>
+              <div class="feature-description">
+                Automatic specialist recommendations with availability tracking
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <div class="info-title">Pre-Consultation Decision Support System</div>
+          <div class="info-text">
+            Helping patients make informed healthcare decisions before visiting facilities.<br>
+            Reducing wait times, optimizing resource allocation, and improving care quality.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        // Check if user is already logged in
+        // This will be implemented with Firebase Auth
+        console.log('Kantan Care - Landing Page Loaded');
+    </script>
+  </body>
+</html>
