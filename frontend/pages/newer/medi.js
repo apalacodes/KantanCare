@@ -1,4 +1,4 @@
-// main.js
+// medi.js
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -247,7 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="clinic-item">
         <div class="flex justify-between">
           <span class="text-sm font-medium">${clinic.name}</span>
-          <span class="text-xs text-muted-foreground">${clinic.distance}</span>
+          <span class="text-xs text-muted-foreground">
+            ${clinic.location || 'Location unavailable'}
+          </span>
         </div>
         <div class="flex gap-2 mt-1">
           ${clinic.services.map(s => `<span class="clinic-tag">${s}</span>`).join('')}

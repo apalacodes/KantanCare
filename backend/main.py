@@ -21,13 +21,7 @@ from psycopg2.extras import RealDictCursor
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 # client = genai.Client(api_key=GEMINI_API_KEY)
 # if not GEMINI_API_KEY:
-#     raise ValueError("GEMINI_API_KEY is missing from environment variables")
-
-
-# class MedicalSummary(typing.TypedDict):
-#     summary: str
-#     keywords: list[str]
-    
+#     raise ValueError("GEMINI_API_KEY is missing from environment variables"
 
 
 # ---------------------------
@@ -45,16 +39,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 def extract_keywords(text: str) -> list[str]:
     """Preprocess symptom text into keywords"""
     text = text.lower()
-    # words = re.findall(r'\b\w+\b', text)
+    words = re.findall(r'\b\w+\b', text)
+    print(text)
+    print(words)
+    return words
 
-    return text
+
 def get_specialties_from_problem(problem: str):
     keywords = extract_keywords(problem)
+    print("keyword:", keywords)
     specialties = set()
-    
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     
@@ -66,16 +64,23 @@ def get_specialties_from_problem(problem: str):
         """, (f"%{kw}%",))
         results = cur.fetchall()
         for row in results:
-            specialties.add(row['specialty'])
+            specialties.add(row['specialty'].strip())
     
     cur.close()
     conn.close()
+    print(specialties)
     return list(specialties) if specialties else ["general physician"]
-def get_doctors_and_clinics(specialties: list, city: str = None, country: str = None, district: str = None):
+
+def get_doctors_and_clinics(
+    specialties: List[str]
+#     city: Optional[str] = None,
+#     district: Optional[str] = None,
+#     country: Optional[str] = None,
+):
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory=RealDictCursor)
 
-    query = """
+    cur.execute("""
         SELECT DISTINCT
             d.name AS doctor_name,
             d.specialty,
@@ -90,22 +95,20 @@ def get_doctors_and_clinics(specialties: list, city: str = None, country: str = 
         JOIN hospitals h ON d.hospital_id = h.id
         JOIN locations l ON h.location_id = l.id
         WHERE LOWER(d.specialty) = ANY(%s)
-    """
-    params = [ [s.lower() for s in specialties] ]
+    """, ([s.lower() for s in specialties],))
 
-    # Optional location filters
-    if city:
-        query += " AND l.city = %s"
-        params.append(city)
-    if district:
-        query += " AND l.district = %s"
-        params.append(district)
-    if country:
-        query += " AND l.country = %s"
-        params.append(country)
-
-    cur.execute(query, tuple(params))
+    # # Optional location filters
+    # if city:
+    #     query += " AND l.city = %s"
+    #     params.append(city)
+    # if district:
+    #     query += " AND l.district = %s"
+    #     params.append(district)
+    # if country:
+    #     query += " AND l.country = %s"
+    #     params.append(country)
     results = cur.fetchall()
+    print(results)
     cur.close()
     conn.close()
     return results
@@ -115,31 +118,36 @@ def get_doctors_and_clinics(specialties: list, city: str = None, country: str = 
 # ---------------------------
 class SymptomData(BaseModel):
     description: str
-    duration: str
-    severity: int | str
-    bodyParts: list
-
-    context: list
-    # location: List[str]  # Changed to list to match frontend
-    # context: Optional[List[str]] = []
-
-class DoctorResult(BaseModel):
-    doctor_name: str
-    specialty: str
-    qualification: str
-    hospital_name: str
-    hospital_type: str
-    city: str
-    district: str
-    country: str
-    next_available: Optional[str] = None
-
+    duration: Optional[str] = None
+    severity: Optional[int] = None
+    bodyParts: Optional[List[str]] = []
+    context: Optional[List[str]] = []
+# OLDER VERSION BELOW WITH DOCTOR RESULT -------------------------------------------
+# class DoctorResult(BaseModel):
+#     doctor_name: str
+#     specialty: str
+#     qualification: str
+#     hospital_name: str
+#     hospital_type: str
+#     city: str
+#     district: str
+#     country: str
+#     next_available: Optional[str] = None
+# class AnalysisResponse(BaseModel):
+#     summary: str
+#     diagnostic_alert: dict
+#     recommended_tests: List[dict]
+#     relief_remedies: List[dict]
+#     recommended_doctors: List[DoctorResult]
+#     nearby_clinics: List[dict]
+#     keywords: List[str]
+# OLDER VERSION ABOVE WITH DOCTOR RESULT -------------------------------------------
 class AnalysisResponse(BaseModel):
     summary: str
     diagnostic_alert: dict
     recommended_tests: List[dict]
     relief_remedies: List[dict]
-    recommended_doctors: List[DoctorResult]
+    recommended_doctors: List[dict]
     nearby_clinics: List[dict]
     keywords: List[str]
 
@@ -233,219 +241,95 @@ class AnalysisResponse(BaseModel):
 #         print(f"Error in AI analysis: {e}")
 #         raise HTTPException(status_code=500, detail=f"AI analysis failed: {str(e)}")
 
-# ---------------------------
-# Function: Search doctors by specialty keywords
-# ---------------------------
-# def search_doctors_by_keywords(keywords: List[str], limit: int = 5):
-#     """Search for doctors matching specialty keywords"""
-#     try:
-#         conn = get_db_connection()
-#         cur = conn.cursor(cursor_factory=RealDictCursor)
-        
-#         # Convert keywords to lowercase for case-insensitive matching
-#         keywords_lower = [k.lower() for k in keywords]
-        
-#         cur.execute("""
-#             SELECT DISTINCT
-#                 d.name AS doctor_name, 
-#                 d.specialty, 
-#                 d.qualification,
-#                 h.name AS hospital_name, 
-#                 h.type AS hospital_type,
-#                 l.city, 
-#                 l.district, 
-#                 l.country
-#             FROM doctors d
-#             JOIN hospitals h ON d.hospital_id = h.id
-#             JOIN locations l ON h.location_id = l.id
-#             WHERE LOWER(d.specialty) = ANY(%s)
-#             LIMIT %s;
-#         """, (keywords_lower, limit))
-        
-#         results = cur.fetchall()
-#         cur.close()
-#         conn.close()
-        
-#         return results
-        
-#     except Exception as e:
-#         print(f"Database error: {e}")
-#         return []
 
-# ---------------------------
-# Function: Get nearby clinics (mock data for now)
-# ---------------------------
-# def get_nearby_clinics(location: str = "KTM, Nepal"):
-#     """Get nearby clinics - currently returns mock data"""
-#     # TODO: Implement actual clinic search based on location
-#     return [
-#         {
-#             "name": "City Diagnostic Lab",
-#             "distance": "0.5 mi",
-#             "services": ["X-Ray", "Blood Work"]
-#         },
-#         {
-#             "name": "Green Valley Urgent Care",
-#             "distance": "1.2 mi",
-#             "services": ["Walk-in"]
-#         }
-#     ]
-
-# def get_nearby_clinics(city: str=None, country: str=None, district: str=None):
-#     try:
-#         conn=get_db_connection()
-#         cur=conn.cursor(cursor_factory=RealDictCursor)
-#         query="""
-# SELECT h.name, h.type, h.address
-# FROM hospitals h
-#             JOIN location l ON h.location_id = l.id
-#             WHERE (%s IS NULL OR l.city = %s)
-#             AND (%s IS NULL OR l.district = %s)
-#             AND (%s IS NULL OR l.country = %s)
-#             LIMIT %s;
-#     """
-#         cur.execute(query, (city, district, country))
-#         clinics = cur.fetchall()
-#         cur.close()
-#         conn.close()
-#         return clinics
-#     except Exception as e:
-#         print(f"Database error fetching clinics: {e}")
-#         return []
-
-# ---------------------------
-# Main API endpoint
-# ---------------------------
-# @app.post("/symptom-check", response_model=AnalysisResponse)
-# def analyze_symptoms(request: SymptomData):
-#     # keywords = find_specialties_from_text(request.description)
-#     default_keywords = ["general physician"]
-#     # process data
-#     bodypart_to_specialty = {
-#         "head": "neurologist",
-#         "skin": "dermatologist",
-#         "chest": "cardiologist",
-#         "stomach": "gastroenterologist",
-#         "eye": "ophthalmologist"
-#     }
-#     keywords = []
-#     for part in request.bodyParts:
-#         if part.lower() in bodypart_to_specialty:
-#             keywords.append(bodypart_to_specialty[part.lower()])
-#     if not keywords:
-#         keywords = default_keywords
-
-#      # Step 2: Search for doctors
-#     doctors = search_doctors_by_keywords(keywords)
-
-#     # Step 3: Get nearby clinics
-#     # Example: take first city/country/district from frontend (or default to Kathmandu)
-#     city = request.context[0] if request.context else "Kathmandu"
-#     country = "Nepal"
-#     district = ""
-#     clinics = get_nearby_clinics(city=city, country=country, district=district)
-
-#     # Step 4: Return response
-#     return AnalysisResponse(
-#         summary="Patient should consult a doctor for evaluation.",
-#         diagnostic_alert={
-#             "severity": "Moderate",
-#             "contagious": False,
-#             "urgency": "within_week"
-#         },
-#         recommended_tests=[],
-#         relief_remedies=[],
-#         recommended_doctors=[DoctorResult(**doc) for doc in doctors],
-#         nearby_clinics=clinics,
-#         keywords=keywords
-#     )
-
-
-# # @app.post("/symptom-check", response_model=AnalysisResponse)
-# # def analyze_symptoms(request: SymptomData):
-# #     """Main endpoint for symptom analysis"""
-    
-# #     # Step 1: Generate AI analysis
-# #     analysis = generate_medical_analysis(
-# #         description=request.description,
-# #         duration=request.duration,
-# #         severity=request.severity,
-# #         location=request.location,
-# #         context=request.context
-# #     )
-    
-#     # Step 2: Search for doctors
-#     doctors = search_doctors_by_keywords(
-#         keywords=analysis.get("specialist_keywords", ["general physician"])
-#     )
-    
-#     # Step 3: Get nearby clinics
-#     clinics = get_nearby_clinics()
-    
-#     # Step 4: Format response
-#     return AnalysisResponse(
-#         summary=analysis.get("diagnostic_summary", ""),
-#         diagnostic_alert={
-#             "severity": analysis.get("severity_level", "Moderate"),
-#             "contagious": analysis.get("contagious_likely", False),
-#             "urgency": analysis.get("urgency", "within_week")
-#         },
-#         recommended_tests=analysis.get("recommended_tests", []),
-#         relief_remedies=analysis.get("relief_remedies", []),
-#         recommended_doctors=[DoctorResult(**doc) for doc in doctors],
-#         nearby_clinics=clinics,
-#         keywords=analysis.get("specialist_keywords", [])
-#     )
-@app.post("/symptom-check")
+@app.post("/symptom-check",response_model=AnalysisResponse)
 def analyze_symptoms(data: SymptomData):
     # 1. Map symptom → specialties
     specialties = get_specialties_from_problem(data.description)
     
-    # 2. Get doctors + clinics
-    doctors_and_clinics = get_doctors_and_clinics(
-        specialties,
-        city=data.context[0] if data.context else None,
-        country="Nepal",
-        district=None
-    )
-    
+    # # 2. Get doctors + clinics
+    # doctors_and_clinics = get_doctors_and_clinics(
+    #     specialties,
+    #     city=data.context[0] if data.context else "Kathmandu",
+    #     country="Nepal",
+    #     district="Kathmandu"
+    # )
+    rows = get_doctors_and_clinics(specialties)
     # 3. Split doctors & clinics
     doctors = []
     clinics_seen = set()
     clinics = []
 
-    for row in doctors_and_clinics:
+    for row in rows:
+        # Doctors (frontend-compatible)
         doctors.append({
             "doctor_name": row["doctor_name"],
             "specialty": row["specialty"],
             "qualification": row["qualification"],
-            "hospital_name": row["hospital_name"],
-            "hospital_type": row["hospital_type"],
-            "city": row["city"],
-            "district": row["district"],
-            "country": row["country"],
+            "hospital_name": row["hospital_name"]
         })
+
+        # Clinics (frontend expects distance + services)
         if row["hospital_name"] not in clinics_seen:
             clinics_seen.add(row["hospital_name"])
+            clinic_location = ", ".join(filter(None, [
+            row.get("address"),
+            # row.get("city"),
+            row.get("country")
+    ]))
             clinics.append({
                 "name": row["hospital_name"],
-                "type": row["hospital_type"],
-                "address": row["address"],
-                "city": row["city"],
-                "district": row["district"],
-                "country": row["country"]
+                "location": clinic_location,              
+                "services": [row["hospital_type"]] if row["hospital_type"] else ["OPD"]
             })
-
+    doctors = doctors[:5]
     return {
-        "summary": "Please consult the recommended doctors and nearby clinics.",
-        "diagnostic_alert": {"severity": "Moderate", "contagious": False, "urgency": "within_week"},
+        "summary": f"Based on your symptoms, you may need a {', '.join(specialties)} consultation.",
+        "diagnostic_alert": {
+            "severity": "Moderate",
+            "contagious": False
+        },
         "recommended_tests": [],
         "relief_remedies": [],
         "recommended_doctors": doctors,
         "nearby_clinics": clinics,
         "keywords": specialties
     }
+# OLDER CODE HERE -------------------------------------------------------
+    # for row in rows:
+    #     doctors.append({
+    #         "doctor_name": row["doctor_name"],
+    #         "specialty": row["specialty"],
+    #         "qualification": row["qualification"],
+    #         "hospital_name": row["hospital_name"],
+    #         "hospital_type": row["hospital_type"],
+    #         "city": row["city"],
+    #         "district": row["district"],
+    #         "country": row["country"],
+    #     })
+    #     if row["hospital_name"] not in clinics_seen:
+    #         clinics_seen.add(row["hospital_name"])
+    #         clinics.append({
+    #             "name": row["hospital_name"],
+    #             "type": row["hospital_type"],
+    #             "address": row["address"],
+    #             "city": row["city"],
+    #             "district": row["district"],
+    #             "country": row["country"]
+    #         })
 
+    # return {
+    #      # LLM OUTPUT -----------------
+    #     "summary": "Please consult the recommended doctors and nearby clinics.",
+    #     "diagnostic_alert": {"severity": "Moderate", "contagious": False, "urgency": "within_week"},
+    #     "recommended_tests": [],
+    #     "relief_remedies": [],
+    #     # LLM OUTPUT ------------------
+    #     "recommended_doctors": doctors,
+    #     "nearby_clinics": clinics,
+    #     "keywords": specialties
+    # }
+# OLDER CODE HERE -------------------------------------------------------
 # ---------------------------
 # Health check endpoint
 # ---------------------------

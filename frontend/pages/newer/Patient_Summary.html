@@ -147,7 +147,29 @@
         background-color: var(--sidebar-primary);
         color: var(--sidebar-primary-foreground);
       }
-
+      /* Action Bar */
+      .action-bar {
+        position: fixed;
+        bottom: 0;
+        left: 260px;
+        right: 0;
+        padding: 20px 32px;
+        background: linear-gradient(to top, var(--background) 80%, transparent);
+        backdrop-filter: blur(8px);
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 10;
+      }
+      
+      .privacy-note {
+        font-size: 13px;
+        color: var(--muted-foreground);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
       /* Main Content */
       .main-content {
         flex: 1;
@@ -289,7 +311,7 @@
       /* Cards */
       .card {
         background-color: var(--card);
-        border-radius: var(--radius-lg);
+        border-radius: 12px ;
         border: 1px solid var(--border);
         overflow: hidden;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -536,7 +558,9 @@
       .text-lg {
         font-size: 18px;
       }
-
+      .text-vlg {
+        font-size: 28px;
+      }
       .font-medium {
         font-weight: 500;
       }
@@ -551,7 +575,29 @@
 
       .text-primary {
         color: var(--primary);
+      }      
+      
+      .btn-primary {
+        background-color: var(--primary);
+        color: var(--primary-foreground);
+        box-shadow: 0 2px 8px rgba(4, 102, 200, 0.2);
       }
+
+      .btn-primary:hover {
+        background-color: #0356a8;
+        box-shadow: 0 4px 12px rgba(4, 102, 200, 0.3);
+      }
+      
+      .btn-secondary {
+        background-color: var(--secondary);
+        color: var(--secondary-foreground);
+        border: 1px solid var(--border);
+      }
+
+      .btn-secondary:hover {
+        background-color: #d4e7ff;
+      }
+
 
       @media (max-width: 968px) {
         .analysis-grid {
@@ -664,78 +710,77 @@
             </div>
             <div class="flex-1">
               <h2 class="text-lg font-semibold mb-1">Possible Diagnostics!</h2>
-              <p class="text-muted-foreground text-sm mb-3" id="diagnosticSummary">Loading analysis...</p>
+              <p class="text-muted-foreground text-vlg t-semibold mb-3" id="diagnosticSummary">Loading analysis...</p>
               <div class="flex gap-2" id="diagnosticBadges"></div>
             </div>
           </div>
+<div class="analysis-grid grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-          <div class="analysis-grid">
-            <div class="flex flex-col gap-6">
-              <!-- Tests -->
-              <div class="card">
-                <div class="p-4 border-b bg-secondary flex justify-between items-center">
-                  <h3 class="font-semibold flex items-center gap-2">
-                    <iconify-icon icon="lucide:microscope" style="font-size: 18px; color: var(--primary)"></iconify-icon>
-                    Recommended Diagnostic Tests
-                  </h3>
-                  <span class="text-xs text-muted-foreground">Review with doctor</span>
-                </div>
-                <div class="p-0" id="testsContainer">
-                  <div class="flex items-center gap-4 p-4">
-                    <span class="text-sm text-muted-foreground">Loading recommendations...</span>
-                  </div>
-                </div>
-              </div>
+<!-- LEFT: Doctors + Clinics -->
+<div class="lg:col-span-2 grid grid-cols-2 gap-4 items-start">
 
-              <!-- Remedies -->
-              <div class="card">
-                <div class="p-4 border-b bg-secondary">
-                  <h3 class="font-semibold flex items-center gap-2">
-                    <iconify-icon icon="lucide:coffee" style="font-size: 18px; color: var(--success)"></iconify-icon>
-                    Immediate Relief Remedies
-                  </h3>
-                </div>
-                <div class="p-6 grid grid-cols-2 gap-4" id="remediesContainer">
-                  <span class="text-sm text-muted-foreground">Loading remedies...</span>
-                </div>
-              </div>
-            </div>
+  <!-- Doctors -->
+  <div class="card ">
+    <div class="p-4 border-b">
+      <h3 class="font-semibold text-sm">Recommended Specialists</h3>
+    </div>
+    <div class="p-3 max-h-[360px] overflow-y-auto flex flex-col gap-3" id="doctorsContainer">
+      <span class="text-sm text-muted-foreground">Loading specialists...</span>
+    </div>
+  </div>
 
-            <div class="flex flex-col gap-6">
-              <!-- Doctors -->
-              <div class="card flex flex-col">
-                <div class="p-4 border-b">
-                  <h3 class="font-semibold text-sm">Recommended Specialists</h3>
-                </div>
-                <div class="p-4 flex flex-col gap-4" id="doctorsContainer">
-                  <span class="text-sm text-muted-foreground">Loading specialists...</span>
-                </div>
-              </div>
+  <!-- Clinics -->
+  <div class="card">
+    <div class="p-4 border-b">
+      <h3 class="font-semibold text-sm">Suggested Clinics</h3>
+    </div>
+    <!-- <div class="p-4 flex-1 overflow-y-auto flex flex-col gap-4" id="clinicsContainer"> -->
+      <div class="p-3 max-h-[360px] overflow-y-auto flex flex-col gap-3" id="clinicsContainer">
+      <span class="text-sm text-muted-foreground">Loading clinics...</span>
+    </div>
+  </div>
+  </div>
+<!-- RIGHT: Tests + Remedies -->
+<div class="col-span-1 flex flex-col gap-6">
 
-              <!-- Clinics -->
-              <div class="card flex flex-col">
-                <div class="p-4 border-b">
-                  <h3 class="font-semibold text-sm">Suggested Clinics</h3>
-                </div>
-                <div class="clinic-map">
-                  <iconify-icon icon="lucide:map" style="font-size: 32px; opacity: 0.5;"></iconify-icon>
-                </div>
-                <div class="p-0" id="clinicsContainer"></div>
-              </div>
-            </div>
-          </div>
+  <!-- Tests -->
+  <div class="card">
+    <div class="p-4 border-b bg-secondary flex justify-between items-center">
+      <h3 class="font-semibold flex items-center gap-2">
+        <iconify-icon icon="lucide:microscope" style="font-size: 18px; color: var(--primary)"></iconify-icon>
+        Recommended Diagnostic Tests
+      </h3>
+      <span class="text-xs text-muted-foreground">Review with doctor</span>
+    </div>
+    <div class="p-4" id="testsContainer">
+      <span class="text-sm text-muted-foreground">Loading recommendations...</span>
+    </div>
+  </div>
 
+  <!-- Remedies -->
+  <div class="card">
+    <div class="p-4 border-b bg-secondary">
+      <h3 class="font-semibold flex items-center gap-2">
+        <iconify-icon icon="lucide:coffee" style="font-size: 18px; color: var(--success)"></iconify-icon>
+        Immediate Relief Remedies
+      </h3>
+    </div>
+    <div class="p-6 grid grid-cols-2 gap-4" id="remediesContainer">
+      <span class="text-sm text-muted-foreground">Loading remedies...</span>
+    </div>
+  </div>
+
+</div>
+<div style="height: 80px;"></div>
           <div class="action-bar">
             <div class="privacy-note">
               <iconify-icon icon="lucide:shield-check" style="font-size: 16px; color: var(--success)"></iconify-icon>
               This Summary is for preliminary diagnostic advice. Book an appointment for accurate diagnosis.
             </div>
             <div style="display: flex; gap: 12px">
-              <button class="btn btn-secondary">Tele-Consultation Available!</button>
-              <a href="#" class="btn btn-primary">
-                Book Appointment
-                <iconify-icon icon="lucide:arrow-right" style="font-size: 16px"></iconify-icon>
-              </a>
+              <button class=" btn btn-secondary">Tele-Consultation Available!</button>
+              <button class=" btn btn-primary">Book Appointment<iconify-icon icon="lucide:arrow-right" style="font-size: 16px"></iconify-icon>
+              </button>
             </div>
           </div>
         </div>
