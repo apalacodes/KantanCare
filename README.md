@@ -1,5 +1,5 @@
 
-# 🩺 KantanCare
+# KantanCare
 Service Design & Deployment Capstone Project
 **KantanCare** is an AI-powered healthcare assistant designed to make medical guidance **simple, accessible, and localized for Nepal**.
 
@@ -7,7 +7,7 @@ It helps users understand symptoms, get AI-generated medical summaries, find nea
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
 - **AI Symptom Analysis**
   - Uses **GPT-2.5** to generate structured medical summaries
@@ -36,6 +36,7 @@ It helps users understand symptoms, get AI-generated medical summaries, find nea
   - Test recommendations
   - Medical history — all in one place
 
+-UNDERCONSTRUCTION : Integrated contextual Chatbot 
 ---
 
 ## Database
